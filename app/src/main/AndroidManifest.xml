@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OZ_STREAM_TV">
         <activity
+            android:name=".main.SplashScreen"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:banner="@drawable/app_icon_your_company"
             android:exported="true"
