@@ -1,13 +1,10 @@
-package com.oz_stream.tv.main;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.oz_stream.tv.ui.main;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -46,7 +43,8 @@ public class SplashScreen extends Activity {
                 // This method will be executed once the timer is over
                 // Start your app main activity
 
-                if (prf.getString("CODE_TV").isEmpty()) {                /*    Intent i = new Intent(context, IDCode.class);
+                if (prf.getString("CODE_TV").isEmpty()) {
+                    /* Intent i = new Intent(context, IDCode.class);
                     startActivity(i);
                     finish();*/
                 } else {
