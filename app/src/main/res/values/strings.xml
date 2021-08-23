@@ -16,4 +16,17 @@
     <!-- Error messages -->
     <string name="error_fragment_message">An error occurred</string>
     <string name="dismiss_error">Dismiss</string>
+
+
+    <string name="insertIdCode">INSERER VOTRE ID</string>
+    <string name="insertIdCodeDesc">Votre ID est fourni après souscription</string>
+    <string name="infoEnTeteAlertDialog">Information</string>
+    <string name="changeLanguage">Veuillez cocher une case pour changer de langue</string>
+    <string name="langue">Sélectionner une langue</string>
+    <string name="idCode">Code ID</string>
+    <string name="send">Envoyer</string>
+    <string name="operation_progress">Operations en cours, Veuillez patienter…</string>
+    <string name="annulProcess">Vous avez annulé le processus ! </string>
+    <string name="error_short_value">This value very short please enter correct value</string>
+    <string name="stateSubscribed">Votre ID ne possède pas de vidéos disponibles</string>
 </resources>

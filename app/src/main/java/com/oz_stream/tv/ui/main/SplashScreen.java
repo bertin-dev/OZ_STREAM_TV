@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -44,9 +45,9 @@ public class SplashScreen extends Activity {
                 // Start your app main activity
 
                 if (prf.getString("CODE_TV").isEmpty()) {
-                    /* Intent i = new Intent(context, IDCode.class);
+                    Intent i = new Intent(context, IDCode.class);
                     startActivity(i);
-                    finish();*/
+                    finish();
                 } else {
                    /* submitIDCode(prf.getString("CODE_TV"));*/
                 }
