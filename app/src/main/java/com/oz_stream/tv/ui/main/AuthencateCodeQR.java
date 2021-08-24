@@ -97,7 +97,7 @@ public class AuthencateCodeQR extends Activity {
     }
 
 
-    public static String getSerialNumber() {
+    private static String getSerialNumber() {
         String serialNumber;
 
         try {

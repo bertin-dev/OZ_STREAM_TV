@@ -9,9 +9,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.oz_stream.tv.App;
 import com.oz_stream.tv.R;
+import com.oz_stream.tv.data.api.TheMovieDbAPI;
 import com.oz_stream.tv.provider.PrefManager;
 import com.oz_stream.tv.translate.LocaleHelper;
+
+import javax.inject.Inject;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends Activity {
@@ -21,15 +25,15 @@ public class SplashScreen extends Activity {
     private ProgressDialog register_progress;
     private AlertDialog.Builder build_error;
     private Context context;
-    //@Inject
-    //TheMovieDbAPI theMovieDbAPI;
+    @Inject
+    TheMovieDbAPI theMovieDbAPI;
     private PrefManager prf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        //App.instance().appComponent().inject(this);
+        App.instance().appComponent().inject(this);
         prf = new PrefManager(getApplicationContext());
         build_error = new AlertDialog.Builder(this);
         context = this;

@@ -8,13 +8,13 @@ import android.widget.Toast;
 
 import androidx.lifecycle.ProcessLifecycleOwner;
 
+import com.google.android.gms.cast.tv.CastReceiverContext;
+import com.google.android.gms.cast.tv.SenderDisconnectedEventInfo;
+import com.google.android.gms.cast.tv.SenderInfo;
 import com.oz_stream.tv.dagger.components.ApplicationComponent;
 import com.oz_stream.tv.dagger.components.DaggerApplicationComponent;
 import com.oz_stream.tv.dagger.modules.ApplicationModule;
 import com.oz_stream.tv.dagger.modules.HttpClientModule;
-import com.google.android.gms.cast.tv.CastReceiverContext;
-import com.google.android.gms.cast.tv.SenderDisconnectedEventInfo;
-import com.google.android.gms.cast.tv.SenderInfo;
 
 import timber.log.Timber;
 
@@ -42,9 +42,9 @@ public class App extends Application {
 
 
         //CASTER
-        CastReceiverContext.initInstance(this);
+        /*CastReceiverContext.initInstance(this);
         CastReceiverContext.getInstance().registerEventCallback(new EventCallback());
-        ProcessLifecycleOwner.get().getLifecycle().addObserver(new AppLifecycleObserver());
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(new AppLifecycleObserver());*/
     }
 
     public static App instance() {

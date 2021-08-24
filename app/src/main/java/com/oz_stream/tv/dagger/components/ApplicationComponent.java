@@ -5,6 +5,7 @@ import com.oz_stream.tv.dagger.AppScope;
 import com.oz_stream.tv.dagger.modules.ApplicationModule;
 import com.oz_stream.tv.dagger.modules.HttpClientModule;
 import com.oz_stream.tv.ui.main.IDCode;
+import com.oz_stream.tv.ui.main.SplashScreen;
 
 import javax.inject.Singleton;
 
@@ -20,6 +21,7 @@ public interface ApplicationComponent {
 
     void inject(App app);
     void inject(IDCode idCode);
+    void inject(SplashScreen splashScreen);
 
     /*void inject(MainFragment mainFragment);
     void inject(DetailFragment movieDetailsFragment);
@@ -29,6 +31,5 @@ public interface ApplicationComponent {
     void inject(MainFragment.Films films);
     void inject(MainFragment.Series series);
     void inject(DialogFragment dialogFragment);
-    void inject(SplashActivity splashActivity);
     void inject(MainFragment.Actors actors);*/
 }
