@@ -4,7 +4,7 @@ import android.graphics.Color;
 
 import androidx.palette.graphics.Palette;
 
-import com.cinaf.android_tv.data.models.PaletteColors;
+import com.oz_stream.tv.data.models.PaletteColors;
 
 public class PaletteUtils {
 
