@@ -16,7 +16,7 @@ import androidx.leanback.widget.PageRow;
 import androidx.leanback.widget.Presenter;
 import androidx.leanback.widget.RowHeaderPresenter;
 
-import com.cinaf.android_tv.R;
+import com.oz_stream.tv.R;
 
 
 public class IconHeaderItemPresenter extends RowHeaderPresenter {

@@ -29,4 +29,50 @@
     <string name="annulProcess">Vous avez annulé le processus ! </string>
     <string name="error_short_value">This value very short please enter correct value</string>
     <string name="stateSubscribed">Votre ID ne possède pas de vidéos disponibles</string>
+
+
+    <string name="accueil">Accueil</string>
+    <string name="films">Films</string>
+    <string name="serie">Séries</string>
+    <string name="acteurs">Acteurs</string>
+    <string name="mesFavoris">Mes Favoris</string>
+    <string name="parametres">Paramètres</string>
+    <string name="deconnexion">Déconnexion</string>
+    <string name="contactNous">Contactez nous</string>
+    <string name="faqSupport">FAQ et Support</string>
+    <string name="policy">Politique de Confidentialité</string>
+    <string name="saison">Saison</string>
+
+    <string-array name="menu_list">
+        <item>@string/accueil</item>
+        <item>@string/films</item>
+        <item>@string/serie</item>
+        <item>@string/acteurs</item>
+        <item>@string/parametres</item>
+        <item>@string/deconnexion</item>
+    </string-array>
+
+
+    <string-array name="icons">
+        <item>@drawable/ic_baseline_home_24</item>
+        <item>@drawable/ic_baseline_local_movies_24</item>
+        <item>@drawable/ic_baseline_live_tv_24</item>
+        <item>@drawable/ic_baseline_recent_actors_24</item>
+        <item>@drawable/ic_baseline_video_settings_24</item>
+        <item>@drawable/ic_baseline_exit_to_app_24</item>
+    </string-array>
+
+
+    <!-- Dialog example -->
+    <string name="dialog_example_button_positive">Oui</string>
+    <string name="dialog_example_button_negative">Non</string>
+    <string name="dialog_example_button_toast_positive_clicked">Ajouté avec succès</string>
+    <string name="dialog_example_button_toast_negative_clicked">Annulé</string>
+
+    <string name="addFavoris">Êtes vous sur de vouloir ajouter cette vidéo aux favoris ?</string>
+    <string name="eltIndisponible">Elément indisponible</string>
+    <string name="sloganCinaf">OZSTREAM Plateforme de streaming vidéo</string>
+
+    <string name="url_principal">https://cinaf.fr/api/first/4F5A9C3D9A86FA54EACEDDD635185/d506abfd–9fe2–4b71-b979-feff21bcad13/</string>
+    <string name="selectedLanguage">Langue déjà sélectionnée!</string>
 </resources>

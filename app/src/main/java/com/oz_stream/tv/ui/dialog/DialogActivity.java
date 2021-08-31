@@ -1,18 +1,18 @@
-package com.oz_stream.tv.ui.base;
+package com.oz_stream.tv.ui.dialog;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import com.oz_stream.tv.R;
+import androidx.leanback.app.GuidedStepFragment;
+
 import com.oz_stream.tv.translate.LocaleHelper;
 
 import java.util.Locale;
 
-
-public class BaseTVActivity extends Activity {
+public class DialogActivity extends Activity {
 
     String currentLanguage = (Locale.getDefault().getLanguage().contentEquals("fr")) ? "fr" : "en", currentLang;
 
@@ -23,17 +23,16 @@ public class BaseTVActivity extends Activity {
         currentLanguage = getIntent().getStringExtra(currentLang);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffa100")));
+
+        if (savedInstanceState == null) {
+            GuidedStepFragment fragment = new DialogFragment();
+            GuidedStepFragment.addAsRoot(this, fragment, android.R.id.content);
+        }
     }
 
-    public void addFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.tv_frame_content, fragment);
-        fragmentTransaction.commit();
-    }
 
     /**
      * attachBaseContext(Context newBase) methode callback permet de verifier la langue au demarrage
