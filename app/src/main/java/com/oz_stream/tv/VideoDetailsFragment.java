@@ -33,7 +33,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
+//import com.bumptech.glide.request.transition.Transition;
 
 import java.util.Collections;
 import java.util.List;
@@ -77,7 +77,7 @@ public class VideoDetailsFragment extends DetailsSupportFragment {
             setupDetailsOverviewRowPresenter();
             setupRelatedMovieListRow();
             setAdapter(mAdapter);
-            initializeBackground(mSelectedMovie);
+            //initializeBackground(mSelectedMovie);
             setOnItemViewClickedListener(new ItemViewClickedListener());
         } else {
             Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -85,7 +85,7 @@ public class VideoDetailsFragment extends DetailsSupportFragment {
         }
     }
 
-    private void initializeBackground(Movie data) {
+    /*private void initializeBackground(Movie data) {
         mDetailsBackground.enableParallax();
         Glide.with(getActivity())
                 .asBitmap()
@@ -100,7 +100,7 @@ public class VideoDetailsFragment extends DetailsSupportFragment {
                         mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size());
                     }
                 });
-    }
+    }*/
 
     private void setupDetailsOverviewRow() {
         Log.d(TAG, "doInBackground: " + mSelectedMovie.toString());
@@ -109,7 +109,7 @@ public class VideoDetailsFragment extends DetailsSupportFragment {
                 ContextCompat.getDrawable(getActivity(), R.drawable.default_background));
         int width = convertDpToPixel(getActivity().getApplicationContext(), DETAIL_THUMB_WIDTH);
         int height = convertDpToPixel(getActivity().getApplicationContext(), DETAIL_THUMB_HEIGHT);
-        Glide.with(getActivity())
+        /*Glide.with(getActivity())
                 .load(mSelectedMovie.getCardImageUrl())
                 .centerCrop()
                 .error(R.drawable.default_background)
@@ -121,7 +121,7 @@ public class VideoDetailsFragment extends DetailsSupportFragment {
                         row.setImageDrawable(drawable);
                         mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size());
                     }
-                });
+                });*/
 
         ArrayObjectAdapter actionAdapter = new ArrayObjectAdapter();
 

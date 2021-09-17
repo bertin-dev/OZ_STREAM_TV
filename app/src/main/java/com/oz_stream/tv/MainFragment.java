@@ -33,7 +33,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
+//import com.bumptech.glide.request.transition.Transition;
+
 
 import java.util.Collections;
 import java.util.List;
@@ -148,7 +149,7 @@ public class MainFragment extends BrowseSupportFragment {
         setOnItemViewSelectedListener(new ItemViewSelectedListener());
     }
 
-    private void updateBackground(String uri) {
+    /*private void updateBackground(String uri) {
         int width = mMetrics.widthPixels;
         int height = mMetrics.heightPixels;
         Glide.with(getActivity())
@@ -163,7 +164,7 @@ public class MainFragment extends BrowseSupportFragment {
                     }
                 });
         mBackgroundTimer.cancel();
-    }
+    }*/
 
     private void startBackgroundTimer() {
         if (null != mBackgroundTimer) {
@@ -222,7 +223,7 @@ public class MainFragment extends BrowseSupportFragment {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    updateBackground(mBackgroundUri);
+                    //updateBackground(mBackgroundUri);
                 }
             });
         }

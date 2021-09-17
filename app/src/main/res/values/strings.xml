@@ -19,11 +19,11 @@
 
 
     <string name="insertIdCode">INSERER VOTRE ID</string>
-    <string name="insertIdCodeDesc">Votre ID est fourni après souscription</string>
+    <string name="insertIdCodeDesc">Votre Code TV est fourni après souscription</string>
     <string name="infoEnTeteAlertDialog">Information</string>
     <string name="changeLanguage">Veuillez cocher une case pour changer de langue</string>
     <string name="langue">Sélectionner une langue</string>
-    <string name="idCode">Code ID</string>
+    <string name="idCode">Code TV</string>
     <string name="send">Envoyer</string>
     <string name="operation_progress">Operations en cours, Veuillez patienter…</string>
     <string name="annulProcess">Vous avez annulé le processus ! </string>
@@ -75,4 +75,6 @@
 
     <string name="url_principal">https://cinaf.fr/api/first/4F5A9C3D9A86FA54EACEDDD635185/d506abfd–9fe2–4b71-b979-feff21bcad13/</string>
     <string name="selectedLanguage">Langue déjà sélectionnée!</string>
+    <string name="phone">Phone</string>
+    <string name="password">Password</string>
 </resources>
