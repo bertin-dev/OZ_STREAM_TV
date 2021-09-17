@@ -3,7 +3,6 @@ package com.oz_stream.tv.data.api;
 import com.oz_stream.tv.Config;
 import com.oz_stream.tv.dagger.modules.HttpClientModule;
 import com.oz_stream.tv.data.models.Access_token;
-import com.oz_stream.tv.data.models.CodeTv;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
