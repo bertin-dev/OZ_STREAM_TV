@@ -3,9 +3,7 @@ package com.oz_stream.tv.data.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class Playlist {
+public class Serie{
 
     @SerializedName("id")
     @Expose
@@ -22,15 +20,15 @@ public class Playlist {
     @SerializedName("updated_at")
     @Expose
     private String updated_at;
-    @SerializedName("created_by")
+    @SerializedName("user_id")
     @Expose
-    private String created_by;
+    private String user_id;
     @SerializedName("updated_by")
     @Expose
     private String updated_by;
-    @SerializedName("series")
+    @SerializedName("created_by")
     @Expose
-    private List<Series> series;
+    private String created_by;
 
 
     public int getId() {
@@ -73,12 +71,12 @@ public class Playlist {
         this.updated_at = updated_at;
     }
 
-    public String getCreated_by() {
-        return created_by;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setCreated_by(String created_by) {
-        this.created_by = created_by;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getUpdated_by() {
@@ -89,11 +87,11 @@ public class Playlist {
         this.updated_by = updated_by;
     }
 
-    public List<Series> getSeries() {
-        return series;
+    public String getCreated_by() {
+        return created_by;
     }
 
-    public void setSeries(List<Series> series) {
-        this.series = series;
+    public void setCreated_by(String created_by) {
+        this.created_by = created_by;
     }
 }

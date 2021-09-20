@@ -7,34 +7,51 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Category implements Parcelable {
+
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("title")
     @Expose
     private String title;
-
-    public Category() {
-    }
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("created_at")
+    @Expose
+    private String created_at;
+    @SerializedName("updated_at")
+    @Expose
+    private String updated_at;
+    @SerializedName("created_by")
+    @Expose
+    private String created_by;
+    @SerializedName("updated_by")
+    @Expose
+    private String updated_by;
+    @SerializedName("pivot")
+    @Expose
+    private Pivot pivot;
 
     protected Category(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readInt();
-        }
+        id = in.readInt();
         title = in.readString();
+        description = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        created_by = in.readString();
+        updated_by = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(id);
-        }
+        dest.writeInt(id);
         dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(created_by);
+        dest.writeString(updated_by);
     }
 
     @Override
@@ -53,22 +70,5 @@ public class Category implements Parcelable {
             return new Category[size];
         }
     };
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
 }
 

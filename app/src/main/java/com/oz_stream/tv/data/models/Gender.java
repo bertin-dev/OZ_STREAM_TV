@@ -1,11 +1,12 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class Playlist {
+public class Gender implements Parcelable  {
 
     @SerializedName("id")
     @Expose
@@ -28,9 +29,48 @@ public class Playlist {
     @SerializedName("updated_by")
     @Expose
     private String updated_by;
-    @SerializedName("series")
+    @SerializedName("pivot")
     @Expose
-    private List<Series> series;
+    private Pivot pivot;
+
+
+    protected Gender(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        description = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        created_by = in.readString();
+        updated_by = in.readString();
+    }
+
+    public static final Creator<Gender> CREATOR = new Creator<Gender>() {
+        @Override
+        public Gender createFromParcel(Parcel in) {
+            return new Gender(in);
+        }
+
+        @Override
+        public Gender[] newArray(int size) {
+            return new Gender[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(title);
+        parcel.writeString(description);
+        parcel.writeString(created_at);
+        parcel.writeString(updated_at);
+        parcel.writeString(created_by);
+        parcel.writeString(updated_by);
+    }
 
 
     public int getId() {
@@ -89,11 +129,15 @@ public class Playlist {
         this.updated_by = updated_by;
     }
 
-    public List<Series> getSeries() {
-        return series;
+    public Pivot getPivot() {
+        return pivot;
     }
 
-    public void setSeries(List<Series> series) {
-        this.series = series;
+    public void setPivot(Pivot pivot) {
+        this.pivot = pivot;
+    }
+
+    public static Creator<Gender> getCREATOR() {
+        return CREATOR;
     }
 }
