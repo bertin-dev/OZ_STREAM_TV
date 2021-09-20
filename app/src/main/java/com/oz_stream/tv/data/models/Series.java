@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Playlist {
+public class Series {
 
     @SerializedName("id")
     @Expose
@@ -22,15 +22,21 @@ public class Playlist {
     @SerializedName("updated_at")
     @Expose
     private String updated_at;
-    @SerializedName("created_by")
+    @SerializedName("user_id")
     @Expose
-    private String created_by;
+    private String user_id;
     @SerializedName("updated_by")
     @Expose
     private String updated_by;
-    @SerializedName("series")
+    @SerializedName("created_by")
     @Expose
-    private List<Series> series;
+    private String created_by;
+    @SerializedName("pivot")
+    @Expose
+    private Pivot pivot;
+    @SerializedName("saisons_with")
+    @Expose
+    private List<SaisonsWith> saisons_with;
 
 
     public int getId() {
@@ -73,12 +79,12 @@ public class Playlist {
         this.updated_at = updated_at;
     }
 
-    public String getCreated_by() {
-        return created_by;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setCreated_by(String created_by) {
-        this.created_by = created_by;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getUpdated_by() {
@@ -89,11 +95,27 @@ public class Playlist {
         this.updated_by = updated_by;
     }
 
-    public List<Series> getSeries() {
-        return series;
+    public String getCreated_by() {
+        return created_by;
     }
 
-    public void setSeries(List<Series> series) {
-        this.series = series;
+    public void setCreated_by(String created_by) {
+        this.created_by = created_by;
+    }
+
+    public Pivot getPivot() {
+        return pivot;
+    }
+
+    public void setPivot(Pivot pivot) {
+        this.pivot = pivot;
+    }
+
+    public List<SaisonsWith> getSaisons_with() {
+        return saisons_with;
+    }
+
+    public void setSaisons_with(List<SaisonsWith> saisons_with) {
+        this.saisons_with = saisons_with;
     }
 }

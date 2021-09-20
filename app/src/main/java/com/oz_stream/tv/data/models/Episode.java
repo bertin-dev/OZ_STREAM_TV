@@ -9,57 +9,53 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Episode implements Parcelable {
+
     @SerializedName("id")
     @Expose
-    private Integer id;
-    @SerializedName("title")
+    private int id;
+    @SerializedName("name")
     @Expose
-    private String title;
+    private String name;
     @SerializedName("description")
     @Expose
     private String description;
-
-    @SerializedName("downloadas")
+    @SerializedName("created_at")
     @Expose
-    private String downloadas;
-
-
-    @SerializedName("playas")
+    private String created_at;
+    @SerializedName("updated_at")
     @Expose
-    private String playas;
-
-    @SerializedName("duration")
+    private String updated_at;
+    @SerializedName("user_id")
     @Expose
-    private String duration;
-
-    @SerializedName("image")
+    private String user_id;
+    @SerializedName("saison_id")
     @Expose
-    private String image;
-    @SerializedName("sources")
+    private String saison_id;
+    @SerializedName("media_id")
     @Expose
-    private List<Source> sources = null;
-
-    //ajouter pour decompte
-    private int count;
-
-    public Episode() {
-    }
+    private String media_id;
+    @SerializedName("created_by")
+    @Expose
+    private String created_by;
+    @SerializedName("updated_by")
+    @Expose
+    private String updated_by;
+    @SerializedName("saison")
+    @Expose
+    private Saison saison;
 
 
     protected Episode(Parcel in) {
-        if (in.readByte() == 0) {
-            id = null;
-        } else {
-            id = in.readInt();
-        }
-        title = in.readString();
+        id = in.readInt();
+        name = in.readString();
         description = in.readString();
-        downloadas = in.readString();
-        playas = in.readString();
-        duration = in.readString();
-        image = in.readString();
-        sources = in.createTypedArrayList(Source.CREATOR);
-        count = in.readInt();
+        created_at = in.readString();
+        updated_at = in.readString();
+        user_id = in.readString();
+        saison_id = in.readString();
+        media_id = in.readString();
+        created_by = in.readString();
+        updated_by = in.readString();
     }
 
     public static final Creator<Episode> CREATOR = new Creator<Episode>() {
@@ -74,43 +70,20 @@ public class Episode implements Parcelable {
         }
     };
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(id);
-        }
-        dest.writeString(title);
-        dest.writeString(description);
-        dest.writeString(downloadas);
-        dest.writeString(playas);
-        dest.writeString(duration);
-        dest.writeString(image);
-        dest.writeTypedList(sources);
-        dest.writeInt(count);
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -121,55 +94,86 @@ public class Episode implements Parcelable {
         this.description = description;
     }
 
-    public String getDownloadas() {
-        return downloadas;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setDownloadas(String downloadas) {
-        this.downloadas = downloadas;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public String getPlayas() {
-        return playas;
+    public String getUpdated_at() {
+        return updated_at;
     }
 
-    public void setPlayas(String playas) {
-        this.playas = playas;
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 
-    public String getDuration() {
-        return duration;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
-    public String getImage() {
-        return image;
+    public String getSaison_id() {
+        return saison_id;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setSaison_id(String saison_id) {
+        this.saison_id = saison_id;
     }
 
-    public List<Source> getSources() {
-        return sources;
+    public String getMedia_id() {
+        return media_id;
     }
 
-    public void setSources(List<Source> sources) {
-        this.sources = sources;
+    public void setMedia_id(String media_id) {
+        this.media_id = media_id;
     }
 
-    public int getCount() {
-        return count;
+    public String getCreated_by() {
+        return created_by;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setCreated_by(String created_by) {
+        this.created_by = created_by;
     }
 
-    public static Creator<Episode> getCREATOR() {
-        return CREATOR;
+    public String getUpdated_by() {
+        return updated_by;
+    }
+
+    public void setUpdated_by(String updated_by) {
+        this.updated_by = updated_by;
+    }
+
+    public Saison getSaison() {
+        return saison;
+    }
+
+    public void setSaison(Saison saison) {
+        this.saison = saison;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeString(created_at);
+        parcel.writeString(updated_at);
+        parcel.writeString(user_id);
+        parcel.writeString(saison_id);
+        parcel.writeString(media_id);
+        parcel.writeString(created_by);
+        parcel.writeString(updated_by);
     }
 }

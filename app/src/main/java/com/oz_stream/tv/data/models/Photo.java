@@ -3,34 +3,30 @@ package com.oz_stream.tv.data.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+public class Photo {
 
-public class Playlist {
 
     @SerializedName("id")
     @Expose
     private int id;
-    @SerializedName("title")
+    @SerializedName("link")
     @Expose
-    private String title;
-    @SerializedName("description")
-    @Expose
-    private String description;
+    private String link;
     @SerializedName("created_at")
     @Expose
     private String created_at;
     @SerializedName("updated_at")
     @Expose
     private String updated_at;
+    @SerializedName("user_id")
+    @Expose
+    private String user_id;
     @SerializedName("created_by")
     @Expose
     private String created_by;
     @SerializedName("updated_by")
     @Expose
     private String updated_by;
-    @SerializedName("series")
-    @Expose
-    private List<Series> series;
 
 
     public int getId() {
@@ -41,20 +37,12 @@ public class Playlist {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getLink() {
+        return link;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public String getCreated_at() {
@@ -73,6 +61,14 @@ public class Playlist {
         this.updated_at = updated_at;
     }
 
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
     public String getCreated_by() {
         return created_by;
     }
@@ -87,13 +83,5 @@ public class Playlist {
 
     public void setUpdated_by(String updated_by) {
         this.updated_by = updated_by;
-    }
-
-    public List<Series> getSeries() {
-        return series;
-    }
-
-    public void setSeries(List<Series> series) {
-        this.series = series;
     }
 }
