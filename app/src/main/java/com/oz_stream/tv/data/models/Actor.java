@@ -13,37 +13,37 @@ public class Actor implements Parcelable {
     private Integer id;
     @SerializedName("firstName")
     @Expose
-    private String firstName;
+    private String firstName = null;
     @SerializedName("lastName")
     @Expose
-    private String lastName;
+    private String lastName = null;
     @SerializedName("birthDate")
     @Expose
-    private String birthDate;
+    private String birthDate = null;
     @SerializedName("height")
     @Expose
-    private String height;
+    private String height = null;
     @SerializedName("bibliographie")
     @Expose
-    private String bibliographie;
+    private String bibliographie = null;
     @SerializedName("avatar")
     @Expose
-    private String avatar;
+    private String avatar = null;
     @SerializedName("phone")
     @Expose
-    private String phone;
+    private String phone = null;
     @SerializedName("created_at")
     @Expose
-    private String created_at;
+    private String created_at = null;
     @SerializedName("updated_at")
     @Expose
-    private String updated_at;
+    private String updated_at = null;
     @SerializedName("created_by")
     @Expose
-    private String created_by;
+    private String created_by = null;
     @SerializedName("updated_by")
     @Expose
-    private String updated_by;
+    private String updated_by = null;
     @SerializedName("pivot")
     @Expose
     private Pivot pivot;

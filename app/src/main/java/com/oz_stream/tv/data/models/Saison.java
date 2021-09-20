@@ -5,14 +5,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Playlist {
+public class Saison {
 
     @SerializedName("id")
     @Expose
     private int id;
-    @SerializedName("title")
+    @SerializedName("name")
     @Expose
-    private String title;
+    private String name;
     @SerializedName("description")
     @Expose
     private String description;
@@ -22,15 +22,21 @@ public class Playlist {
     @SerializedName("updated_at")
     @Expose
     private String updated_at;
+    @SerializedName("user_id")
+    @Expose
+    private String user_id;
+    @SerializedName("serie_id")
+    @Expose
+    private String serie_id;
     @SerializedName("created_by")
     @Expose
     private String created_by;
     @SerializedName("updated_by")
     @Expose
     private String updated_by;
-    @SerializedName("series")
+    @SerializedName("serie")
     @Expose
-    private List<Series> series;
+    private Serie serie;
 
 
     public int getId() {
@@ -41,12 +47,12 @@ public class Playlist {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -73,6 +79,22 @@ public class Playlist {
         this.updated_at = updated_at;
     }
 
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getSerie_id() {
+        return serie_id;
+    }
+
+    public void setSerie_id(String serie_id) {
+        this.serie_id = serie_id;
+    }
+
     public String getCreated_by() {
         return created_by;
     }
@@ -89,11 +111,11 @@ public class Playlist {
         this.updated_by = updated_by;
     }
 
-    public List<Series> getSeries() {
-        return series;
+    public Serie getSerie() {
+        return serie;
     }
 
-    public void setSeries(List<Series> series) {
-        this.series = series;
+    public void setSerie(Serie serie) {
+        this.serie = serie;
     }
 }

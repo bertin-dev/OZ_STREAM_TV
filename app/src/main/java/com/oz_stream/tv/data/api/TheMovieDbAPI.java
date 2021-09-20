@@ -3,11 +3,8 @@ package com.oz_stream.tv.data.api;
 import com.oz_stream.tv.Config;
 import com.oz_stream.tv.dagger.modules.HttpClientModule;
 import com.oz_stream.tv.data.models.Actor;
-import com.oz_stream.tv.data.models.ApiResponse;
-import com.oz_stream.tv.data.models.CodeTv;
-import com.oz_stream.tv.data.models.Movie;
-import com.oz_stream.tv.data.models.Poster;
-import com.oz_stream.tv.data.models.Season;
+import com.oz_stream.tv.data.models.Root;
+import com.oz_stream.tv.data.models.Saison;
 
 import java.util.List;
 
@@ -21,10 +18,10 @@ import rx.Observable;
 public interface TheMovieDbAPI {
 
     @GET(HttpClientModule.ACCUEIL)
-    Observable<Movie> getNowPlayingMovies();
+    Observable<Root> getNowPlayingMovies();
 
 
-    @GET(HttpClientModule.ACTOR_DETAILS + "{id}/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
+    /*@GET(HttpClientModule.ACTOR_DETAILS + "{id}/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
     Observable<List<Poster>> getFilmographieDetails(
             @Path("id") int id
     );
@@ -104,17 +101,12 @@ public interface TheMovieDbAPI {
             @Field("image") String image
     );
 
-    //LIST DES SAISONS ET EPISODES
+
+
+        //LIST DES SAISONS ET EPISODES
     @GET(HttpClientModule.SEASON + "{id}/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<List<Season>> getSeasonsBySerie(@Path("id") Integer id);
-
-
-
-    //SEND ID CODE
-    @FormUrlEncoded
-    @POST(HttpClientModule.IDCODE + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<CodeTv> codeID(@Field("code") String code);
-
+    Observable<List<Saison>> getSeasonsBySerie(@Path("id") Integer id);
+    */
 
 
 
