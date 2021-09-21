@@ -7,19 +7,19 @@ public class Pivot{
 
     @SerializedName("media_id")
     @Expose
-    private String media_id;
+    private String media_id = null;
     @SerializedName("actor_id")
     @Expose
-    private String actor_id;
+    private String actor_id = null;
     @SerializedName("category_id")
     @Expose
-    private String category_id;
+    private String category_id = null;
     @SerializedName("gender_id")
     @Expose
-    private String gender_id;
+    private String gender_id = null;
     @SerializedName("serie_id")
     @Expose
-    private String serie_id;
+    private String serie_id = null;
 
 
     public String getMedia_id() {

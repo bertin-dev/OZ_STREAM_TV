@@ -12,118 +12,118 @@ public class Data {
     private int id;
     @SerializedName("title")
     @Expose
-    private String title;
+    private String title = null;
     @SerializedName("description")
     @Expose
-    private String description;
+    private String description = null;
     @SerializedName("isPreview")
     @Expose
-    private String isPreview;
+    private String isPreview = null;
     @SerializedName("isComming")
     @Expose
-    private String isComming;
+    private String isComming = null;
     @SerializedName("type")
     @Expose
-    private String type;
+    private String type = null;
     @SerializedName("status")
     @Expose
-    private String status;
+    private String status = null;
     @SerializedName("isFree")
     @Expose
-    private String isFree;
+    private String isFree = null;
     @SerializedName("credit")
     @Expose
-    private String credit;
+    private String credit = null;
     @SerializedName("showAt")
     @Expose
-    private String showAt;
+    private String showAt = null;
     @SerializedName("unavailableAt")
     @Expose
-    private String unavailableAt;
+    private String unavailableAt = null;
     @SerializedName("link")
     @Expose
-    private String link;
+    private String link = null;
     @SerializedName("nber_like")
     @Expose
-    private String nber_like;
+    private String nber_like = null;
     @SerializedName("nber_dislike")
     @Expose
-    private String nber_dislike;
+    private String nber_dislike = null;
     @SerializedName("nber_download")
     @Expose
-    private String nber_download;
+    private String nber_download = null;
     @SerializedName("stars")
     @Expose
-    private String stars;
+    private String stars = null;
     @SerializedName("nber_bandeLooked")
     @Expose
-    private String nber_bandeLooked;
+    private String nber_bandeLooked = null;
     @SerializedName("nber_streamLooked")
     @Expose
-    private String nber_streamLooked;
+    private String nber_streamLooked = null;
     @SerializedName("nber_timeLineLookStream")
     @Expose
-    private String nber_timeLineLookStream;
+    private String nber_timeLineLookStream = null;
     @SerializedName("nber_timeLineLookBande")
     @Expose
-    private String nber_timeLineLookBande;
+    private String nber_timeLineLookBande = null;
     @SerializedName("popularity")
     @Expose
-    private String popularity;
+    private String popularity = null;
     @SerializedName("created_at")
     @Expose
-    private String created_at;
+    private String created_at = null;
     @SerializedName("updated_at")
     @Expose
-    private String updated_at;
+    private String updated_at = null;
     @SerializedName("user_id")
     @Expose
-    private String user_id;
+    private String user_id = null;
     @SerializedName("language_id")
     @Expose
-    private String language_id;
+    private String language_id = null;
     @SerializedName("photo_id")
     @Expose
-    private String photo_id;
+    private String photo_id = null;
     @SerializedName("bande_anonce_id")
     @Expose
-    private String bande_anonce_id;
+    private String bande_anonce_id = null;
     @SerializedName("created_by")
     @Expose
-    private String created_by;
+    private String created_by = null;
     @SerializedName("updated_by")
     @Expose
-    private String updated_by;
+    private String updated_by = null;
     @SerializedName("this_user_stat_videos")
     @Expose
-    private List<String> this_user_stat_videos;
+    private List<ThisUserStatVideo> this_user_stat_videos = null;
     @SerializedName("diffuser")
     @Expose
-    private Diffuser diffuser;
+    private Diffuser diffuser = null;
     @SerializedName("language")
     @Expose
-    private String language;
+    private String language = null;
     @SerializedName("episodes")
     @Expose
-    private List<Episode> episodes;
+    private List<Episode> episodes = null;
     @SerializedName("photo")
     @Expose
-    private Photo photo;
+    private Photo photo = null;
     @SerializedName("bande_anonce")
     @Expose
-    private BandeAnonce bande_anonce;
+    private BandeAnonce bande_anonce = null;
     @SerializedName("actors")
     @Expose
-    private List<Actor> actors;
+    private List<Actor> actors = null;
     @SerializedName("comments")
     @Expose
-    private List<Comment> comments;
+    private List<Comment> comments = null;
     @SerializedName("categories")
     @Expose
-    private List<Category> categories;
+    private List<Category> categories = null;
     @SerializedName("genders")
     @Expose
-    private List<Gender> genders;
+    private List<Gender> genders = null;
 
 
     public int getId() {
@@ -358,11 +358,11 @@ public class Data {
         this.updated_by = updated_by;
     }
 
-    public List<String> getThis_user_stat_videos() {
+    public List<ThisUserStatVideo> getThis_user_stat_videos() {
         return this_user_stat_videos;
     }
 
-    public void setThis_user_stat_videos(List<String> this_user_stat_videos) {
+    public void setThis_user_stat_videos(List<ThisUserStatVideo> this_user_stat_videos) {
         this.this_user_stat_videos = this_user_stat_videos;
     }
 

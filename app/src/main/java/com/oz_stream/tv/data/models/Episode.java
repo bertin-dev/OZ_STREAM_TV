@@ -15,34 +15,34 @@ public class Episode implements Parcelable {
     private int id;
     @SerializedName("name")
     @Expose
-    private String name;
+    private String name = null;
     @SerializedName("description")
     @Expose
-    private String description;
+    private String description = null;
     @SerializedName("created_at")
     @Expose
-    private String created_at;
+    private String created_at = null;
     @SerializedName("updated_at")
     @Expose
-    private String updated_at;
+    private String updated_at = null;
     @SerializedName("user_id")
     @Expose
-    private String user_id;
+    private String user_id = null;
     @SerializedName("saison_id")
     @Expose
-    private String saison_id;
+    private String saison_id = null;
     @SerializedName("media_id")
     @Expose
-    private String media_id;
+    private String media_id = null;
     @SerializedName("created_by")
     @Expose
-    private String created_by;
+    private String created_by = null;
     @SerializedName("updated_by")
     @Expose
-    private String updated_by;
+    private String updated_by = null;
     @SerializedName("saison")
     @Expose
-    private Saison saison;
+    private Saison saison = null;
 
 
     protected Episode(Parcel in) {

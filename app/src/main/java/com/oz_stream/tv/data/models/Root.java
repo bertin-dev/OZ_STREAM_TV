@@ -9,28 +9,28 @@ public class Root {
 
     @SerializedName("news")
     @Expose
-    private News news;
+    private News news = null;
     @SerializedName("previews")
     @Expose
-    private Previews previews;
+    private Previews previews = null;
     @SerializedName("populars")
     @Expose
-    private Populars populars;
+    private Populars populars = null;
     @SerializedName("willbePostes")
     @Expose
-    private WillbePostes willbePostes;
+    private WillbePostes willbePostes = null;
     @SerializedName("frees")
     @Expose
-    private Frees frees;
+    private Frees frees = null;
     @SerializedName("gender")
     @Expose
-    private Gender gender;
+    private Gender gender = null;
     @SerializedName("category")
     @Expose
-    private List<Category> category;
+    private List<Category> category = null;
     @SerializedName("playlist")
     @Expose
-    private List<Playlist> playlist;
+    private List<Playlist> playlist = null;
 
 
     public News getNews() {

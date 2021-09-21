@@ -12,7 +12,7 @@ public class News {
     private Integer total;
     @SerializedName("datas")
     @Expose
-    public List<Data> datas;
+    public List<Data> datas = null;
 
 
     public Integer getTotal() {

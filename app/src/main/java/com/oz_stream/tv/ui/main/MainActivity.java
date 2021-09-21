@@ -1,8 +1,6 @@
-package com.oz_stream.tv;
+package com.oz_stream.tv.ui.main;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.FragmentActivity;
 
 import com.oz_stream.tv.ui.base.BaseTVActivity;
 

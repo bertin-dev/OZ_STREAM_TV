@@ -10,25 +10,25 @@ public class Serie{
     private int id;
     @SerializedName("title")
     @Expose
-    private String title;
+    private String title = null;
     @SerializedName("description")
     @Expose
-    private String description;
+    private String description = null;
     @SerializedName("created_at")
     @Expose
-    private String created_at;
+    private String created_at = null;
     @SerializedName("updated_at")
     @Expose
-    private String updated_at;
+    private String updated_at = null;
     @SerializedName("user_id")
     @Expose
-    private String user_id;
+    private String user_id = null;
     @SerializedName("updated_by")
     @Expose
-    private String updated_by;
+    private String updated_by = null;
     @SerializedName("created_by")
     @Expose
-    private String created_by;
+    private String created_by = null;
 
 
     public int getId() {

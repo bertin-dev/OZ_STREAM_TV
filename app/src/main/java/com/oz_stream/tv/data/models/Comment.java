@@ -7,102 +7,102 @@ public class Comment {
 
     @SerializedName("id")
     @Expose
-    public int id;
+    private int id;
     @SerializedName("content")
     @Expose
-    public String content;
+    private String content = null;
     @SerializedName("isValidated")
     @Expose
-    public String isValidated;
+    private String isValidated = null;
     @SerializedName("created_at")
     @Expose
-    public String created_at;
+    private String created_at = null;
     @SerializedName("updated_at")
     @Expose
-    public String updated_at;
+    private String updated_at = null;
     @SerializedName("media_id")
     @Expose
-    public String media_id;
+    private String media_id = null;
     @SerializedName("user_id")
     @Expose
-    public String user_id;
+    private String user_id = null;
     @SerializedName("comment_reply_id")
     @Expose
-    public String comment_reply_id;
+    private String comment_reply_id = null;
     @SerializedName("comments_reply")
     @Expose
-    public String comments_reply;
+    private String comments_reply = null;
 
 
-    public int getId() {
+    private int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    private void setId(int id) {
         this.id = id;
     }
 
-    public String getContent() {
+    private String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    private void setContent(String content) {
         this.content = content;
     }
 
-    public String getIsValidated() {
+    private String getIsValidated() {
         return isValidated;
     }
 
-    public void setIsValidated(String isValidated) {
+    private void setIsValidated(String isValidated) {
         this.isValidated = isValidated;
     }
 
-    public String getCreated_at() {
+    private String getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    private void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    private String getUpdated_at() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    private void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
 
-    public String getMedia_id() {
+    private String getMedia_id() {
         return media_id;
     }
 
-    public void setMedia_id(String media_id) {
+    private void setMedia_id(String media_id) {
         this.media_id = media_id;
     }
 
-    public String getUser_id() {
+    private String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    private void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
-    public String getComment_reply_id() {
+    private String getComment_reply_id() {
         return comment_reply_id;
     }
 
-    public void setComment_reply_id(String comment_reply_id) {
+    private void setComment_reply_id(String comment_reply_id) {
         this.comment_reply_id = comment_reply_id;
     }
 
-    public String getComments_reply() {
+    private String getComments_reply() {
         return comments_reply;
     }
 
-    public void setComments_reply(String comments_reply) {
+    private void setComments_reply(String comments_reply) {
         this.comments_reply = comments_reply;
     }
 }

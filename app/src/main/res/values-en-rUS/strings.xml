@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OZ_STREAM_TV</string>
+    <string name="browse_title">Videos by Your Company</string>
+    <string name="related_movies">Related Videos</string>
+    <string name="grid_view">Grid View</string>
+    <string name="error_fragment">Error Fragment</string>
+    <string name="personal_settings">Personal Settings</string>
+    <string name="watch_trailer_1">Watch trailer</string>
+    <string name="watch_trailer_2">FREE</string>
+    <string name="rent_1">Rent By Day</string>
+    <string name="rent_2">From $1.99</string>
+    <string name="buy_1">Buy and Own</string>
+    <string name="buy_2">AT $9.99</string>
+    <string name="movie">Movie</string>
+
+    <!-- Error messages -->
+    <string name="error_fragment_message">An error occurred</string>
+    <string name="dismiss_error">Dismiss</string>
+
+
+    <string name="insertIdCode">INSERT YOUR ID</string>
+    <string name="insertIdCodeDesc">Your TV code is provided after subscription</string>
+    <string name="infoEnTeteAlertDialog">Information</string>
+    <string name="changeLanguage">Please tick a box to change language</string>
+    <string name="langue">Select a language</string>
+    <string name="idCode">TV code</string>
+    <string name="send">Send</string>
+    <string name="operation_progress">Operations in progress, Please wait …</string>
+    <string name="annulProcess">You canceled the process! </string>
+    <string name="error_short_value">This value very short please enter correct value</string>
+    <string name="stateSubscribed">Your ID does not have videos available</string>
+
+
+    <string name="accueil">Home</string>
+    <string name="films">Movies</string>
+    <string name="serie">Series</string>
+    <string name="acteurs">Actors</string>
+    <string name="mesFavoris">My favourites</string>
+    <string name="parametres">Settings</string>
+    <string name="deconnexion">Logout</string>
+    <string name="contactNous">Contact us</string>
+    <string name="faqSupport">FAQ and Support</string>
+    <string name="policy">Privacy policy</string>
+    <string name="saison">Season</string>
+
+    <string-array name="menu_list">
+        <item>@string/accueil</item>
+        <item>@string/films</item>
+        <item>@string/serie</item>
+        <item>@string/acteurs</item>
+        <item>@string/parametres</item>
+        <item>@string/deconnexion</item>
+    </string-array>
+
+
+    <string-array name="icons">
+        <item>@drawable/ic_baseline_home_24</item>
+        <item>@drawable/ic_baseline_local_movies_24</item>
+        <item>@drawable/ic_baseline_live_tv_24</item>
+        <item>@drawable/ic_baseline_recent_actors_24</item>
+        <item>@drawable/ic_baseline_video_settings_24</item>
+        <item>@drawable/ic_baseline_exit_to_app_24</item>
+    </string-array>
+
+
+    <!-- Dialog example -->
+    <string name="dialog_example_button_positive">Yes</string>
+    <string name="dialog_example_button_negative">No</string>
+    <string name="dialog_example_button_toast_positive_clicked">Added successfully</string>
+    <string name="dialog_example_button_toast_negative_clicked">Canceled</string>
+
+    <string name="addFavoris">Are you sure you want to bookmark this video?</string>
+    <string name="eltIndisponible">Item unavailable</string>
+    <string name="sloganCinaf">OZSTREAM Video streaming platform</string>
+
+    <string name="url_principal">https://cinaf.fr/api/first/4F5A9C3D9A86FA54EACEDDD635185/d506abfd–9fe2–4b71-b979-feff21bcad13/</string>
+    <string name="selectedLanguage">Language already selected!</string>
+    <string name="phone">Phone</string>
+    <string name="password">Password</string>
+
+
+    <string name="slide">Slide</string>
+    <string name="acteurPopulaire">Popular actors</string>
+    <string name="mieuxNote">Top rated</string>
+    <string name="plusPopulaire">The most popular</string>
+    <string name="bientot">Soon</string>
+    <string name="drame">Drama</string>
+    <string name="humour">Humor</string>
+    <string name="productionOZSTREAM">Production OZSTREAM</string>
+    <string name="action">Action</string>
+    <string name="romance">Romance</string>
+
+    <string name="cast">Cast</string>
+    <string name="filmographie">Filmography</string>
+    <string name="casting">Casting</string>
+    <string name="recommandePourVous">Recommended for you</string>
+
+    <string name="confirmExit">Confirm the exit .. !!!</string>
+    <string name="confirmExitMsg">Are you sure you want to quit?</string>
+    <string name="oui">Yes</string>
+    <string name="non">No</string>
+</resources>

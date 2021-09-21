@@ -10,46 +10,46 @@ public class ThisUserStatVideo {
     private int id;
     @SerializedName("downloaded")
     @Expose
-    private String downloaded;
+    private String downloaded = null;
     @SerializedName("isliked")
     @Expose
-    private String isliked;
+    private String isliked = null;
     @SerializedName("stars")
     @Expose
-    private String stars;
+    private String stars = null;
     @SerializedName("alreadyBought")
     @Expose
-    private String alreadyBought;
+    private String alreadyBought = null;
     @SerializedName("bandeLooked")
     @Expose
-    private String bandeLooked;
+    private String bandeLooked = null;
     @SerializedName("streamLooked")
     @Expose
-    private String streamLooked;
+    private String streamLooked = null;
     @SerializedName("timeLineLookBande")
     @Expose
-    private String timeLineLookBande;
+    private String timeLineLookBande = null;
     @SerializedName("timeLineLookStream")
     @Expose
-    private String timeLineLookStream;
+    private String timeLineLookStream = null;
     @SerializedName("created_at")
     @Expose
-    private String created_at;
+    private String created_at = null;
     @SerializedName("updated_at")
     @Expose
-    private String updated_at;
+    private String updated_at = null;
     @SerializedName("media_id")
     @Expose
-    private String media_id;
+    private String media_id = null;
     @SerializedName("user_id")
     @Expose
-    private String user_id;
+    private String user_id = null;
     @SerializedName("created_by")
     @Expose
-    private String created_by;
+    private String created_by = null;
     @SerializedName("updated_by")
     @Expose
-    private String updated_by;
+    private String updated_by = null;
 
 
     public int getId() {

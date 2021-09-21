@@ -36,12 +36,13 @@ public class HttpClientModule {
 
     public static final String API_URL = "https://ozstream.tv/webservice/api/";
     public static final String LOGIN = "login";
+    public static final String ACCUEIL = "all/media/home";
 
 
 
 
 
-    public static final String ACCUEIL = "first/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/";
+
     public static final String ACTOR_DETAILS = "movie/by/actor/";
     public static final String RANDOM_GENRE = "movie/random/";
     public static final String ROLE_BY_POSTER = "role/by/poster/";

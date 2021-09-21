@@ -12,7 +12,7 @@ public class Previews {
     private int total;
     @SerializedName("datas")
     @Expose
-    private List<Data> datas;
+    private List<Data> datas = null;
 
 
     public int getTotal() {

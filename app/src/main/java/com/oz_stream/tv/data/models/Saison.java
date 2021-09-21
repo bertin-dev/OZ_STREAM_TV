@@ -12,31 +12,31 @@ public class Saison {
     private int id;
     @SerializedName("name")
     @Expose
-    private String name;
+    private String name = null;
     @SerializedName("description")
     @Expose
-    private String description;
+    private String description = null;
     @SerializedName("created_at")
     @Expose
-    private String created_at;
+    private String created_at = null;
     @SerializedName("updated_at")
     @Expose
-    private String updated_at;
+    private String updated_at = null;
     @SerializedName("user_id")
     @Expose
-    private String user_id;
+    private String user_id = null;
     @SerializedName("serie_id")
     @Expose
-    private String serie_id;
+    private String serie_id = null;
     @SerializedName("created_by")
     @Expose
-    private String created_by;
+    private String created_by = null;
     @SerializedName("updated_by")
     @Expose
-    private String updated_by;
+    private String updated_by = null;
     @SerializedName("serie")
     @Expose
-    private Serie serie;
+    private Serie serie = null;
 
 
     public int getId() {

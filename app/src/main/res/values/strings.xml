@@ -77,4 +77,26 @@
     <string name="selectedLanguage">Langue déjà sélectionnée!</string>
     <string name="phone">Phone</string>
     <string name="password">Password</string>
+
+
+    <string name="slide">Slide</string>
+    <string name="acteurPopulaire">Acteurs populaires</string>
+    <string name="mieuxNote">Les mieux notés</string>
+    <string name="plusPopulaire">Les plus Populaires</string>
+    <string name="bientot">Bientôt</string>
+    <string name="drame">Drame</string>
+    <string name="humour">Humour</string>
+    <string name="productionOZSTREAM">Production Cinaf</string>
+    <string name="action">Action</string>
+    <string name="romance">Romance</string>
+
+    <string name="cast">Cast</string>
+    <string name="filmographie">Filmographie</string>
+    <string name="casting">Casting</string>
+    <string name="recommandePourVous">Recommandés pour vous</string>
+
+    <string name="confirmExit">Confirmer la sortie..!!!</string>
+    <string name="confirmExitMsg">Êtes-vous sûr de vouloir quitter ?</string>
+    <string name="oui">Oui</string>
+    <string name="non">Non</string>
 </resources>

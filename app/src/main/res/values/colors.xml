@@ -10,4 +10,5 @@
     <color name="default_color">#FF3366</color>
     <color name="colorAccent">#490220</color>
     <color name="black">#000000</color>
+    <color name="primary_transparent">#BF081c24</color>
 </resources>
