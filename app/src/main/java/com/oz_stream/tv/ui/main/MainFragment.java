@@ -128,7 +128,7 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
 
     private void setupUIElements() {
         glideBackgroundManager = new GlideBackgroundManager(getActivity());
-        setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.logo_official_thumbnail));
+        setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.icon));
         // Badge, when set, takes precedent over title
         setTitle(getString(R.string.accueil));
         //set headers background color
