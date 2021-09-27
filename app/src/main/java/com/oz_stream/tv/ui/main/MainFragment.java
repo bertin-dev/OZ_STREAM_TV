@@ -42,6 +42,7 @@ import com.oz_stream.tv.R;
 import com.oz_stream.tv.data.api.TheMovieDbAPI;
 import com.oz_stream.tv.data.models.Actor;
 import com.oz_stream.tv.data.models.Data;
+import com.oz_stream.tv.data.models.Frees;
 import com.oz_stream.tv.data.models.News;
 import com.oz_stream.tv.data.models.Populars;
 import com.oz_stream.tv.data.models.Previews;
@@ -120,15 +121,14 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         loadData();
         setupEventListeners();
         getLoaderManager().initLoader(0, null, this);
-        //glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.placeholder));
-        glideBackgroundManager.setBackgroundColors(Color.parseColor("#FF263238"));
-        //getMainFragmentRegistry().registerFragment(PageRow.class, new PageRowFragmentFactory());
+        glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.placeholder));
+        //glideBackgroundManager.setBackgroundColors(Color.parseColor("#FF263238"));
         getMainFragmentRegistry().registerFragment(PageRow.class, new PageRowFragmentFactory(glideBackgroundManager));
     }
 
     private void setupUIElements() {
         glideBackgroundManager = new GlideBackgroundManager(getActivity());
-        setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.logo_official_thumbnail));
+        setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.icon));
         // Badge, when set, takes precedent over title
         setTitle(getString(R.string.accueil));
         //set headers background color
@@ -232,7 +232,7 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             Row row = (Row)rowObj;
 
             if (row.getHeaderItem().getId() == HEADER_ID_1) {
-                return new Accueil();
+                return new Accueil(mBackgroundManager);
             } else if (row.getHeaderItem().getId() == HEADER_ID_6) {
                 return new Logout();
             }else if (row.getHeaderItem().getId() == HEADER_ID_7) {
@@ -243,7 +243,7 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
 
             //mBackgroundManager.setDrawable(null);
             /*if (row.getHeaderItem().getId() == HEADER_ID_1) {
-                return new Accueil();
+                return new Accueil(mBackgroundManager);
             } else if (row.getHeaderItem().getId() == HEADER_ID_2) {
                 return new Films();
             } else if (row.getHeaderItem().getId() == HEADER_ID_3) {
@@ -292,8 +292,8 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         // rows - 2 - popular
         private static final int POPULAIRE = 2;
 
-        // rows - 3 - upcoming
-        private static final int UPCOMING = 3;
+        // rows - 3 - gratuit
+        private static final int VIDEO_GRATUIT = 3;
 
         // rows - 4 - drame
         private static final int DRAME = 4;
@@ -313,6 +313,11 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         SparseArray<MovieRow> movieRowSparseArray;
 
         ArrayObjectAdapter rowsAdapter;
+        GlideBackgroundManager glideBackgroundManager;
+
+        public Accueil(GlideBackgroundManager glideBackgroundManager) {
+            this.glideBackgroundManager = glideBackgroundManager;
+        }
 
         public Accueil() {
         }
@@ -334,7 +339,7 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             super.onViewCreated(view, savedInstanceState);
             fetchPreviewMovies();
             fetchPopularMovies();
-            //fetchUpcomingMovies();
+            fetchFreesMovies();
             //Toast.makeText(getActivity(), "4", Toast.LENGTH_SHORT).show();
         }
 
@@ -409,10 +414,10 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             );
 
             //row - 3 - create objects
-            movieRowSparseArray.put(UPCOMING, new MovieRow()
-                    .setId(UPCOMING)
+            movieRowSparseArray.put(VIDEO_GRATUIT, new MovieRow()
+                    .setId(VIDEO_GRATUIT)
                     .setAdapter(new ArrayObjectAdapter(moviePresenter))
-                    .setTitle(getString(R.string.bientot))
+                    .setTitle(getString(R.string.movie_free))
                     .setPage(1)
             );
 
@@ -507,6 +512,18 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
                     }, e -> Timber.e(e, "Error fetching Top Rated movies: %s", e.getMessage()));
         }
 
+
+        private void fetchFreesMovies() {
+            theMovieDbAPI.getHomePage()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(response -> {
+                        bindFreesMoviesResponse(response, VIDEO_GRATUIT);
+                        //startEntranceTransition();
+                    }, e -> Timber.e(e, "Error fetching upcoming movies: %s", e.getMessage()));
+        }
+
+
         /*private void fetchActorsMovies() {
             theMovieDbAPI.getHomePage()
                     .subscribeOn(Schedulers.io())
@@ -517,17 +534,6 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
                     }, e -> {
                         Timber.e(e, "Error fetching now Actor movies: %s", e.getMessage());
                     });
-        }
-
-
-        private void fetchUpcomingMovies() {
-            theMovieDbAPI.getHomePage()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-                        bindUpComingResponse(response, UPCOMING);
-                        //startEntranceTransition();
-                    }, e -> Timber.e(e, "Error fetching upcoming movies: %s", e.getMessage()));
         }
 
 
@@ -649,29 +655,21 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
         }
 
-
-        /*private void bindUpComingResponse(Root response, int id) {
-            Log.w("UP COMING", "bindUpComingResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
+        //vidéos gratuite
+        private void bindFreesMoviesResponse(Root response, int id) {
+            //Log.w("UP COMING", "bindFreesMoviesResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
             MovieRow movieRow = movieRowSparseArray.get(id);
             movieRow.setPage(movieRow.getPage() + 1);
             HeaderItem headerItem = new HeaderItem(movieRow.getTitle());
-            List<Genre> genres = response.getGenres();
 
-            //films les mieux notés (Poster)
-            for(Genre genre : genres){
+            Frees frees = response.getFrees();
+            List<Data> dataList = frees.getDatas();
+            movieRow.getAdapter().add(dataList);
 
-                if(genre.getTitle().trim().toLowerCase().equalsIgnoreCase("bientôt")){
-                    for (Poster poster : genre.getPosters()){
-                        if(poster.getImage() != null){
-                            movieRow.getAdapter().add(poster);
-                        }
-                    }
-                }
-            }
             rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
         }
 
-
+        /*
         private void bindDrameResponse(Root response, int id) {
             Log.w("DRAME", "bindDrameResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
             MovieRow movieRow = movieRowSparseArray.get(id);
