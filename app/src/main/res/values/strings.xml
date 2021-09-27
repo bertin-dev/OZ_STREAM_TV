@@ -73,7 +73,7 @@
     <string name="eltIndisponible">Elément indisponible</string>
     <string name="sloganCinaf">OZSTREAM Plateforme de streaming vidéo</string>
 
-    <string name="url_principal">https://cinaf.fr/api/first/4F5A9C3D9A86FA54EACEDDD635185/d506abfd–9fe2–4b71-b979-feff21bcad13/</string>
+    <string name="url_principal">https://ozstream.tv/webservice/api/all/media/home</string>
     <string name="selectedLanguage">Langue déjà sélectionnée!</string>
     <string name="phone">Phone</string>
     <string name="password">Password</string>
@@ -99,4 +99,24 @@
     <string name="confirmExitMsg">Êtes-vous sûr de vouloir quitter ?</string>
     <string name="oui">Oui</string>
     <string name="non">Non</string>
+    <string name="under">-</string>
+    <string name="description">Description</string>
+
+    <string name="fullname">Entrez le nom complet</string>
+    <string name="bAnnonce">Bande Annonce</string>
+    <string name="regarder">REGARDER</string>
+    <string name="favoris">Favoris</string>
+    <string name="biographie">Biographie</string>
+    <string name="recherche">Recherche</string>
+    <string name="title_activity_play">Play</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+    <string name="avant_premiere">Avant Première</string>
 </resources>

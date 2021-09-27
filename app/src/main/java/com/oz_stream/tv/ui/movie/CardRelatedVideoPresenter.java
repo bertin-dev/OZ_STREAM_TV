@@ -70,6 +70,11 @@ public class CardRelatedVideoPresenter extends Presenter {
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Object item) {
+
+    }
+
+    /*@Override
+    public void onBindViewHolder(ViewHolder viewHolder, Object item) {
         Poster poster = (Poster) item;
 
         ImageCardView cardView = (ImageCardView) viewHolder.view;
@@ -88,7 +93,7 @@ public class CardRelatedVideoPresenter extends Presenter {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(cardView.getMainImageView());
         }
-    }
+    }*/
 
     @Override
     public void onUnbindViewHolder(ViewHolder viewHolder) {

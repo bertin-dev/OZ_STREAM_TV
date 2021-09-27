@@ -1,11 +1,14 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Root {
+public class Root implements Parcelable {
 
     @SerializedName("news")
     @Expose
@@ -32,6 +35,36 @@ public class Root {
     @Expose
     private List<Playlist> playlist = null;
 
+
+    protected Root(Parcel in) {
+        news = in.readParcelable(News.class.getClassLoader());
+        gender = in.readParcelable(Gender.class.getClassLoader());
+        category = in.createTypedArrayList(Category.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(news, flags);
+        dest.writeParcelable(gender, flags);
+        dest.writeTypedList(category);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Root> CREATOR = new Creator<Root>() {
+        @Override
+        public Root createFromParcel(Parcel in) {
+            return new Root(in);
+        }
+
+        @Override
+        public Root[] newArray(int size) {
+            return new Root[size];
+        }
+    };
 
     public News getNews() {
         return news;

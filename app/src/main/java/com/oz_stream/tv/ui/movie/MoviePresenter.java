@@ -4,6 +4,8 @@ import android.view.ViewGroup;
 
 import androidx.leanback.widget.Presenter;
 
+import com.oz_stream.tv.data.models.Data;
+
 
 public class MoviePresenter extends Presenter {
 
@@ -17,7 +19,7 @@ public class MoviePresenter extends Presenter {
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Object item) {
-        ((MovieCardView) viewHolder.view).bind((Poster) item);
+        ((MovieCardView) viewHolder.view).bind((Data) item);
     }
 
 

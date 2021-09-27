@@ -74,7 +74,7 @@
     <string name="eltIndisponible">Item unavailable</string>
     <string name="sloganCinaf">OZSTREAM Video streaming platform</string>
 
-    <string name="url_principal">https://cinaf.fr/api/first/4F5A9C3D9A86FA54EACEDDD635185/d506abfd–9fe2–4b71-b979-feff21bcad13/</string>
+    <string name="url_principal">https://ozstream.tv/webservice/api/all/media/home</string>
     <string name="selectedLanguage">Language already selected!</string>
     <string name="phone">Phone</string>
     <string name="password">Password</string>
@@ -100,4 +100,14 @@
     <string name="confirmExitMsg">Are you sure you want to quit?</string>
     <string name="oui">Yes</string>
     <string name="non">No</string>
+    <string name="under">-</string>
+    <string name="description">Description</string>
+    <string name="fullname">Enter full name</string>
+    <string name="bAnnonce">TRAILER</string>
+    <string name="regarder">WATCH</string>
+    <string name="favoris">Favorites</string>
+    <string name="biographie">Biography</string>
+    <string name="recherche">Research</string>
+
+    <string name="avant_premiere">Preview</string>
 </resources>

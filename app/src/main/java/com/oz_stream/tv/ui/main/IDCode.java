@@ -66,6 +66,14 @@ public class IDCode extends Activity {
         ButterKnife.bind(this);
         prf = new PrefManager(getApplicationContext());
         build_error = new AlertDialog.Builder(this);
+
+
+        if(!prf.getString("ACCESS_TOKEN").equals("")){
+            Intent i = new Intent(IDCode.this, MainActivity.class);
+            startActivity(i);
+            // close this activity
+            finish();
+        }
     }
 
 

@@ -1,11 +1,14 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Data {
+public class Data implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -70,7 +73,8 @@ public class Data {
     @SerializedName("popularity")
     @Expose
     private String popularity = null;
-    @SerializedName("created_at")
+
+    /*@SerializedName("created_at")
     @Expose
     private String created_at = null;
     @SerializedName("updated_at")
@@ -96,13 +100,13 @@ public class Data {
     private String updated_by = null;
     @SerializedName("this_user_stat_videos")
     @Expose
-    private List<ThisUserStatVideo> this_user_stat_videos = null;
+    private List<ThisUserStatVideo> this_user_stat_videos = null;*/
     @SerializedName("diffuser")
     @Expose
     private Diffuser diffuser = null;
-    @SerializedName("language")
+    /*@SerializedName("language")
     @Expose
-    private String language = null;
+    private String language = null;*/
     @SerializedName("episodes")
     @Expose
     private List<Episode> episodes = null;
@@ -125,6 +129,110 @@ public class Data {
     @Expose
     private List<Gender> genders = null;
 
+    private PaletteColors paletteColors;
+    private String director;
+    private int count;
+
+    public Data() {
+    }
+
+    protected Data(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        description = in.readString();
+        isPreview = in.readString();
+        isComming = in.readString();
+        type = in.readString();
+        status = in.readString();
+        isFree = in.readString();
+        credit = in.readString();
+        showAt = in.readString();
+        unavailableAt = in.readString();
+        link = in.readString();
+        nber_like = in.readString();
+        nber_dislike = in.readString();
+        nber_download = in.readString();
+        stars = in.readString();
+        nber_bandeLooked = in.readString();
+        nber_streamLooked = in.readString();
+        nber_timeLineLookStream = in.readString();
+        nber_timeLineLookBande = in.readString();
+        popularity = in.readString();
+        /*created_at = in.readString();
+        updated_at = in.readString();
+        user_id = in.readString();
+        language_id = in.readString();
+        photo_id = in.readString();
+        bande_anonce_id = in.readString();
+        created_by = in.readString();
+        updated_by = in.readString();
+        language = in.readString();*/
+        episodes = in.createTypedArrayList(Episode.CREATOR);
+        actors = in.createTypedArrayList(Actor.CREATOR);
+        categories = in.createTypedArrayList(Category.CREATOR);
+        genders = in.createTypedArrayList(Gender.CREATOR);
+        paletteColors = in.readParcelable(PaletteColors.class.getClassLoader());
+        director = in.readString();
+        count = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(isPreview);
+        dest.writeString(isComming);
+        dest.writeString(type);
+        dest.writeString(status);
+        dest.writeString(isFree);
+        dest.writeString(credit);
+        dest.writeString(showAt);
+        dest.writeString(unavailableAt);
+        dest.writeString(link);
+        dest.writeString(nber_like);
+        dest.writeString(nber_dislike);
+        dest.writeString(nber_download);
+        dest.writeString(stars);
+        dest.writeString(nber_bandeLooked);
+        dest.writeString(nber_streamLooked);
+        dest.writeString(nber_timeLineLookStream);
+        dest.writeString(nber_timeLineLookBande);
+        dest.writeString(popularity);
+        /*dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(user_id);
+        dest.writeString(language_id);
+        dest.writeString(photo_id);
+        dest.writeString(bande_anonce_id);
+        dest.writeString(created_by);
+        dest.writeString(updated_by);
+        dest.writeString(language);*/
+        dest.writeTypedList(episodes);
+        dest.writeTypedList(actors);
+        dest.writeTypedList(categories);
+        dest.writeTypedList(genders);
+        dest.writeParcelable(paletteColors, flags);
+        dest.writeString(director);
+        dest.writeInt(count);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Data> CREATOR = new Creator<Data>() {
+        @Override
+        public Data createFromParcel(Parcel in) {
+            return new Data(in);
+        }
+
+        @Override
+        public Data[] newArray(int size) {
+            return new Data[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -294,7 +402,7 @@ public class Data {
         this.popularity = popularity;
     }
 
-    public String getCreated_at() {
+    /*public String getCreated_at() {
         return created_at;
     }
 
@@ -364,7 +472,7 @@ public class Data {
 
     public void setThis_user_stat_videos(List<ThisUserStatVideo> this_user_stat_videos) {
         this.this_user_stat_videos = this_user_stat_videos;
-    }
+    }*/
 
     public Diffuser getDiffuser() {
         return diffuser;
@@ -374,13 +482,13 @@ public class Data {
         this.diffuser = diffuser;
     }
 
-    public String getLanguage() {
+    /*public String getLanguage() {
         return language;
     }
 
     public void setLanguage(String language) {
         this.language = language;
-    }
+    }*/
 
     public List<Episode> getEpisodes() {
         return episodes;
@@ -436,5 +544,39 @@ public class Data {
 
     public void setGenders(List<Gender> genders) {
         this.genders = genders;
+    }
+
+    public PaletteColors getPaletteColors() {
+        return paletteColors;
+    }
+
+    public void setPaletteColors(PaletteColors paletteColors) {
+        this.paletteColors = paletteColors;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", isPreview='" + isPreview + '\'' +
+                '}';
     }
 }

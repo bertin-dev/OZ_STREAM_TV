@@ -1,9 +1,6 @@
 package com.oz_stream.tv.ui.main;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.app.ProgressDialog;
@@ -11,25 +8,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +26,6 @@ import androidx.core.content.ContextCompat;
 import androidx.leanback.app.BrowseFragment;
 import androidx.leanback.app.RowsFragment;
 import androidx.leanback.widget.ArrayObjectAdapter;
-import androidx.leanback.widget.FocusHighlight;
 import androidx.leanback.widget.HeaderItem;
 import androidx.leanback.widget.ListRow;
 import androidx.leanback.widget.ListRowPresenter;
@@ -49,29 +36,31 @@ import androidx.leanback.widget.Presenter;
 import androidx.leanback.widget.PresenterSelector;
 import androidx.leanback.widget.Row;
 import androidx.leanback.widget.RowPresenter;
-import androidx.leanback.widget.VerticalGridPresenter;
-import com.google.gson.Gson;
+
 import com.oz_stream.tv.App;
-import com.oz_stream.tv.BuildConfig;
 import com.oz_stream.tv.R;
 import com.oz_stream.tv.data.api.TheMovieDbAPI;
 import com.oz_stream.tv.data.models.Actor;
+import com.oz_stream.tv.data.models.Data;
+import com.oz_stream.tv.data.models.News;
+import com.oz_stream.tv.data.models.Populars;
+import com.oz_stream.tv.data.models.Previews;
+import com.oz_stream.tv.data.models.Root;
 import com.oz_stream.tv.provider.PrefManager;
 import com.oz_stream.tv.ui.base.GlideBackgroundManager;
 import com.oz_stream.tv.ui.base.IconHeaderItemPresenter;
 import com.oz_stream.tv.ui.detail.DetailActivity;
+import com.oz_stream.tv.ui.detail.DetailFragment;
+import com.oz_stream.tv.ui.detail.DetailPosterActivity;
+import com.oz_stream.tv.ui.detail.DetailPosterFragment;
 import com.oz_stream.tv.ui.movie.ActorCardView;
 import com.oz_stream.tv.ui.movie.ActorPresenter;
 import com.oz_stream.tv.ui.movie.MovieCardView;
 import com.oz_stream.tv.ui.movie.MoviePresenter;
+import com.oz_stream.tv.ui.movie.PopularMoviePresenter;
+import com.oz_stream.tv.ui.player.caster.DataListLoader;
 import com.oz_stream.tv.ui.search.SearchActivity;
-import com.oz_stream.tv.ui.setting.Card;
-import com.oz_stream.tv.ui.setting.CardRow;
-import com.oz_stream.tv.ui.setting.SettingsIconPresenter;
-import com.oz_stream.tv.ui.setting.utils.CardListRowSetting;
-import com.oz_stream.tv.ui.setting.utils.Utils;
 
-import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -85,7 +74,7 @@ import timber.log.Timber;
  * Sample {@link BrowseFragment} implementation showcasing the use of {@link PageRow} and
  * {@link ListRow}.
  */
-public class MainFragment extends BrowseFragment implements LoaderManager.LoaderCallbacks<List<Poster>>{
+public class MainFragment extends BrowseFragment implements LoaderManager.LoaderCallbacks<List<Data>>{
 
     @Inject
     TheMovieDbAPI theMovieDbAPI;
@@ -133,8 +122,8 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         getLoaderManager().initLoader(0, null, this);
         //glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.placeholder));
         glideBackgroundManager.setBackgroundColors(Color.parseColor("#FF263238"));
-        getMainFragmentRegistry().registerFragment(PageRow.class, new PageRowFragmentFactory());
-        //getMainFragmentRegistry().registerFragment(PageRow.class, new PageRowFragmentFactory(glideBackgroundManager));
+        //getMainFragmentRegistry().registerFragment(PageRow.class, new PageRowFragmentFactory());
+        getMainFragmentRegistry().registerFragment(PageRow.class, new PageRowFragmentFactory(glideBackgroundManager));
     }
 
     private void setupUIElements() {
@@ -142,11 +131,11 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.logo_official_thumbnail));
         // Badge, when set, takes precedent over title
         setTitle(getString(R.string.accueil));
-        // set headers background color
+        //set headers background color
         setBrandColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
         setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
-        // search icon background color
+        //search icon background color
         setSearchAffordanceColor(getResources().getColor(R.color.default_color));
 
         setHeaderPresenterSelector(new PresenterSelector() {
@@ -158,7 +147,6 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
     }
 
     private void setupEventListeners() {
-
         // search icon clicked
         setOnSearchClickedListener(v -> {
             Intent intent = new Intent(getActivity(), SearchActivity.class);
@@ -170,7 +158,6 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
     private void loadData() {
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         setAdapter(mRowsAdapter);
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -218,33 +205,44 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
 
 
     @Override
-    public Loader<List<Poster>> onCreateLoader(int id, Bundle args) {
-        return new PosterListLoader(getActivity(), getString(R.string.url_principal));
+    public Loader<List<Data>> onCreateLoader(int id, Bundle args) {
+        return new DataListLoader(getActivity(), getString(R.string.url_principal));
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Poster>> loader, List<Poster> data) {
+    public void onLoadFinished(Loader<List<Data>> loader, List<Data> data) {
 
     }
 
     @Override
-    public void onLoaderReset(Loader<List<Poster>> loader) {
+    public void onLoaderReset(Loader<List<Data>> loader) {
 
     }
 
 
     public static class PageRowFragmentFactory extends FragmentFactory {
-        /*private final GlideBackgroundManager mBackgroundManager;
+        private final GlideBackgroundManager mBackgroundManager;
 
         PageRowFragmentFactory(GlideBackgroundManager backgroundManager) {
             this.mBackgroundManager = backgroundManager;
-        }*/
+        }
 
         @Override
         public Fragment createFragment(Object rowObj) {
             Row row = (Row)rowObj;
-            //mBackgroundManager.setDrawable(null);
+
             if (row.getHeaderItem().getId() == HEADER_ID_1) {
+                return new Accueil();
+            } else if (row.getHeaderItem().getId() == HEADER_ID_6) {
+                return new Logout();
+            }else if (row.getHeaderItem().getId() == HEADER_ID_7) {
+                return new ContactUsWebView();
+            }else if (row.getHeaderItem().getId() == HEADER_ID_8) {
+                return new PolicyConfidentialityWebView();
+            }
+
+            //mBackgroundManager.setDrawable(null);
+            /*if (row.getHeaderItem().getId() == HEADER_ID_1) {
                 return new Accueil();
             } else if (row.getHeaderItem().getId() == HEADER_ID_2) {
                 return new Films();
@@ -260,11 +258,21 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
                 return new ContactUsWebView();
             }else if (row.getHeaderItem().getId() == HEADER_ID_8) {
                 return new PolicyConfidentialityWebView();
-            }
+            }*/
 
             throw new IllegalArgumentException(String.format("Invalid row %s", rowObj));
         }
     }
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Page fragment embeds a rows fragment.
@@ -276,13 +284,13 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         private static final String TAG = "Accueil";
 
         // rows - 0 - Accueil
-        private static final int ACCUEIL = 0;
+        private static final int AVANT_PREMIERE = 0;
 
         // rows - 1 - top rated
-        private static final int TOP_RATED = 1;
+        private static final int MIEUX_NOTE = 1;
 
         // rows - 2 - popular
-        private static final int POPULAR = 2;
+        private static final int POPULAIRE = 2;
 
         // rows - 3 - upcoming
         private static final int UPCOMING = 3;
@@ -315,7 +323,8 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             App.instance().appComponent().inject(this);
             createDataRows();
             createRows();
-            fetchActorsMovies();
+
+            //fetchActorsMovies();
             fetchTopRatedMovies();
             return super.onCreateView(inflater, container, savedInstanceState);
         }
@@ -323,8 +332,9 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         @Override
         public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
+            fetchPreviewMovies();
             fetchPopularMovies();
-            fetchUpcomingMovies();
+            //fetchUpcomingMovies();
             //Toast.makeText(getActivity(), "4", Toast.LENGTH_SHORT).show();
         }
 
@@ -334,9 +344,11 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             //Toast.makeText(getActivity(), "2", Toast.LENGTH_SHORT).show();
             //prepareEntranceTransition();
             //fetchSlideMovies();
-            fetchDrameMovies();
+
+
+            /*fetchDrameMovies();
             fetchHumourMovies();
-            fetchProductionCinafMovies();
+            fetchProductionCinafMovies();*/
             setupEventListeners1();
         }
 
@@ -346,8 +358,9 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         public void onResume() {
             super.onResume();
             //Toast.makeText(getActivity(), "3", Toast.LENGTH_SHORT).show();
-            fetchActionMovies();
-            fetchRomanceMovies();
+
+            //fetchActionMovies();
+            //fetchRomanceMovies();
         }
 
         private void setupEventListeners1() {
@@ -369,27 +382,28 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             //The CardPresenter defines the UI of the items in the row
             ActorPresenter actorPresenter = new ActorPresenter();
             MoviePresenter moviePresenter = new MoviePresenter();
+            PopularMoviePresenter popularMoviePresenter = new PopularMoviePresenter();
 
             //row - 0 - create objects
-            movieRowSparseArray.put(ACCUEIL, new MovieRow()
-                    .setId(ACCUEIL)
-                    .setAdapter(new ArrayObjectAdapter(actorPresenter))
-                    .setTitle(getString(R.string.acteurPopulaire))
+            movieRowSparseArray.put(AVANT_PREMIERE, new MovieRow()
+                    .setId(AVANT_PREMIERE)
+                    .setAdapter(new ArrayObjectAdapter(moviePresenter))
+                    .setTitle(getString(R.string.avant_premiere))
                     .setPage(1)
             );
 
             //row - 1 - create objects
-            movieRowSparseArray.put(TOP_RATED, new MovieRow()
-                    .setId(TOP_RATED)
+            movieRowSparseArray.put(MIEUX_NOTE, new MovieRow()
+                    .setId(MIEUX_NOTE)
                     .setAdapter(new ArrayObjectAdapter(moviePresenter))
                     .setTitle(getString(R.string.mieuxNote))
                     .setPage(1)
             );
 
             //row - 2 - create objects
-            movieRowSparseArray.put(POPULAR, new MovieRow()
-                    .setId(POPULAR)
-                    .setAdapter(new ArrayObjectAdapter(moviePresenter))
+            movieRowSparseArray.put(POPULAIRE, new MovieRow()
+                    .setId(POPULAIRE)
+                    .setAdapter(new ArrayObjectAdapter(popularMoviePresenter))
                     .setTitle(getString(R.string.plusPopulaire))
                     .setPage(1)
             );
@@ -425,7 +439,7 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             movieRowSparseArray.put(PRODUCTION_CINAF, new MovieRow()
                     .setId(PRODUCTION_CINAF)
                     .setAdapter(new ArrayObjectAdapter(moviePresenter))
-                    .setTitle(getString(R.string.productionCinaf))
+                    .setTitle(getString(R.string.productionOZSTREAM))
                     .setPage(1)
             );
 
@@ -455,37 +469,53 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             setAdapter(rowsAdapter);
         }
 
-        private void fetchActorsMovies() {
+
+        //Avant première
+        private void fetchPreviewMovies() {
             theMovieDbAPI.getHomePage()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(response -> {
-                        bindActorsResponse(response, ACCUEIL);
+                        bindPreviewResponse(response, AVANT_PREMIERE);
                         //startEntranceTransition();
                     }, e -> {
-                        Timber.e(e, "Error fetching now Actor movies: %s", e.getMessage());
+                        Timber.e(e, "Error fetching popular movies: %s", e.getMessage());
                     });
         }
 
-        private void fetchTopRatedMovies() {
-            theMovieDbAPI.getHomePage()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-                        bindTopRatedResponse(response, TOP_RATED);
-                        //startEntranceTransition();
-                    }, e -> Timber.e(e, "Error fetching Top Rated movies: %s", e.getMessage()));
-        }
-
+        // Vidéos populaires
         private void fetchPopularMovies() {
             theMovieDbAPI.getHomePage()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(response -> {
-                        bindPopularResponse(response, POPULAR);
+                        bindPopularResponse(response, POPULAIRE);
                         //startEntranceTransition();
                     }, e -> {
                         Timber.e(e, "Error fetching popular movies: %s", e.getMessage());
+                    });
+        }
+
+        //MIEUX NOTE (NOUVEAUTE)
+        private void fetchTopRatedMovies() {
+            theMovieDbAPI.getHomePage()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(response -> {
+                        bindTopRatedResponse(response, MIEUX_NOTE);
+                        //startEntranceTransition();
+                    }, e -> Timber.e(e, "Error fetching Top Rated movies: %s", e.getMessage()));
+        }
+
+        /*private void fetchActorsMovies() {
+            theMovieDbAPI.getHomePage()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(response -> {
+                        //bindActorsResponse(response, ACCUEIL);
+                        //startEntranceTransition();
+                    }, e -> {
+                        Timber.e(e, "Error fetching now Actor movies: %s", e.getMessage());
                     });
         }
 
@@ -552,10 +582,10 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
                         bindRomanceResponse(response, ROMANCE);
                         //startEntranceTransition();
                     }, e -> Timber.e(e, "Error fetching romance movies: %s", e.getMessage()));
-        }
+        }*/
 
 
-        private void bindActorsResponse(Movie response, int id) {
+        /*private void bindActorsResponse(Root response, int id) {
             Log.w("ACTOR", "bindActorsResponse: " + response.getActors() );
             MovieRow movieRow = movieRowSparseArray.get(id);
             movieRow.setPage(movieRow.getPage() + 1);
@@ -566,30 +596,61 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
                 }
             }
             rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
-        }
+        }*/
 
-        private void bindTopRatedResponse(Movie response, int id) {
-            Log.w("TOP RATED", "bindTopRatedResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
+
+        //Avant Première
+        private void bindPreviewResponse(Root response, int id) {
+            //Log.w("POPULAR", "bindPreviewResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
             MovieRow movieRow = movieRowSparseArray.get(id);
             movieRow.setPage(movieRow.getPage() + 1);
             HeaderItem headerItem = new HeaderItem(movieRow.getTitle());
-            List<Genre> genres = response.getGenres();
 
-            //films les mieux notés (Poster)
-            for(Genre genre : genres){
-                if(genre.getTitle().trim().toLowerCase().equalsIgnoreCase("top rated")){
-                    for (Poster poster : genre.getPosters()){
-                        if(poster.getImage() != null){
-                            movieRow.getAdapter().add(poster);
-                        }
-                    }
-                }
+            Previews previews = response.getPreviews();
+            List<Data> dataList = previews.getDatas();
+
+            for(Data data : dataList){
+                movieRow.getAdapter().add(data);
             }
             rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
         }
 
 
-        private void bindUpComingResponse(Movie response, int id) {
+        //Populaires
+        private void bindPopularResponse(Root response, int id) {
+            //Log.w("POPULAR", "bindPopularResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
+            MovieRow movieRow = movieRowSparseArray.get(id);
+            movieRow.setPage(movieRow.getPage() + 1);
+            HeaderItem headerItem = new HeaderItem(movieRow.getTitle());
+
+            Populars populars = response.getPopulars();
+            List<Data> dataList = populars.getDatas();
+
+            for(Data data : dataList){
+                movieRow.getAdapter().add(data);
+            }
+            rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
+        }
+
+
+        //MIEUX NOTE (NOUVEAUTE)
+        private void bindTopRatedResponse(Root response, int id) {
+            //Log.w("TOP RATED", "bindTopRatedResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
+            MovieRow movieRow = movieRowSparseArray.get(id);
+            movieRow.setPage(movieRow.getPage() + 1);
+            HeaderItem headerItem = new HeaderItem(movieRow.getTitle());
+
+            News news = response.getNews();
+            List<Data> dataList = news.getDatas();
+
+            for(Data data : dataList){
+                movieRow.getAdapter().add(data);
+            }
+            rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
+        }
+
+
+        /*private void bindUpComingResponse(Root response, int id) {
             Log.w("UP COMING", "bindUpComingResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
             MovieRow movieRow = movieRowSparseArray.get(id);
             movieRow.setPage(movieRow.getPage() + 1);
@@ -611,31 +672,7 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         }
 
 
-        private void bindPopularResponse(Movie response, int id) {
-            Log.w("POPULAR", "bindPopularResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
-            MovieRow movieRow = movieRowSparseArray.get(id);
-            movieRow.setPage(movieRow.getPage() + 1);
-            HeaderItem headerItem = new HeaderItem(movieRow.getTitle());
-            List<Genre> genres = response.getGenres();
-
-            //films populaires
-            for(Genre genre : genres){
-
-                if(genre.getTitle().trim().toLowerCase().equalsIgnoreCase("popular")){
-
-                    for (Poster poster : genre.getPosters()){
-                        if(poster.getImage() != null){
-                            movieRow.getAdapter().add(poster);
-                        }
-                    }
-
-                }
-            }
-            rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
-        }
-
-
-        private void bindDrameResponse(Movie response, int id) {
+        private void bindDrameResponse(Root response, int id) {
             Log.w("DRAME", "bindDrameResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
             MovieRow movieRow = movieRowSparseArray.get(id);
             movieRow.setPage(movieRow.getPage() + 1);
@@ -657,7 +694,7 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         }
 
 
-        private void bindHumourResponse(Movie response, int id) {
+        private void bindHumourResponse(Root response, int id) {
             Log.w("HUMOUR", "bindHumourResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
             MovieRow movieRow = movieRowSparseArray.get(id);
             movieRow.setPage(movieRow.getPage() + 1);
@@ -679,7 +716,7 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         }
 
 
-        private void bindProductionCinafResponse(Movie response, int id) {
+        private void bindProductionCinafResponse(Root response, int id) {
             Log.w("PRODUCTION CINAF", "bindProductionCinafResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
             MovieRow movieRow = movieRowSparseArray.get(id);
             movieRow.setPage(movieRow.getPage() + 1);
@@ -701,7 +738,7 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         }
 
 
-        private void bindActionResponse(Movie response, int id) {
+        private void bindActionResponse(Root response, int id) {
             Log.w("ACTION", "bindActionResponse: " + response.getGenres().get(0).getTitle().toLowerCase());
             MovieRow movieRow = movieRowSparseArray.get(id);
             movieRow.setPage(movieRow.getPage() + 1);
@@ -723,7 +760,7 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         }
 
 
-        private void bindRomanceResponse(Movie response, int id) {
+        private void bindRomanceResponse(Root response, int id) {
             Log.w("ACTION", "bindRomancenResponse: " + response.getGenres().get(0).getTitle().toLowerCase());
             MovieRow movieRow = movieRowSparseArray.get(id);
             movieRow.setPage(movieRow.getPage() + 1);
@@ -742,212 +779,39 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
                 }
             }
             rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
-        }
-
-
-
-        @Override
-        public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-            // Check if the item is a langue
-            if (item instanceof Actor) {
-                Actor actor = (Actor) item;
-                // Check if the langue has a backdrop
-                /*if(actor.getImage() != null) {
-                    glideBackgroundManager.loadImage(actor.getImage());
-                } else {
-                    // If there is no backdrop for the langue we just use a default one
-                    glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.place_holder_channel));
-                }*/
-            }
-
-
-            // Check if the item is a langue
-            if (item instanceof Poster) {
-                Poster poster = (Poster) item;
-                // Check if the langue has a backdrop
-                /*if(poster.getImage() != null) {
-                    glideBackgroundManager.loadImage(poster.getImage());
-                } else {
-                    // If there is no backdrop for the langue we just use a default one
-                    glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.place_holder_channel));
-                }*/
-            }
-        }
-
-        @Override
-        public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-            if (item instanceof Actor) {
-                Actor actor = (Actor) item;
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                // Pass the langue to the activity
-                intent.putExtra(Actor.class.getSimpleName(), actor);
-
-                if (itemViewHolder.view instanceof ActorCardView) {
-                    // Pass the ImageView to allow a nice transition
-                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            getActivity(),
-                            ((ActorCardView) itemViewHolder.view).getPosterIV(),
-                            DetailFragment.TRANSITION_NAME).toBundle();
-                    getActivity().startActivity(intent, bundle);
-                } else {
-                    startActivity(intent);
-                }
-            }
-            if( item instanceof Poster){
-                Poster poster = (Poster) item;
-                Intent intent = new Intent(getActivity(), DetailPosterActivity.class);
-                // Pass the langue to the activity
-                intent.putExtra(Poster.class.getSimpleName(), poster);
-
-                if (itemViewHolder.view instanceof MovieCardView) {
-                    // Pass the ImageView to allow a nice transition
-                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            getActivity(),
-                            ((MovieCardView) itemViewHolder.view).getPosterIV(),
-                            DetailPosterFragment.TRANSITION_NAME).toBundle();
-                    getActivity().startActivity(intent, bundle);
-                } else {
-                    startActivity(intent);
-                }
-            }
-        }
-
-
-    }
-
-
-    /**
-     * Simple page Films implementation.
-     */
-    public static class Films extends GridFragment implements OnItemViewSelectedListener, OnItemViewClickedListener {
-
-        @Inject
-        TheMovieDbAPI theMovieDbAPI;
-
-        private static final int COLUMNS = 6;
-        private final int ZOOM_FACTOR = FocusHighlight.ZOOM_FACTOR_SMALL;
-        private ArrayObjectAdapter mAdapter;
-        private SparseArray<MovieRow> movieRowSparseArrayFilms;
-        // rows - 0 - MOVIE
-        private static final int MOVIE = 0;
-        //private GlideBackgroundManager glideBackgroundManager;
-        private static String TAG= "Films";
-
-        public Films() {
-        }
-
-        /*public Films(GlideBackgroundManager glideBackgroundManager) {
-            this.glideBackgroundManager = glideBackgroundManager;
         }*/
 
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            App.instance().appComponent().inject(this);
-
-            setupAdapter();
-            loadData(0, "created", 0);
-
-            setupEventListeners2();
-            getMainFragmentAdapter().getFragmentHost().notifyDataReady(getMainFragmentAdapter());
-        }
-
-        private void setupEventListeners2() {
-            setOnItemViewSelectedListener(this);
-            setOnItemViewClickedListener(this);
-        }
-
-        // Creates the data rows objects
-        private void createDataRows() {
+        public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
+            // Check if the item is a langue
+            /*if (item instanceof Actor) {
+                Actor actor = (Actor) item;
+                // Check if the langue has a backdrop
+                if(actor.getImage() != null) {
+                    glideBackgroundManager.loadImage(actor.getImage());
+                } else {
+                    // If there is no backdrop for the langue we just use a default one
+                    glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.place_holder_channel));
+                }
+            }*/
 
 
-            movieRowSparseArrayFilms = new SparseArray<>();
-
-            //The CardPresenter defines the UI of the items in the row
-            MoviePresenter moviePresenter = new MoviePresenter();
-
-            //row - 1 - create objects
-            movieRowSparseArrayFilms.put(MOVIE, new MovieRow()
-                    .setId(MOVIE)
-                    .setAdapter(new ArrayObjectAdapter(moviePresenter))
-                    .setTitle(getString(R.string.films))
-                    .setPage(1)
-            );
-        }
-
-
-        private void setupAdapter() {
-            VerticalGridPresenter presenter = new VerticalGridPresenter(ZOOM_FACTOR);
-            presenter.setNumberOfColumns(COLUMNS);
-            setGridPresenter(presenter);
-
-            createDataRows();
-
-            MovieRow movieRow = movieRowSparseArrayFilms.get(MOVIE);
-
-            mAdapter = movieRow.getAdapter();
-            setAdapter(mAdapter);
-        }
-
-        private void loadData(int genre, String created, int page) {
-
-            theMovieDbAPI.getMoviesByFiltres(genre,created, page)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-                        bindMovieResponse(response, MOVIE);
-                        //startEntranceTransition();
-                    }, e -> {
-                        Timber.e(e, "Error fetching now playing movies: %s", e.getMessage());
-                    });
-        }
-
-
-        private void bindMovieResponse(List<Poster> response, int id) {
-            Log.w(TAG, "bindMovieResponse: "+ response );
-            if(response.size()>0){
-                MovieRow movieRow = movieRowSparseArrayFilms.get(id);
-                movieRow.setPage(movieRow.getPage() + 1);
-
-                for(Poster poster : response){
-                    if(poster.getImage() != null){
-                        movieRow.getAdapter().add(poster);
-                    }
+            // Check if the item is a langue
+            if (item instanceof Data) {
+                Data data = (Data) item;
+                // Check if the langue has a backdrop
+                if(data.getPhoto().getLink() != null) {
+                    glideBackgroundManager.loadImage(data.getPhoto().getLink());
+                } else {
+                    // If there is no backdrop for the langue we just use a default one
+                    glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.place_holder_channel));
                 }
             }
         }
 
         @Override
-        public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-            // Check if the item is a langue
-            if (item instanceof Actor) {
-                Actor actor = (Actor) item;
-                // Check if the langue has a backdrop
-                /*if(actor.getImage() != null) {
-                    glideBackgroundManager.loadImage(actor.getImage());
-                } else {
-                    // If there is no backdrop for the langue we just use a default one
-                    glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.place_holder_channel));
-                }*/
-            }
-
-
-            // Check if the item is a langue
-            if (item instanceof Poster) {
-                Poster poster = (Poster) item;
-                // Check if the langue has a backdrop
-                /*if(poster.getImage() != null) {
-                    glideBackgroundManager.loadImage(poster.getImage());
-                } else {
-                    // If there is no backdrop for the langue we just use a default one
-                    glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.place_holder_channel));
-                }*/
-            }
-        }
-
-        @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-            if (item instanceof Actor) {
+            /*if (item instanceof Actor) {
                 Actor actor = (Actor) item;
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 // Pass the langue to the activity
@@ -963,18 +827,18 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
                 } else {
                     startActivity(intent);
                 }
-            }
-            if( item instanceof Poster){
-                Poster poster = (Poster) item;
+            }*/
+            if( item instanceof Data){
+                Data data = (Data) item;
                 Intent intent = new Intent(getActivity(), DetailPosterActivity.class);
                 // Pass the langue to the activity
-                intent.putExtra(Poster.class.getSimpleName(), poster);
+                intent.putExtra(Data.class.getSimpleName(), data);
 
                 if (itemViewHolder.view instanceof MovieCardView) {
                     // Pass the ImageView to allow a nice transition
                     Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                             getActivity(),
-                            ((MovieCardView) itemViewHolder.view).getPosterIV(),
+                            ((MovieCardView) itemViewHolder.view).getMovie_img(),
                             DetailPosterFragment.TRANSITION_NAME).toBundle();
                     getActivity().startActivity(intent, bundle);
                 } else {
@@ -983,186 +847,20 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             }
         }
 
-        @Override
-        public void onResume() {
-            super.onResume();
-            loadData(0, "created", 1);
-        }
-
 
     }
 
-    /**
-     * Simple page Serie implementation.
-     */
-    public static class Series extends GridFragment implements OnItemViewSelectedListener, OnItemViewClickedListener {
-
-        @Inject
-        TheMovieDbAPI theMovieDbAPI;
-
-        private static final String TAG = "Series";
-        private static final int COLUMNS = 6;
-        private final int ZOOM_FACTOR = FocusHighlight.ZOOM_FACTOR_LARGE;
-        private ArrayObjectAdapter mAdapter;
-        private SparseArray<MovieRow> movieRowSparseArraySerie;
-        // rows - 0 - MOVIE
-        private static final int SERIE = 0;
-        //private GlideBackgroundManager glideBackgroundManager;
 
 
-        /*public Series(GlideBackgroundManager glideBackgroundManager) {
-            this.glideBackgroundManager = glideBackgroundManager;
-        }*/
-
-        public Series() {
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            App.instance().appComponent().inject(this);
-            setupAdapter();
-            loadData(0,"created", 0);
-            setupEventListeners3();
-            getMainFragmentAdapter().getFragmentHost().notifyDataReady(getMainFragmentAdapter());
-        }
 
 
-        private void setupEventListeners3() {
-            setOnItemViewSelectedListener(this);
-            setOnItemViewClickedListener(this);
-        }
-        // Creates the data rows objects
-        private void createDataRows() {
-
-            movieRowSparseArraySerie = new SparseArray<>();
-
-            //The CardPresenter defines the UI of the items in the row
-            MoviePresenter moviePresenter = new MoviePresenter();
-
-            //row - 1 - create objects
-            movieRowSparseArraySerie.put(SERIE, new MovieRow()
-                    .setId(SERIE)
-                    .setAdapter(new ArrayObjectAdapter(moviePresenter))
-                    .setTitle(getString(R.string.serie))
-                    .setPage(1)
-            );
-        }
 
 
-        private void setupAdapter() {
-            VerticalGridPresenter presenter = new VerticalGridPresenter(ZOOM_FACTOR);
-            presenter.setNumberOfColumns(COLUMNS);
-            setGridPresenter(presenter);
-
-            createDataRows();
-
-            MovieRow movieRow = movieRowSparseArraySerie.get(SERIE);
-
-            mAdapter = movieRow.getAdapter();
-            setAdapter(mAdapter);
-        }
-
-        private void loadData(int genre, String created, int page) {
-
-            theMovieDbAPI.getSeriesByFiltres(genre,created, page)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-                        bindSeriesResponse(response, SERIE);
-                        //startEntranceTransition();
-                    }, e -> {
-                        Timber.e(e, "Error fetching now playing serie: %s", e.getMessage());
-                    });
-        }
 
 
-        private void bindSeriesResponse(List<Poster> response, int id) {
-
-            if(response.size()>0){
-                MovieRow movieRow = movieRowSparseArraySerie.get(id);
-                movieRow.setPage(movieRow.getPage() + 1);
-
-                for(Poster poster : response){
-                    if(poster.getImage() != null){
-                        movieRow.getAdapter().add(poster);
-                    }
-                }
-            }
-        }
 
 
-        @Override
-        public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-            // Check if the item is a actor
-            if (item instanceof Actor) {
-                Actor actor = (Actor) item;
-                // Check if the langue has a backdrop
-                /*if(actor.getImage() != null) {
-                    glideBackgroundManager.loadImage(actor.getImage());
-                } else {
-                    // If there is no backdrop for the langue we just use a default one
-                    glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.place_holder_channel));
-                }*/
-            }
 
-            // Check if the item is a poster
-            if (item instanceof Poster) {
-                Poster poster = (Poster) item;
-                // Check if the langue has a backdrop
-                /*if(poster.getImage() != null) {
-                    glideBackgroundManager.loadImage(poster.getImage());
-                } else {
-                    // If there is no backdrop for the langue we just use a default one
-                    glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.place_holder_channel));
-                }*/
-            }
-        }
-
-        @Override
-        public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-            if (item instanceof Actor) {
-                Actor actor = (Actor) item;
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                // Pass the langue to the activity
-                intent.putExtra(Actor.class.getSimpleName(), actor);
-
-                if (itemViewHolder.view instanceof ActorCardView) {
-                    // Pass the ImageView to allow a nice transition
-                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            getActivity(),
-                            ((ActorCardView) itemViewHolder.view).getPosterIV(),
-                            DetailFragment.TRANSITION_NAME).toBundle();
-                    getActivity().startActivity(intent, bundle);
-                } else {
-                    startActivity(intent);
-                }
-            }
-            if( item instanceof Poster){
-                Poster poster = (Poster) item;
-                Intent intent = new Intent(getActivity(), DetailPosterActivity.class);
-                // Pass the langue to the activity
-                intent.putExtra(Poster.class.getSimpleName(), poster);
-
-                if (itemViewHolder.view instanceof MovieCardView) {
-                    // Pass the ImageView to allow a nice transition
-                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            getActivity(),
-                            ((MovieCardView) itemViewHolder.view).getPosterIV(),
-                            DetailPosterFragment.TRANSITION_NAME).toBundle();
-                    getActivity().startActivity(intent, bundle);
-                } else {
-                    startActivity(intent);
-                }
-            }
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            loadData(0,"created", 1);
-        }
-    }
 
 
     public static class Logout extends Fragment implements MainFragmentAdapterProvider{
@@ -1220,163 +918,6 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         }
 
     }
-
-
-    public static class Actors extends GridFragment implements OnItemViewSelectedListener, OnItemViewClickedListener {
-
-        @Inject
-        TheMovieDbAPI theMovieDbAPI;
-
-        private static final String TAG = "Actors";
-        private static final int COLUMNS = 6;
-        private final int ZOOM_FACTOR = FocusHighlight.ZOOM_FACTOR_SMALL;
-        private ArrayObjectAdapter mAdapter;
-        private SparseArray<MovieRow> movieRowSparseArraySerie;
-        // rows - 0 - Actors
-        private static final int ACTEUR = 0;
-
-        public Actors() {
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            App.instance().appComponent().inject(this);
-            setupAdapter();
-            fetchActorsMovies();
-            setupEventListeners3();
-            getMainFragmentAdapter().getFragmentHost().notifyDataReady(getMainFragmentAdapter());
-        }
-
-
-        private void setupEventListeners3() {
-            setOnItemViewSelectedListener(this);
-            setOnItemViewClickedListener(this);
-        }
-        // Creates the data rows objects
-        private void createDataRows() {
-
-            movieRowSparseArraySerie = new SparseArray<>();
-
-            //The CardPresenter defines the UI of the items in the row
-            ActorPresenter actorPresenter = new ActorPresenter();
-
-            //row - 1 - create objects
-            movieRowSparseArraySerie.put(ACTEUR, new MovieRow()
-                    .setId(ACTEUR)
-                    .setAdapter(new ArrayObjectAdapter(actorPresenter))
-                    .setTitle(getString(R.string.acteurs))
-                    .setPage(1)
-            );
-        }
-
-
-        private void setupAdapter() {
-            VerticalGridPresenter presenter = new VerticalGridPresenter(ZOOM_FACTOR);
-            presenter.setNumberOfColumns(COLUMNS);
-            setGridPresenter(presenter);
-
-            createDataRows();
-
-            MovieRow movieRow = movieRowSparseArraySerie.get(ACTEUR);
-
-            mAdapter = movieRow.getAdapter();
-            setAdapter(mAdapter);
-        }
-
-        private void fetchActorsMovies() {
-
-            theMovieDbAPI.getHomePage()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-                        bindActorsResponse(response, ACTEUR);
-                        //startEntranceTransition();
-                    }, e -> {
-                        Timber.e(e, "Error fetching now Actor movies: %s", e.getMessage());
-                    });
-        }
-
-        private void bindActorsResponse(Movie response, int id) {
-            MovieRow movieRow = movieRowSparseArraySerie.get(id);
-            movieRow.setPage(movieRow.getPage() + 1);
-
-            for(Actor actor : response.getActors()){
-                if(actor.getImage() != null){
-                    movieRow.getAdapter().add(actor);
-                }
-            }
-        }
-
-
-        @Override
-        public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-            // Check if the item is a actor
-            if (item instanceof Actor) {
-                Actor actor = (Actor) item;
-                // Check if the langue has a backdrop
-                /*if(actor.getImage() != null) {
-                    glideBackgroundManager.loadImage(actor.getImage());
-                } else {
-                    // If there is no backdrop for the langue we just use a default one
-                    glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.place_holder_channel));
-                }*/
-            }
-
-            // Check if the item is a poster
-            if (item instanceof Poster) {
-                Poster poster = (Poster) item;
-                // Check if the langue has a backdrop
-                /*if(poster.getImage() != null) {
-                    glideBackgroundManager.loadImage(poster.getImage());
-                } else {
-                    // If there is no backdrop for the langue we just use a default one
-                    glideBackgroundManager.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.place_holder_channel));
-                }*/
-            }
-        }
-
-        @Override
-        public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-            if (item instanceof Actor) {
-                Actor actor = (Actor) item;
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                // Pass the langue to the activity
-                intent.putExtra(Actor.class.getSimpleName(), actor);
-
-                if (itemViewHolder.view instanceof ActorCardView) {
-                    // Pass the ImageView to allow a nice transition
-                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            getActivity(),
-                            ((ActorCardView) itemViewHolder.view).getPosterIV(),
-                            DetailFragment.TRANSITION_NAME).toBundle();
-                    getActivity().startActivity(intent, bundle);
-                } else {
-                    startActivity(intent);
-                }
-            }
-            if( item instanceof Poster){
-                Poster poster = (Poster) item;
-                Intent intent = new Intent(getActivity(), DetailPosterActivity.class);
-                // Pass the langue to the activity
-                intent.putExtra(Poster.class.getSimpleName(), poster);
-
-                if (itemViewHolder.view instanceof MovieCardView) {
-                    // Pass the ImageView to allow a nice transition
-                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            getActivity(),
-                            ((MovieCardView) itemViewHolder.view).getPosterIV(),
-                            DetailPosterFragment.TRANSITION_NAME).toBundle();
-                    getActivity().startActivity(intent, bundle);
-                } else {
-                    startActivity(intent);
-                }
-            }
-        }
-    }
-
-
-
     public static class ContactUsWebView extends Fragment implements MainFragmentAdapterProvider {
         private MainFragmentAdapter mMainFragmentAdapter = new MainFragmentAdapter(this);
         private WebView mWebview;
@@ -1450,132 +991,5 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             mWebview.loadUrl("https://cinaf.fr/tv/police.html");
             getMainFragmentAdapter().getFragmentHost().notifyDataReady(getMainFragmentAdapter());
         }
-    }
-    public static class setting extends RowsFragment implements OnItemViewClickedListener{
-
-        private final ArrayObjectAdapter mRowsAdapter;
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setupEventListeners4();
-        }
-
-        private void setupEventListeners4() {
-            setOnItemViewClickedListener(this);
-        }
-
-        public setting() {
-            ListRowPresenter selector = new ListRowPresenter();
-            selector.setNumRows(1);
-            mRowsAdapter = new ArrayObjectAdapter(selector);
-            setAdapter(mRowsAdapter);
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    loadData();
-                }
-            }, 200);
-        }
-
-        private void loadData() {
-            if (isAdded()) {
-                String json = Utils.inputStreamToString(getResources().openRawResource(
-                        R.raw.menu_setting));
-                CardRow cardRow = new Gson().fromJson(json, CardRow.class);
-                mRowsAdapter.add(createCardRow(cardRow));
-                getMainFragmentAdapter().getFragmentHost().notifyDataReady(
-                        getMainFragmentAdapter());
-            }
-        }
-
-        private ListRow createCardRow(CardRow cardRow) {
-            SettingsIconPresenter iconCardPresenter = new SettingsIconPresenter(getActivity());
-            ArrayObjectAdapter adapter = new ArrayObjectAdapter(iconCardPresenter);
-            for(Card card : cardRow.getCards()) {
-                adapter.add(card);
-            }
-
-            HeaderItem headerItem = new HeaderItem(cardRow.getTitle());
-            return new CardListRowSetting(headerItem, adapter, cardRow);
-        }
-
-        @Override
-        public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-            if (item instanceof Card) {
-                Card card = (Card) item;
-
-                if(card.getTitle().equalsIgnoreCase("Langue")){
-
-
-
-                    /**
-                     * Add to home screen feature is not allowed in the system less than android O
-                     * a toast will be popped up as notification
-                     */
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                        Toast.makeText(getActivity(), "Add to home screen not supported", Toast.LENGTH_SHORT)
-                                .show();
-                        return;
-                    }
-                    Intent intent = new Intent(getActivity(), ChannelPublishActivity.class);
-                    startActivity(intent);
-
-
-
-                }else {
-                    showSourcesPlayDialog();
-                }
-            }
-        }
-
-        @SuppressLint("SetTextI18n")
-        private void showSourcesPlayDialog() {
-            Dialog play_source_dialog = new Dialog(getActivity(),
-                    R.style.Theme_Dialog);
-            play_source_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            play_source_dialog.setCancelable(true);
-            play_source_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            Window window = play_source_dialog.getWindow();
-            WindowManager.LayoutParams wlp = window.getAttributes();
-            getActivity().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-            wlp.gravity = Gravity.BOTTOM;
-            window.setAttributes(wlp);
-            play_source_dialog.setContentView(R.layout.dialog_sources);
-
-            RelativeLayout relative_layout_dialog_source_close =  play_source_dialog.findViewById(R.id.relative_layout_dialog_source_close);
-
-            TextView version = play_source_dialog.findViewById(R.id.version);
-            version.setText("Android TV Version " + BuildConfig.VERSION_NAME);
-
-            TextView copy = (TextView) play_source_dialog.findViewById(R.id.copy);
-            copy.setText("© " + Calendar.getInstance().get(Calendar.YEAR) + " " + getString(R.string.sloganCinaf));
-
-            relative_layout_dialog_source_close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    play_source_dialog.dismiss();
-                }
-            });
-            play_source_dialog.setOnKeyListener(new Dialog.OnKeyListener() {
-                @Override
-                public boolean onKey(DialogInterface arg0, int keyCode,
-                                     KeyEvent event) {
-                    // TODO Auto-generated method stub
-                    if (keyCode == KeyEvent.KEYCODE_BACK) {
-                        play_source_dialog.dismiss();
-                    }
-                    return true;
-                }
-            });
-            play_source_dialog.show();
-        }
-
-
     }
 }

@@ -16,6 +16,8 @@
 package com.oz_stream.tv.ui.main;
 
 
+import android.graphics.Movie;
+
 import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.Presenter;
 import androidx.leanback.widget.PresenterSelector;
@@ -34,13 +36,16 @@ public class ShadowRowPresenterSelector extends PresenterSelector {
         mShadowDisabledRowPresenter.setShadowEnabled(false);
     }
 
-    @Override
+    public Presenter getPresenter(Object item) {
+        return mShadowEnabledRowPresenter;
+    }
+   /* @Override
     public Presenter getPresenter(Object item) {
         if (!(item instanceof CardListRow)) return mShadowDisabledRowPresenter;
         CardListRow listRow = (CardListRow) item;
         Movie row = listRow.getmCardRow();
         return mShadowEnabledRowPresenter;
-    }
+    }*/
 
     @Override
     public Presenter[] getPresenters() {

@@ -27,7 +27,9 @@ public class ActorCardView extends BindableCardView<Actor> {
         ButterKnife.bind(this);
     }
 
-    @Override
+    protected void bind(Actor actor) {
+    }
+   /* @Override
     protected void bind(Actor actor) {
         Glide.with(getContext())
                 .load(actor.getImage())
@@ -35,7 +37,7 @@ public class ActorCardView extends BindableCardView<Actor> {
                 .into(mPosterIV);
         title_tv.setText(actor.getName());
 
-    }
+    }*/
 
     public CircleImageView getPosterIV() {
         return mPosterIV;

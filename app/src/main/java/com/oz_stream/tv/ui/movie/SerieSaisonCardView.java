@@ -35,7 +35,7 @@ public class SerieSaisonCardView extends BindableCardView<Episode> {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mPosterIV);
 
-            title_tv.setText(episode.getTitle());
+            title_tv.setText(episode.getName());
     }
 
     public ImageView getPosterIV() {
