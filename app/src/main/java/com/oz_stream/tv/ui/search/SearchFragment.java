@@ -32,19 +32,13 @@ import com.oz_stream.tv.data.api.TheMovieDbAPI;
 import com.oz_stream.tv.data.models.Actor;
 import com.oz_stream.tv.ui.detail.DetailActivity;
 import com.oz_stream.tv.ui.detail.DetailFragment;
-import com.oz_stream.tv.ui.detail.DetailPosterActivity;
 import com.oz_stream.tv.ui.movie.ActorCardView;
 import com.oz_stream.tv.ui.movie.ActorPresenter;
-import com.oz_stream.tv.ui.movie.MovieCardView;
 import com.oz_stream.tv.ui.movie.MoviePresenter;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 public class SearchFragment extends androidx.leanback.app.SearchFragment
         implements androidx.leanback.app.SearchFragment.SearchResultProvider, OnItemViewClickedListener {
@@ -275,7 +269,7 @@ public class SearchFragment extends androidx.leanback.app.SearchFragment
 
         /*if( item instanceof Poster){
             Poster poster = (Poster) item;
-            Intent intent = new Intent(getActivity(), DetailPosterActivity.class);
+            Intent intent = new Intent(getActivity(), DetailDataActivity.class);
             // Pass the langue to the activity
             intent.putExtra(Poster.class.getSimpleName(), poster);
 
@@ -284,7 +278,7 @@ public class SearchFragment extends androidx.leanback.app.SearchFragment
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
                         ((MovieCardView) itemViewHolder.view).getPosterIV(),
-                        DetailPosterFragment.TRANSITION_NAME).toBundle();
+                        DetailDataFragment.TRANSITION_NAME).toBundle();
                 getActivity().startActivity(intent, bundle);
             } else {
                 startActivity(intent);

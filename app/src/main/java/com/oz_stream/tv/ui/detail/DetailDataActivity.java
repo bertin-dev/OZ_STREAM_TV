@@ -1,6 +1,5 @@
 package com.oz_stream.tv.ui.detail;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -11,7 +10,7 @@ import com.oz_stream.tv.ui.base.BaseTVActivity;
 import com.oz_stream.tv.ui.base.GlideBackgroundManager;
 
 
-public class DetailPosterActivity extends BaseTVActivity {
+public class DetailDataActivity extends BaseTVActivity {
 
     GlideBackgroundManager glideBackgroundManager;
     @Override
@@ -21,7 +20,7 @@ public class DetailPosterActivity extends BaseTVActivity {
         //Data
         Data data = getIntent().getExtras().getParcelable(Data.class.getSimpleName());
 
-        DetailPosterFragment detailPosterFragment = DetailPosterFragment.newInstance(data);
+        DetailDataFragment detailPosterFragment = DetailDataFragment.newInstance(data);
         addFragment(detailPosterFragment);
 
 

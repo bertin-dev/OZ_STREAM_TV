@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityOptionsCompat;
@@ -44,7 +43,6 @@ import com.oz_stream.tv.data.models.Episode;
 import com.oz_stream.tv.data.models.PaletteColors;
 import com.oz_stream.tv.ui.base.GlideBackgroundManager;
 import com.oz_stream.tv.ui.base.PaletteUtils;
-import com.oz_stream.tv.ui.dialog.DialogActivity;
 import com.oz_stream.tv.ui.main.MainActivity;
 import com.oz_stream.tv.ui.movie.ActorCardView;
 import com.oz_stream.tv.ui.movie.MovieCardView;
@@ -60,9 +58,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class DetailPosterFragment extends DetailsFragment implements Palette.PaletteAsyncListener, OnItemViewClickedListener {
+public class DetailDataFragment extends DetailsFragment implements Palette.PaletteAsyncListener, OnItemViewClickedListener {
 
-    private static final String TAG = "DetailPosterFragment";
+    private static final String TAG = "DetailDataFragment";
     public static String TRANSITION_NAME = "poster_transition";
     @Inject
     TheMovieDbAPI theMovieDbAPI;
@@ -84,10 +82,10 @@ public class DetailPosterFragment extends DetailsFragment implements Palette.Pal
         }
     };
 
-    public static DetailPosterFragment newInstance(Data data) {
+    public static DetailDataFragment newInstance(Data data) {
         Bundle args = new Bundle();
         args.putParcelable(Data.class.getSimpleName(), data);
-        DetailPosterFragment fragment = new DetailPosterFragment();
+        DetailDataFragment fragment = new DetailDataFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,7 +95,7 @@ public class DetailPosterFragment extends DetailsFragment implements Palette.Pal
         super.onCreate(savedInstanceState);
         App.instance().appComponent().inject(this);
         if (getArguments() == null || !getArguments().containsKey(Data.class.getSimpleName())) {
-            throw new RuntimeException("A poster is necessary for DetailPosterFragment");
+            throw new RuntimeException("A poster is necessary for DetailDataFragment");
         }
         data = getArguments().getParcelable(Data.class.getSimpleName());
         glideBackgroundManager = new GlideBackgroundManager(getActivity());
@@ -162,7 +160,7 @@ public class DetailPosterFragment extends DetailsFragment implements Palette.Pal
 
     private void setUpAdapter() {
 
-        customDetailPresenter = new CustomDetailPresenter(new DetailPosterDescriptionPresenter(),
+        customDetailPresenter = new CustomDetailPresenter(new DetailDataDescriptionPresenter(),
                 new DetailsOverviewLogoPresenter());
 
 
@@ -384,7 +382,7 @@ public class DetailPosterFragment extends DetailsFragment implements Palette.Pal
 
     @Override
     public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-        /*if (item instanceof Actor) {
+        if (item instanceof Actor) {
             Actor actor = (Actor) item;
             Intent intent = new Intent(getActivity(), DetailActivity.class);
             // Pass the langue to the activity
@@ -400,11 +398,11 @@ public class DetailPosterFragment extends DetailsFragment implements Palette.Pal
             } else {
                 startActivity(intent);
             }
-        }*/
+        }
 
         if (item instanceof Data) {
             Data data1 = (Data) item;
-            Intent intent = new Intent(getActivity(), DetailPosterActivity.class);
+            Intent intent = new Intent(getActivity(), DetailDataActivity.class);
             // Pass the langue to the activity
             intent.putExtra(Data.class.getSimpleName(), data1);
 
@@ -413,7 +411,7 @@ public class DetailPosterFragment extends DetailsFragment implements Palette.Pal
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
                         ((MovieCardView) itemViewHolder.view).getMovie_img(),
-                        DetailPosterFragment.TRANSITION_NAME).toBundle();
+                        DetailDataFragment.TRANSITION_NAME).toBundle();
                 getActivity().startActivity(intent, bundle);
             } else {
                 startActivity(intent);

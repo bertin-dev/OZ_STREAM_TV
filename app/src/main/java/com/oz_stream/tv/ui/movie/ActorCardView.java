@@ -1,5 +1,6 @@
 package com.oz_stream.tv.ui.movie;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.TextView;
 
@@ -27,17 +28,17 @@ public class ActorCardView extends BindableCardView<Actor> {
         ButterKnife.bind(this);
     }
 
-    protected void bind(Actor actor) {
-    }
-   /* @Override
+
+    @SuppressLint("SetTextI18n")
+    @Override
     protected void bind(Actor actor) {
         Glide.with(getContext())
-                .load(actor.getImage())
+                .load(actor.getAvatar())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(mPosterIV);
-        title_tv.setText(actor.getName());
+        title_tv.setText(actor.getFirstName() + " " + actor.getLastName());
 
-    }*/
+    }
 
     public CircleImageView getPosterIV() {
         return mPosterIV;

@@ -11,6 +11,10 @@ import androidx.leanback.widget.Presenter;
 
 import com.oz_stream.tv.R;
 import com.oz_stream.tv.data.models.Actor;
+import com.oz_stream.tv.data.models.Data;
+import com.oz_stream.tv.data.models.Gender;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,14 +69,14 @@ public class DetailViewHolder extends Presenter.ViewHolder {
         itemView = view;
     }
 
-    /*@SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n")
     public void bindActor(Actor actor) {
-        if (actor != null && actor.getName() != null) {
+        if (actor != null && actor.getLastName() != null) {
             mOverviewLabelTV.setText(R.string.biographie);
-            mRuntimeTV.setText(actor.getType() + " - " + actor.getBorn());
-            movieTitleTV.setText(actor.getName());
+            mRuntimeTV.setText(actor.getBirthDate());
+            movieTitleTV.setText(actor.getFirstName() + " " + actor.getLastName());
             movieYearTV.setText(actor.getHeight());
-            movieOverview.setText(actor.getBio());
+            movieOverview.setText(actor.getBibliographie());
             mGenresLayout.removeAllViews();
 
             if (actor.getPaletteColors() != null) {
@@ -85,49 +89,49 @@ public class DetailViewHolder extends Presenter.ViewHolder {
 
         }
 
-    }*/
+    }
 
 
-    /*@SuppressLint("SetTextI18n")
-    public void bindPoster(Poster poster){
+    @SuppressLint("SetTextI18n")
+    public void bindDate(Data data){
 
-        if (poster != null && poster.getTitle() != null) {
+        if (data != null && data.getTitle() != null) {
             classification.setVisibility(View.VISIBLE);
-            mRuntimeTV.setText(poster.getDuration());
-            mTaglineTV.setText(poster.getClassification());
-            movieTitleTV.setText(poster.getTitle().toUpperCase());
-            movieYearTV.setText(poster.getYear());
-            movieOverview.setText(poster.getDescription());
+            mRuntimeTV.setText(data.getDuration());
+            mTaglineTV.setText(data.getClassification());
+            movieTitleTV.setText(data.getTitle().toUpperCase());
+            movieYearTV.setText(data.getYear());
+            movieOverview.setText(data.getDescription());
             mGenresLayout.removeAllViews();
 
-            //if (poster.getDirector() != null) {
-                //mDirectorTv.setText(String.format(Locale.getDefault(), "Directeur: %s", poster.getDirector()));
-            //}
+            if (data.getDirector() != null) {
+                mDirectorTv.setText(String.format(Locale.getDefault(), "Directeur: %s", data.getDirector()));
+            }
 
-            rating_bar.setRating(poster.getRating());
-            rating.setText(poster.getRating() + "/5");
-            imdb.setText(poster.getImdb() + "/10");
+            rating_bar.setRating(data.getRating());
+            rating.setText(data.getRating() + "/5");
+            imdb.setText(data.getImdb() + "/10");
 
             int _16dp = (int) itemView.getResources().getDimension(R.dimen.full_padding);
             int _8dp = (int) itemView.getResources().getDimension(R.dimen.half_padding);
             float corner = itemView.getResources().getDimension(R.dimen.genre_corner);
 
-            if (poster.getPaletteColors() != null) {
+            if (data.getPaletteColors() != null) {
                 Log.w(TAG, "bindPoster---------BONJOUR: " );
-                movieTitleTV.setTextColor(poster.getPaletteColors().getTitleColor());
-                mOverviewLabelTV.setTextColor(poster.getPaletteColors().getTitleColor());
-                mTaglineTV.setTextColor(poster.getPaletteColors().getTextColor());
-                mRuntimeTV.setTextColor(poster.getPaletteColors().getTextColor());
-                movieYearTV.setTextColor(poster.getPaletteColors().getTextColor());
-                movieOverview.setTextColor(poster.getPaletteColors().getTextColor());
-                mDirectorTv.setTextColor(poster.getPaletteColors().getTextColor());
-                rating.setTextColor(poster.getPaletteColors().getTextColor());
-                imdb.setTextColor(poster.getPaletteColors().getTextColor());
-                int primaryDarkColor = poster.getPaletteColors().getStatusBarColor();
+                movieTitleTV.setTextColor(data.getPaletteColors().getTitleColor());
+                mOverviewLabelTV.setTextColor(data.getPaletteColors().getTitleColor());
+                mTaglineTV.setTextColor(data.getPaletteColors().getTextColor());
+                mRuntimeTV.setTextColor(data.getPaletteColors().getTextColor());
+                movieYearTV.setTextColor(data.getPaletteColors().getTextColor());
+                movieOverview.setTextColor(data.getPaletteColors().getTextColor());
+                mDirectorTv.setTextColor(data.getPaletteColors().getTextColor());
+                rating.setTextColor(data.getPaletteColors().getTextColor());
+                imdb.setTextColor(data.getPaletteColors().getTextColor());
+                int primaryDarkColor = data.getPaletteColors().getStatusBarColor();
                 // Adds each genre to the genre layout
-                for (Genre genre : poster.getGenres()) {
+                for (Gender genre : data.getGenders()) {
                     TextView textView = new TextView(itemView.getContext());
-                    Log.w(TAG, "bindPoster---------1: " + genre.getTitle() );
+                    Log.w(TAG, "bindData---------1: " + genre.getTitle() );
                     textView.setText(genre.getTitle());
                     //GradientDrawable shape = new GradientDrawable();
                     //shape.setShape(GradientDrawable.RECTANGLE);
@@ -150,5 +154,5 @@ public class DetailViewHolder extends Presenter.ViewHolder {
 
         }
 
-    }*/
+    }
 }

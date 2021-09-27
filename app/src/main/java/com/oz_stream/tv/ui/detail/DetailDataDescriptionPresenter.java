@@ -7,9 +7,10 @@ import android.view.ViewGroup;
 import androidx.leanback.widget.Presenter;
 
 import com.oz_stream.tv.R;
+import com.oz_stream.tv.data.models.Data;
 
 
-public class DetailPosterDescriptionPresenter extends Presenter {
+public class DetailDataDescriptionPresenter extends Presenter {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
@@ -19,11 +20,11 @@ public class DetailPosterDescriptionPresenter extends Presenter {
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Object item) {
-        /*Poster poster = (Poster) item;
-        if(poster != null){
+        Data data = (Data) item;
+        if(data != null){
             DetailViewHolder holder = (DetailViewHolder) viewHolder;
-            holder.bindPoster(poster);
-        }*/
+            holder.bindDate(data);
+        }
     }
 
     @Override

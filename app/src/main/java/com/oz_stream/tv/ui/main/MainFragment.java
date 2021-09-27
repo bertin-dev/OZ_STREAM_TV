@@ -7,10 +7,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,21 +38,18 @@ import androidx.leanback.widget.RowPresenter;
 import com.oz_stream.tv.App;
 import com.oz_stream.tv.R;
 import com.oz_stream.tv.data.api.TheMovieDbAPI;
-import com.oz_stream.tv.data.models.Actor;
 import com.oz_stream.tv.data.models.Data;
 import com.oz_stream.tv.data.models.Frees;
 import com.oz_stream.tv.data.models.News;
 import com.oz_stream.tv.data.models.Populars;
 import com.oz_stream.tv.data.models.Previews;
 import com.oz_stream.tv.data.models.Root;
+import com.oz_stream.tv.data.models.WillbePostes;
 import com.oz_stream.tv.provider.PrefManager;
 import com.oz_stream.tv.ui.base.GlideBackgroundManager;
 import com.oz_stream.tv.ui.base.IconHeaderItemPresenter;
-import com.oz_stream.tv.ui.detail.DetailActivity;
-import com.oz_stream.tv.ui.detail.DetailFragment;
-import com.oz_stream.tv.ui.detail.DetailPosterActivity;
-import com.oz_stream.tv.ui.detail.DetailPosterFragment;
-import com.oz_stream.tv.ui.movie.ActorCardView;
+import com.oz_stream.tv.ui.detail.DetailDataActivity;
+import com.oz_stream.tv.ui.detail.DetailDataFragment;
 import com.oz_stream.tv.ui.movie.ActorPresenter;
 import com.oz_stream.tv.ui.movie.MovieCardView;
 import com.oz_stream.tv.ui.movie.MoviePresenter;
@@ -295,8 +290,8 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         // rows - 3 - gratuit
         private static final int VIDEO_GRATUIT = 3;
 
-        // rows - 4 - drame
-        private static final int DRAME = 4;
+        // rows - 4 - Vidéo bande Annonce
+        private static final int VIDEO_BANDE_ANNONCE = 4;
 
         // rows - 5 - humour
         private static final int HUMOUR = 5;
@@ -351,8 +346,8 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             //fetchSlideMovies();
 
 
-            /*fetchDrameMovies();
-            fetchHumourMovies();
+            fetchWillBePostesMovies();
+            /*fetchHumourMovies();
             fetchProductionCinafMovies();*/
             setupEventListeners1();
         }
@@ -423,10 +418,10 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
 
 
             //row - 4 - create objects
-            movieRowSparseArray.put(DRAME, new MovieRow()
-                    .setId(DRAME)
+            movieRowSparseArray.put(VIDEO_BANDE_ANNONCE, new MovieRow()
+                    .setId(VIDEO_BANDE_ANNONCE)
                     .setAdapter(new ArrayObjectAdapter(moviePresenter))
-                    .setTitle(getString(R.string.drame))
+                    .setTitle(getString(R.string.video_b_annonce))
                     .setPage(1)
             );
 
@@ -524,6 +519,17 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         }
 
 
+        private void fetchWillBePostesMovies() {
+            theMovieDbAPI.getHomePage()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(response -> {
+                        bindWillBePostesResponse(response, VIDEO_BANDE_ANNONCE);
+                        //startEntranceTransition();
+                    }, e -> Timber.e(e, "Error fetching drame movies: %s", e.getMessage()));
+        }
+
+
         /*private void fetchActorsMovies() {
             theMovieDbAPI.getHomePage()
                     .subscribeOn(Schedulers.io())
@@ -534,17 +540,6 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
                     }, e -> {
                         Timber.e(e, "Error fetching now Actor movies: %s", e.getMessage());
                     });
-        }
-
-
-        private void fetchDrameMovies() {
-            theMovieDbAPI.getHomePage()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-                        bindDrameResponse(response, DRAME);
-                        //startEntranceTransition();
-                    }, e -> Timber.e(e, "Error fetching drame movies: %s", e.getMessage()));
         }
 
 
@@ -669,29 +664,21 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
         }
 
-        /*
-        private void bindDrameResponse(Root response, int id) {
-            Log.w("DRAME", "bindDrameResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
+
+        private void bindWillBePostesResponse(Root response, int id) {
+            //Log.w("VIDEO_BANDE_ANNONCE", "bindWillBePostesResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
             MovieRow movieRow = movieRowSparseArray.get(id);
             movieRow.setPage(movieRow.getPage() + 1);
             HeaderItem headerItem = new HeaderItem(movieRow.getTitle());
-            List<Genre> genres = response.getGenres();
 
-            //films les mieux notés (Poster)
-            for(Genre genre : genres){
+            WillbePostes willbePostes = response.getWillbePostes();
+            List<Data> dataList = willbePostes.getDatas();
+            movieRow.getAdapter().add(dataList);
 
-                if(genre.getTitle().trim().toLowerCase().equalsIgnoreCase("drame")){
-                    for (Poster poster : genre.getPosters()){
-                        if(poster.getImage() != null){
-                            movieRow.getAdapter().add(poster);
-                        }
-                    }
-                }
-            }
             rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
         }
 
-
+        /*
         private void bindHumourResponse(Root response, int id) {
             Log.w("HUMOUR", "bindHumourResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
             MovieRow movieRow = movieRowSparseArray.get(id);
@@ -828,7 +815,7 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             }*/
             if( item instanceof Data){
                 Data data = (Data) item;
-                Intent intent = new Intent(getActivity(), DetailPosterActivity.class);
+                Intent intent = new Intent(getActivity(), DetailDataActivity.class);
                 // Pass the langue to the activity
                 intent.putExtra(Data.class.getSimpleName(), data);
 
@@ -837,7 +824,7 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
                     Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                             getActivity(),
                             ((MovieCardView) itemViewHolder.view).getMovie_img(),
-                            DetailPosterFragment.TRANSITION_NAME).toBundle();
+                            DetailDataFragment.TRANSITION_NAME).toBundle();
                     getActivity().startActivity(intent, bundle);
                 } else {
                     startActivity(intent);

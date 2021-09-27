@@ -9,4 +9,8 @@
     <dimen name="default_image_card_width">224dp</dimen>
     <dimen name="default_image_card_height">126dp</dimen>
 
+    <dimen name="genre_corner">12dp</dimen>
+    <dimen name="half_padding">8dp</dimen>
+    <dimen name="full_padding">16dp</dimen>
+
 </resources>

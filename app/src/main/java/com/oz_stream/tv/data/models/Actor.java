@@ -233,6 +233,20 @@ public class Actor implements Parcelable {
         this.director = director;
     }
 
+    public static Creator<Actor> getCREATOR() {
+        return CREATOR;
+    }
+
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", avatar='" + avatar + '\'' +
+                '}';
+    }
 
 }
 

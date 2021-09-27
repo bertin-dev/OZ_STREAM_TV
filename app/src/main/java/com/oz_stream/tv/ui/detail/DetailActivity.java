@@ -25,14 +25,14 @@ public class DetailActivity extends BaseTVActivity {
         DetailFragment detailsFragment = DetailFragment.newInstance(actor);
         addFragment(detailsFragment);
 
-        /*glideBackgroundManager = new GlideBackgroundManager(this);
+        glideBackgroundManager = new GlideBackgroundManager(this);
 
-        if(actor.getImage() != null){
-            //glideBackgroundManager.loadImage(actor.getImage());
-            glideBackgroundManager.setBackgroundColors(Color.parseColor("#FF263238"));
+        if(actor.getAvatar() != null){
+            glideBackgroundManager.loadImage(actor.getAvatar());
+            //glideBackgroundManager.setBackgroundColors(Color.parseColor("#FF263238"));
         } else {
             glideBackgroundManager.setBackground(ContextCompat.getDrawable(this, R.drawable.placeholder));
-        }*/
+        }
 
     }
 }

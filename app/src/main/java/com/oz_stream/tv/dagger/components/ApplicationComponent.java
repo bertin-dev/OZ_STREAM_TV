@@ -5,7 +5,7 @@ import com.oz_stream.tv.dagger.AppScope;
 import com.oz_stream.tv.dagger.modules.ApplicationModule;
 import com.oz_stream.tv.dagger.modules.HttpClientModule;
 import com.oz_stream.tv.ui.detail.DetailFragment;
-import com.oz_stream.tv.ui.detail.DetailPosterFragment;
+import com.oz_stream.tv.ui.detail.DetailDataFragment;
 import com.oz_stream.tv.ui.dialog.DialogFragment;
 import com.oz_stream.tv.ui.main.IDCode;
 import com.oz_stream.tv.ui.main.MainFragment;
@@ -34,6 +34,6 @@ public interface ApplicationComponent {
     void inject(MainFragment.Series series);
     void inject(MainFragment.Actors actors);*/
     void inject(DetailFragment movieDetailsFragment);
-    void inject(DetailPosterFragment detailPosterFragment);
+    void inject(DetailDataFragment detailPosterFragment);
     void inject(SearchFragment searchFragment);
 }

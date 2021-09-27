@@ -34,6 +34,8 @@ import com.oz_stream.tv.App;
 import com.oz_stream.tv.R;
 import com.oz_stream.tv.data.api.TheMovieDbAPI;
 import com.oz_stream.tv.data.models.Actor;
+import com.oz_stream.tv.data.models.ActorDetails;
+import com.oz_stream.tv.data.models.Data;
 import com.oz_stream.tv.data.models.PaletteColors;
 import com.oz_stream.tv.ui.base.GlideBackgroundManager;
 import com.oz_stream.tv.ui.base.PaletteUtils;
@@ -80,7 +82,7 @@ public class DetailFragment extends DetailsFragment implements OnItemViewClicked
         glideBackgroundManager = new GlideBackgroundManager(getActivity());
         glideBackgroundManager.setBackgroundColors(Color.parseColor("#FF263238"));
         setUpAdapter();
-        //setUpDetailsOverviewRow();
+        setUpDetailsOverviewRow();
         setupFilmographyRow();
         setupEventListeners1();
     }
@@ -107,24 +109,24 @@ public class DetailFragment extends DetailsFragment implements OnItemViewClicked
     }
 
 
-    /*private void setUpDetailsOverviewRow() {
+    private void setUpDetailsOverviewRow() {
 
         if(actor != null){
             detailsOverviewRow = new DetailsOverviewRow(new ActorDetails());
             mAdapter.add(detailsOverviewRow);
 
-            loadImage(actor.getImage());
+            loadImage(actor.getAvatar());
             detailsOverviewRow.setItem(this.actor);
         }
-    }*/
+    }
 
 
     private void setupFilmographyRow() {
         mAdapter.add(new ListRow(new HeaderItem(2, getString(R.string.filmographie)), mFilmographyAdapter));
-        //Filmography();
+        Filmography();
     }
 
-    /*private void Filmography() {
+    private void Filmography() {
         theMovieDbAPI.getFilmographieDetails(actor.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -132,9 +134,9 @@ public class DetailFragment extends DetailsFragment implements OnItemViewClicked
     }
 
 
-    private void bindFilmography(List<Poster> posterList) {
+    private void bindFilmography(List<Data> posterList) {
         mFilmographyAdapter.addAll(0, posterList);
-    }*/
+    }
 
     private SimpleTarget<GlideDrawable> mGlideDrawableSimpleTarget = new SimpleTarget<GlideDrawable>() {
         @Override
@@ -174,8 +176,8 @@ public class DetailFragment extends DetailsFragment implements OnItemViewClicked
         customDetailPresenter.setActionsBackgroundColor(colors.getStatusBarColor());
         customDetailPresenter.setBackgroundColor(colors.getToolbarBackgroundColor());
 
-        customDetailPresenter.setActionsBackgroundColor(Color.parseColor("#FF263238"));
-        customDetailPresenter.setBackgroundColor(Color.parseColor("#FF263238"));
+        /*customDetailPresenter.setActionsBackgroundColor(Color.parseColor("#FF263238"));
+        customDetailPresenter.setBackgroundColor(Color.parseColor("#FF263238"));*/
 
         if (actor != null) {
             this.actor.setPaletteColors(colors);
@@ -192,27 +194,22 @@ public class DetailFragment extends DetailsFragment implements OnItemViewClicked
     @Override
     public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
 
-    }
-
-    /*@Override
-    public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
-
-        if( item instanceof Poster){
-            Poster poster = (Poster) item;
-            Intent intent = new Intent(getActivity(), DetailPosterActivity.class);
+        if( item instanceof Data){
+            Data poster = (Data) item;
+            Intent intent = new Intent(getActivity(), DetailDataActivity.class);
             // Pass the langue to the activity
-            intent.putExtra(Poster.class.getSimpleName(), poster);
+            intent.putExtra(Data.class.getSimpleName(), poster);
 
             if (itemViewHolder.view instanceof filmographyPresenter.FilmographyCardView) {
                 // Pass the ImageView to allow a nice transition
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
                         ((filmographyPresenter.FilmographyCardView) itemViewHolder.view).getPosterIV(),
-                        DetailPosterFragment.TRANSITION_NAME).toBundle();
+                        DetailDataFragment.TRANSITION_NAME).toBundle();
                 getActivity().startActivity(intent, bundle);
             } else {
                 startActivity(intent);
             }
         }
-    }*/
+    }
 }

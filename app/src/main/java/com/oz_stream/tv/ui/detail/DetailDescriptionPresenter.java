@@ -21,10 +21,10 @@ public class DetailDescriptionPresenter extends Presenter {
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Object item) {
         Actor actor = (Actor) item;
-        /*if(actor != null){
+        if(actor != null){
             DetailViewHolder holder = (DetailViewHolder) viewHolder;
             holder.bindActor(actor);
-        }*/
+        }
     }
 
     @Override
