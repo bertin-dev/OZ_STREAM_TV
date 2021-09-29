@@ -9,6 +9,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Observable;
 
 public interface TheMovieDbAPI {
@@ -17,6 +18,13 @@ public interface TheMovieDbAPI {
     //PAGE D'ACCUEIL
     @GET(HttpClientModule.ACCUEIL)
     Observable<Root> getHomePage();
+
+
+    //FILTER BY CATEGORY
+    @GET(HttpClientModule.FILTER_BY_CATEGORY + "/{category}")
+    Observable<Root> getFilterByCategory(
+            @Path("category") String category
+    );
 
     //SEND ID CODE
     @FormUrlEncoded

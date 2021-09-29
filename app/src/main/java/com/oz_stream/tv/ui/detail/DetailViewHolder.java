@@ -98,7 +98,7 @@ public class DetailViewHolder extends Presenter.ViewHolder {
         if (data != null && data.getTitle() != null) {
             classification.setVisibility(View.VISIBLE);
             mRuntimeTV.setText(data.getDuration());
-            mTaglineTV.setText(data.getClassification());
+            mTaglineTV.setText(data.getType() + " - "+ data.getCredit() + " Crédits");
             movieTitleTV.setText(data.getTitle().toUpperCase());
             movieYearTV.setText(data.getYear());
             movieOverview.setText(data.getDescription());

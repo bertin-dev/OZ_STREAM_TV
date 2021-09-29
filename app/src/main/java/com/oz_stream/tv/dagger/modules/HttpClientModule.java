@@ -37,6 +37,7 @@ public class HttpClientModule {
     public static final String API_URL = "https://ozstream.tv/webservice/api/";
     public static final String LOGIN = "login";
     public static final String ACCUEIL = "all/media/home";
+    public static final String FILTER_BY_CATEGORY = "all/media/home/more/new";
 
 
 
