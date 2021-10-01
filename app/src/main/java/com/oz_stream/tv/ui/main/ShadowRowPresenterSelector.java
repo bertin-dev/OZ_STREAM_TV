@@ -22,6 +22,8 @@ import androidx.leanback.widget.ListRowPresenter;
 import androidx.leanback.widget.Presenter;
 import androidx.leanback.widget.PresenterSelector;
 
+import com.oz_stream.tv.data.models.Root;
+
 /**
  * This {@link PresenterSelector} will return a {@link ListRowPresenter} which has shadow support
  * enabled or not depending on {@link CardRow#useShadow()} for a given row.
@@ -36,16 +38,13 @@ public class ShadowRowPresenterSelector extends PresenterSelector {
         mShadowDisabledRowPresenter.setShadowEnabled(false);
     }
 
-    public Presenter getPresenter(Object item) {
-        return mShadowEnabledRowPresenter;
-    }
-   /* @Override
+    @Override
     public Presenter getPresenter(Object item) {
         if (!(item instanceof CardListRow)) return mShadowDisabledRowPresenter;
         CardListRow listRow = (CardListRow) item;
-        Movie row = listRow.getmCardRow();
+        Root row = listRow.getmCardRow();
         return mShadowEnabledRowPresenter;
-    }*/
+    }
 
     @Override
     public Presenter[] getPresenters() {
