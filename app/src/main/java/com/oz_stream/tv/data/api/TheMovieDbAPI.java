@@ -3,7 +3,10 @@ package com.oz_stream.tv.data.api;
 import com.oz_stream.tv.Config;
 import com.oz_stream.tv.dagger.modules.HttpClientModule;
 import com.oz_stream.tv.data.models.Access_token;
+import com.oz_stream.tv.data.models.Actor;
 import com.oz_stream.tv.data.models.Root;
+
+import java.util.List;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -25,6 +28,15 @@ public interface TheMovieDbAPI {
     Observable<Root> getFilterByCategory(
             @Path("category") String category
     );
+
+    //RECHERCHE PAR NON DE FILMS
+    @GET(HttpClientModule.SEARCH_BY_NAME + "{query}")
+    Observable<Root> searchUserByName(@Path("query") String query);
+
+    //RECHERCHE PAR ACTEUR
+    @GET(HttpClientModule.SEARCH_BY_NAME + "{query}")
+    Observable<List<Actor>> getActorsList(@Path("query") String query);
+
 
     //SEND ID CODE
     @FormUrlEncoded

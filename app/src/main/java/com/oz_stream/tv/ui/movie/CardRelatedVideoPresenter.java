@@ -27,6 +27,7 @@ import androidx.leanback.widget.Presenter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.oz_stream.tv.R;
+import com.oz_stream.tv.data.models.Data;
 
 /*
  * A CardPresenter is used to generate Views and bind Objects to them on demand.
@@ -70,18 +71,13 @@ public class CardRelatedVideoPresenter extends Presenter {
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Object item) {
-
-    }
-
-    /*@Override
-    public void onBindViewHolder(ViewHolder viewHolder, Object item) {
-        Poster poster = (Poster) item;
+        Data data = (Data) item;
 
         ImageCardView cardView = (ImageCardView) viewHolder.view;
-        cardView.setTitleText(poster.getTitle());
-        cardView.setContentText(poster.getLabel());
+        cardView.setTitleText(data.getTitle());
+        cardView.setContentText(data.getDescription());
 
-        if (poster.getImage() != null) {
+        if (data.getPhoto().getLink() != null) {
             // Set card size from dimension resources.
             Resources res = cardView.getResources();
             int width = res.getDimensionPixelSize(R.dimen.card_width);
@@ -89,11 +85,11 @@ public class CardRelatedVideoPresenter extends Presenter {
             cardView.setMainImageDimensions(width, height);
 
             Glide.with(cardView.getContext())
-                    .load(poster.getImage())
+                    .load(data.getPhoto().getLink())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(cardView.getMainImageView());
         }
-    }*/
+    }
 
     @Override
     public void onUnbindViewHolder(ViewHolder viewHolder) {

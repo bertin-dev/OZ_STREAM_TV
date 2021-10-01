@@ -38,7 +38,7 @@ public class HttpClientModule {
     public static final String LOGIN = "login";
     public static final String ACCUEIL = "all/media/home";
     public static final String FILTER_BY_CATEGORY = "all/media/home/more/new";
-
+    public static final String SEARCH_BY_NAME = "api/getuser?search=";
 
 
 
@@ -48,7 +48,6 @@ public class HttpClientModule {
     public static final String RANDOM_GENRE = "movie/random/";
     public static final String ROLE_BY_POSTER = "role/by/poster/";
     public static final String SEARCH_BY_ACTOR = "actor/all/";
-    public static final String GLOBAL_SEARCH = "search/";
     public static final String MOVIES = "movie/by/filtres/";
     public static final String SERIES = "serie/by/filtres/";
     public static final String EDIT_TOKEN = "user/token/";
