@@ -5,6 +5,7 @@ import com.oz_stream.tv.dagger.modules.HttpClientModule;
 import com.oz_stream.tv.data.models.Access_token;
 import com.oz_stream.tv.data.models.Actor;
 import com.oz_stream.tv.data.models.Root;
+import com.oz_stream.tv.data.models.RootFilter;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface TheMovieDbAPI {
 
     //FILTER BY CATEGORY
     @GET(HttpClientModule.FILTER_BY_CATEGORY + "/{category}")
-    Observable<Root> getFilterByCategory(
+    Observable<RootFilter> getFilterByCategory(
             @Path("category") String category
     );
 
@@ -40,7 +41,7 @@ public interface TheMovieDbAPI {
 
     //SEND ID CODE
     @FormUrlEncoded
-    @POST(HttpClientModule.IDCODE + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
+    @POST(HttpClientModule.IDCODE)
     Observable<Access_token> codeID(@Field("code") String code);
 
     //AUTHENTIFICATION

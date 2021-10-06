@@ -127,10 +127,10 @@ public class DetailFragment extends DetailsFragment implements OnItemViewClicked
     }
 
     private void Filmography() {
-        theMovieDbAPI.getFilmographieDetails(actor.getId())
+        /*theMovieDbAPI.getFilmographieDetails(actor.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::bindFilmography, e -> Timber.e(e, "Error fetching Filmographie: %s", e.getMessage()));
+                .subscribe(this::bindFilmography, e -> Timber.e(e, "Error fetching Filmographie: %s", e.getMessage()));*/
     }
 
 

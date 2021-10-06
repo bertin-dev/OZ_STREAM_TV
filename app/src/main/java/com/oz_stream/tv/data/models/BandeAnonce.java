@@ -1,11 +1,14 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BandeAnonce {
+public class BandeAnonce implements Parcelable {
 
-    @SerializedName("role_id")
+    @SerializedName("id")
     @Expose
     private int id;
     @SerializedName("name")
@@ -35,6 +38,51 @@ public class BandeAnonce {
     @SerializedName("serie_id")
     @Expose
     private String serie_id = null;
+
+
+    protected BandeAnonce(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        link = in.readString();
+        description = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        user_id = in.readString();
+        created_by = in.readString();
+        updated_by = in.readString();
+        serie_id = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(link);
+        dest.writeString(description);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(user_id);
+        dest.writeString(created_by);
+        dest.writeString(updated_by);
+        dest.writeString(serie_id);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<BandeAnonce> CREATOR = new Creator<BandeAnonce>() {
+        @Override
+        public BandeAnonce createFromParcel(Parcel in) {
+            return new BandeAnonce(in);
+        }
+
+        @Override
+        public BandeAnonce[] newArray(int size) {
+            return new BandeAnonce[size];
+        }
+    };
 
 
     public int getId() {
@@ -115,5 +163,9 @@ public class BandeAnonce {
 
     public void setSerie_id(String serie_id) {
         this.serie_id = serie_id;
+    }
+
+    public static Creator<BandeAnonce> getCREATOR() {
+        return CREATOR;
     }
 }

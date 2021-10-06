@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Gender implements Parcelable  {
 
     @SerializedName("id")
@@ -32,6 +34,9 @@ public class Gender implements Parcelable  {
     @SerializedName("pivot")
     @Expose
     private Pivot pivot = null;
+    @SerializedName("medias")
+    @Expose
+    private List<Media> medias = null;
 
 
     protected Gender(Parcel in) {
@@ -42,6 +47,23 @@ public class Gender implements Parcelable  {
         updated_at = in.readString();
         created_by = in.readString();
         updated_by = in.readString();
+    }
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(created_by);
+        dest.writeString(updated_by);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Gender> CREATOR = new Creator<Gender>() {
@@ -55,22 +77,6 @@ public class Gender implements Parcelable  {
             return new Gender[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(title);
-        parcel.writeString(description);
-        parcel.writeString(created_at);
-        parcel.writeString(updated_at);
-        parcel.writeString(created_by);
-        parcel.writeString(updated_by);
-    }
 
 
     public int getId() {
@@ -135,6 +141,14 @@ public class Gender implements Parcelable  {
 
     public void setPivot(Pivot pivot) {
         this.pivot = pivot;
+    }
+
+    public List<Media> getMedias() {
+        return medias;
+    }
+
+    public void setMedias(List<Media> medias) {
+        this.medias = medias;
     }
 
     public static Creator<Gender> getCREATOR() {

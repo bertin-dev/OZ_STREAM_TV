@@ -110,4 +110,6 @@
     <string name="recherche">Research</string>
 
     <string name="avant_premiere">Preview</string>
+    <string name="news">News</string>
+    <string name="movie_gender">Gender movie</string>
 </resources>

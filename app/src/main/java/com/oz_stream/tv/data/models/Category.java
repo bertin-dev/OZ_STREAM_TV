@@ -13,25 +13,23 @@ public class Category implements Parcelable {
     private int id;
     @SerializedName("title")
     @Expose
-    private String title = null;
+    private String title;
     @SerializedName("description")
     @Expose
-    private String description = null;
+    private String description;
     @SerializedName("created_at")
     @Expose
-    private String created_at = null;
+    private String created_at;
     @SerializedName("updated_at")
     @Expose
-    private String updated_at = null;
+    private String updated_at;
     @SerializedName("created_by")
     @Expose
-    private String created_by = null;
+    private String created_by;
     @SerializedName("updated_by")
     @Expose
-    private String updated_by = null;
-    @SerializedName("pivot")
-    @Expose
-    private Pivot pivot;
+    private String updated_by;
+
 
     protected Category(Parcel in) {
         id = in.readInt();
@@ -70,7 +68,6 @@ public class Category implements Parcelable {
             return new Category[size];
         }
     };
-
 
     public int getId() {
         return id;
@@ -128,16 +125,7 @@ public class Category implements Parcelable {
         this.updated_by = updated_by;
     }
 
-    public Pivot getPivot() {
-        return pivot;
-    }
-
-    public void setPivot(Pivot pivot) {
-        this.pivot = pivot;
-    }
-
     public static Creator<Category> getCREATOR() {
         return CREATOR;
     }
 }
-

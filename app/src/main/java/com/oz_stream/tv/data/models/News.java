@@ -15,7 +15,7 @@ public class News implements Parcelable {
     private Integer total;
     @SerializedName("datas")
     @Expose
-    public List<Data> datas = null;
+    private List<Data> datas = null;
 
 
     protected News(Parcel in) {

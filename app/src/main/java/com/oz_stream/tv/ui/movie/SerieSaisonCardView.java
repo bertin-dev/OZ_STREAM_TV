@@ -30,10 +30,10 @@ public class SerieSaisonCardView extends BindableCardView<Episode> {
     @Override
     protected void bind(Episode episode) {
 
-            Glide.with(getContext())
+            /*Glide.with(getContext())
                     .load(episode.getImage())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(mPosterIV);
+                    .into(mPosterIV);*/
 
             title_tv.setText(episode.getName());
     }

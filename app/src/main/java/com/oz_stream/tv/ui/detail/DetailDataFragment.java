@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityOptionsCompat;
@@ -33,21 +34,32 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.oz_stream.tv.App;
+import com.oz_stream.tv.Config;
 import com.oz_stream.tv.R;
 import com.oz_stream.tv.data.api.TheMovieDbAPI;
 import com.oz_stream.tv.data.models.Actor;
+import com.oz_stream.tv.data.models.BandeAnonce;
+import com.oz_stream.tv.data.models.Categories;
 import com.oz_stream.tv.data.models.Category;
 import com.oz_stream.tv.data.models.Data;
 import com.oz_stream.tv.data.models.DataDetails;
 import com.oz_stream.tv.data.models.Episode;
+import com.oz_stream.tv.data.models.Media;
 import com.oz_stream.tv.data.models.PaletteColors;
+import com.oz_stream.tv.data.models.Root;
 import com.oz_stream.tv.ui.base.GlideBackgroundManager;
 import com.oz_stream.tv.ui.base.PaletteUtils;
+import com.oz_stream.tv.ui.dialog.DialogActivity;
 import com.oz_stream.tv.ui.main.MainActivity;
 import com.oz_stream.tv.ui.movie.ActorCardView;
 import com.oz_stream.tv.ui.movie.MovieCardView;
 import com.oz_stream.tv.ui.movie.MoviePresenter;
 import com.oz_stream.tv.ui.movie.SerieSaisonPresenter;
+import com.oz_stream.tv.ui.player.EmbedActivity;
+import com.oz_stream.tv.ui.player.Play;
+import com.oz_stream.tv.ui.player.PlayerActivity;
+import com.oz_stream.tv.ui.player.caster.PlaybackActivity;
+import com.oz_stream.tv.ui.player.caster.PlaybackTrailerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +73,7 @@ import timber.log.Timber;
 public class DetailDataFragment extends DetailsFragment implements Palette.PaletteAsyncListener, OnItemViewClickedListener {
 
     private static final String TAG = "DetailDataFragment";
-    public static String TRANSITION_NAME = "poster_transition";
+    public static String TRANSITION_NAME = "data_transition";
     @Inject
     TheMovieDbAPI theMovieDbAPI;
 
@@ -74,7 +86,7 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
     String mYoutubeID;
     Data data;
     String allSeason = "Saison";
-    GlideBackgroundManager glideBackgroundManager;
+    //GlideBackgroundManager glideBackgroundManager;
     private SimpleTarget<GlideDrawable> mGlideDrawableSimpleTarget = new SimpleTarget<GlideDrawable>() {
         @Override
         public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
@@ -98,21 +110,20 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
             throw new RuntimeException("A poster is necessary for DetailDataFragment");
         }
         data = getArguments().getParcelable(Data.class.getSimpleName());
-        glideBackgroundManager = new GlideBackgroundManager(getActivity());
-        glideBackgroundManager.setBackgroundColors(Color.parseColor("#FF263238"));
+        /*glideBackgroundManager = new GlideBackgroundManager(getActivity());
+        glideBackgroundManager.setBackgroundColors(Color.parseColor("#FF263238"));*/
         setUpAdapter();
         setUpDetailsOverviewRow();
-        setUpCastMembers();
+        //setUpCastMembers();
 
-        for(Category category : data.getCategories()){
-            if(category.getTitle() != null){
-                if(category.getTitle().toLowerCase().trim().equalsIgnoreCase("serie")){
-                    setUpSeason();
-                }
+       /* Category category =  data.getCategory();
+        if(category.getTitle() != null){
+            if(category.getTitle().toLowerCase().trim().equalsIgnoreCase("serie tv")){
+                setUpSeason();
             }
         }
 
-        setupRecommendationsRow();
+        setupRecommendationsRow();*/
         setupEventListeners1();
     }
 
@@ -120,43 +131,43 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
         setOnItemViewClickedListener(this);
     }
 
-    /*public void playTrailer() {
+    public void playTrailer() {
 
-        if (poster != null) {
-            if (poster.getTrailer().getType() != null && poster.getTrailer().getType().equals("youtube")) {
-                mYoutubeID = getTrailer(poster.getTrailer(), "official");
+        if (data != null) {
+            if (data.getBande_anonce().getLink() != null) {
+                mYoutubeID = getTrailer(data.getBande_anonce(), "official");
                 Intent intent = new Intent(getActivity(), PlayerActivity.class);
-                intent.putExtra("videoId", poster.getTrailer().getUrl());
+                intent.putExtra("videoId", data.getBande_anonce().getLink());
                 startActivity(intent);
                 return;
             }
-            if (poster.getTrailer().getType() != null && poster.getTrailer().getType().equals("embed")) {
+            /*if (data.getBande_anonce().getLink() != null) {
                 Intent intent = new Intent(getActivity(), EmbedActivity.class);
-                intent.putExtra("url", poster.getTrailer().getUrl());
+                intent.putExtra("url", data.getTrailer().getUrl());
                 startActivity(intent);
                 return;
-            } else {
+            }*/ else {
 
-                if (poster.getTrailer().getUrl() != null && poster.getTrailer().getUrl().contains("vimeo")) {
-                    Log.w(TAG, "vimeo: PLAY" + poster.getTrailer().getUrl());
+                if (data.getBande_anonce().getLink() != null && data.getBande_anonce().getLink().contains("vimeo")) {
+                    Log.w(TAG, "vimeo: PLAY" + data.getBande_anonce().getLink());
                     Intent intent = new Intent(getActivity(), EmbedActivity.class);
-                    intent.putExtra("url", poster.getTrailer().getUrl());
+                    intent.putExtra("url", data.getBande_anonce().getLink());
                     startActivity(intent);
                 } else {
                     Log.w(TAG, "playTrailer: PLAY");
                     Intent intent = new Intent(getActivity(), Play.class);
-                    intent.putExtra("url", poster.getTrailer().getUrl());
-                    intent.putExtra("type", poster.getTrailer().getType());
-                    intent.putExtra("image", poster.getImage());
-                    intent.putExtra("title", poster.getTitle());
-                    intent.putExtra("subtitle", poster.getTitle() + " Trailer");
+                    intent.putExtra("url", data.getBande_anonce().getLink());
+                    //intent.putExtra("type", data.getBande_anonce().getType());
+                    intent.putExtra("image", Config.GLOBAL_URL + data.getPhoto().getLink());
+                    intent.putExtra("title", data.getTitle());
+                    intent.putExtra("subtitle", data.getDescription() + " Trailer");
                     startActivity(intent);
                 }
             }
         } else {
             Log.w(TAG, "playTrailer: Objet Poster Null");
         }
-    }*/
+    }
 
     private void setUpAdapter() {
 
@@ -171,12 +182,12 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
 
         customDetailPresenter.setOnActionClickedListener(action -> {
             int actionId = (int) action.getId();
-            /*switch (actionId) {
+            switch (actionId) {
                 //Bande Annonce
                 case 0: {
                     //playTrailer();
                     Intent intent = new Intent(getActivity(), PlaybackTrailerActivity.class);
-                    intent.putExtra(MainActivity.POSTER, poster);
+                    intent.putExtra(MainActivity.DATA, data);
                     startActivity(intent);
                 }
                 break;
@@ -184,7 +195,7 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
                 case 1: {
 
                     Intent intent = new Intent(getActivity(), PlaybackActivity.class);
-                    intent.putExtra(MainActivity.POSTER, poster);
+                    intent.putExtra(MainActivity.DATA, data);
                     startActivity(intent);
                 }
                 break;
@@ -195,7 +206,7 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
                     startActivity(intent, bundle);
                 }
                 break;
-            }*/
+            }
         });
 
 
@@ -212,7 +223,7 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
             detailsOverviewRow = new DetailsOverviewRow(new DataDetails());
             mAdapter.add(detailsOverviewRow);
 
-            loadImage(data.getPhoto().getLink());
+            loadImage(Config.GLOBAL_URL + data.getPhoto().getLink());
             detailsOverviewRow.setItem(this.data);
             fetchVideos();
         }
@@ -247,8 +258,8 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
         /*theMovieDbAPI.getSeasonsBySerie(poster.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::bindSeason, e -> Timber.e(e, "Error fetching season: %s", e.getMessage()));*/
-        bindSeason(data.getEpisodes());
+                .subscribe(this::bindSeason, e -> Timber.e(e, "Error fetching season: %s", e.getMessage()));
+        bindSeason(data.getEpisodes());*/
     }
 
     private void bindSeason(List<Episode> episodeList) {
@@ -271,35 +282,42 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
     private void fetchRecommendations() {
 
         String genres_list = "";
-        for (int i = 0; i < poster.getGenres().size(); i++) {
-            if (poster.getGenres().size() - 1 == i) {
-                genres_list += poster.getGenres().get(i).getId();
+        for (int i = 0; i < data.getGenders().size(); i++) {
+            if (data.getGenders().size() - 1 == i) {
+                genres_list += data.getGenders().get(i).getId();
             } else {
-                genres_list += poster.getGenres().get(i).getId() + ",";
+                genres_list += data.getGenders().get(i).getId() + ",";
             }
         }
 
-        theMovieDbAPI.getRandomMovies(genres_list)
+        /*theMovieDbAPI.getHomePage(genres_list)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::bindRecommendations, e -> Timber.e(e, "Error fetching recommendations: %s", e.getMessage()));*/
+
+        theMovieDbAPI.getHomePage()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::bindRecommendations, e -> Timber.e(e, "Error fetching recommendations: %s", e.getMessage()));
     }
 
-    private void bindRecommendations(List<Poster> posters) {
-        List<Poster> posterList = new ArrayList<>();
-        posterList.clear();
-        for (int i = 0; i < posters.size(); i++) {
-            if (posters.get(i).getId() != poster.getId())
-                posterList.add(posters.get(i));
+    private void bindRecommendations(Root response) {
+        List<Data> data1 = response.getNews().getDatas();
+        List<Data> dataList = new ArrayList<>();
+        dataList.clear();
+        for (int i = 0; i < data1.size(); i++) {
+            if (data1.get(i).getId() != data.getId())
+                Log.w(TAG, "onCreate--------------------------s-------------: " + data1.get(i) );
+                dataList.add(data1.get(i));
         }
-        mRecommendationsAdapter.addAll(0, posterList);
+        mRecommendationsAdapter.addAll(0, dataList);
     }
 
-    private String getTrailer(Source source, String keyword) {
+    private String getTrailer(BandeAnonce media, String keyword) {
         String id = null;
 
-        if (source.getUrl().toLowerCase().contains(keyword)) {
-            String[] tab = source.getUrl().split("=");
+        if (media.getLink().toLowerCase().contains(keyword)) {
+            String[] tab = media.getLink().split("=");
             id = tab[1];
             String[] tab2 = id.split("&");
             id = tab2[0];
@@ -356,14 +374,12 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
         SparseArrayObjectAdapter adapter = new SparseArrayObjectAdapter();
         adapter.set(0, new Action(0, getString(R.string.bAnnonce), null, getResources().getDrawable(R.drawable.ic_baseline_local_movies_24)));
 
-        //listage des categories
-        for(Category category : data.getCategories()){
-
-            if(category.getTitle() != null){
-                if(category.getTitle().toLowerCase().trim().equalsIgnoreCase("serie") ||
-                        category.getTitle().toLowerCase().trim().equalsIgnoreCase("film")){
-                    adapter.set(1, new Action(1, getString(R.string.regarder), null, getResources().getDrawable(R.drawable.exo_icon_play)));
-                }
+        //categories
+        Category category =  data.getCategory();
+        if(category.getTitle() != null){
+            if(category.getTitle().toLowerCase().trim().equalsIgnoreCase("serie tv") ||
+                    category.getTitle().toLowerCase().trim().equalsIgnoreCase("film")){
+                adapter.set(1, new Action(1, getString(R.string.regarder), null, getResources().getDrawable(R.drawable.exo_icon_play)));
             }
         }
 
@@ -421,10 +437,10 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
         if (item instanceof Episode) {
             Episode episode = (Episode) item;
 
-            Intent intent = new Intent(getActivity(), PlaybackSerieActivity.class);
+            /*Intent intent = new Intent(getActivity(), PlaybackSerieActivity.class);
             intent.putExtra(MainActivity.EPISODE, episode);
-            intent.putExtra(MainActivity.POSTER, data);
-            startActivity(intent);
+            intent.putExtra(MainActivity.DATA, data);
+            startActivity(intent);*/
         }
     }
 }
