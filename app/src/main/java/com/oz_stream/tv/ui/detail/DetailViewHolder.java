@@ -100,7 +100,7 @@ public class DetailViewHolder extends Presenter.ViewHolder {
             mRuntimeTV.setText(data.getDuration());
             mTaglineTV.setText(data.getType() + " - "+ data.getCredit() + " Crédits");
             movieTitleTV.setText(data.getTitle().toUpperCase());
-            movieYearTV.setText(data.getYear());
+            //movieYearTV.setText(data.getYear());
             movieOverview.setText(data.getDescription());
             mGenresLayout.removeAllViews();
 
@@ -108,9 +108,13 @@ public class DetailViewHolder extends Presenter.ViewHolder {
                 mDirectorTv.setText(String.format(Locale.getDefault(), "Directeur: %s", data.getDirector()));
             }
 
-            rating_bar.setRating(data.getRating());
+            /*rating_bar.setRating(data.getRating());
             rating.setText(data.getRating() + "/5");
-            imdb.setText(data.getImdb() + "/10");
+            imdb.setText(data.getImdb() + "/10");*/
+
+            rating_bar.setRating(Float.parseFloat(data.getNber_like()));
+            rating.setText(data.getNber_dislike());
+            //imdb.setText(data.getImdb() + "/10");
 
             int _16dp = (int) itemView.getResources().getDimension(R.dimen.full_padding);
             int _8dp = (int) itemView.getResources().getDimension(R.dimen.half_padding);

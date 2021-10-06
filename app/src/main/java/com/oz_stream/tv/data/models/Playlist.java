@@ -1,11 +1,14 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Playlist {
+public class Playlist implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -32,6 +35,46 @@ public class Playlist {
     @Expose
     private List<Series> series = null;
 
+
+    protected Playlist(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        description = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        created_by = in.readString();
+        updated_by = in.readString();
+        series = in.createTypedArrayList(Series.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(created_by);
+        dest.writeString(updated_by);
+        dest.writeTypedList(series);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Playlist> CREATOR = new Creator<Playlist>() {
+        @Override
+        public Playlist createFromParcel(Parcel in) {
+            return new Playlist(in);
+        }
+
+        @Override
+        public Playlist[] newArray(int size) {
+            return new Playlist[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -95,5 +138,9 @@ public class Playlist {
 
     public void setSeries(List<Series> series) {
         this.series = series;
+    }
+
+    public static Creator<Playlist> getCREATOR() {
+        return CREATOR;
     }
 }

@@ -71,7 +71,7 @@ public class AuthencateCodeQR extends Activity {
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
 
-        Bitmap overlay = BitmapFactory.decodeResource(getResources(), R.drawable.logo_official_thumbnail);
+        Bitmap overlay = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
         qrcode.setImageBitmap(mergeBitmaps(overlay,bitmap));
 
         return bitmap;

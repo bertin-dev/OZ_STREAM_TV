@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Gender implements Parcelable  {
+public class NoSery implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -31,15 +31,12 @@ public class Gender implements Parcelable  {
     @SerializedName("updated_by")
     @Expose
     private String updated_by = null;
-    @SerializedName("pivot")
-    @Expose
-    private Pivot pivot = null;
     @SerializedName("medias")
     @Expose
     private List<Media> medias = null;
 
 
-    protected Gender(Parcel in) {
+    protected NoSery(Parcel in) {
         id = in.readInt();
         title = in.readString();
         description = in.readString();
@@ -47,8 +44,8 @@ public class Gender implements Parcelable  {
         updated_at = in.readString();
         created_by = in.readString();
         updated_by = in.readString();
+        medias = in.createTypedArrayList(Media.CREATOR);
     }
-
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -59,6 +56,7 @@ public class Gender implements Parcelable  {
         dest.writeString(updated_at);
         dest.writeString(created_by);
         dest.writeString(updated_by);
+        dest.writeTypedList(medias);
     }
 
     @Override
@@ -66,18 +64,17 @@ public class Gender implements Parcelable  {
         return 0;
     }
 
-    public static final Creator<Gender> CREATOR = new Creator<Gender>() {
+    public static final Creator<NoSery> CREATOR = new Creator<NoSery>() {
         @Override
-        public Gender createFromParcel(Parcel in) {
-            return new Gender(in);
+        public NoSery createFromParcel(Parcel in) {
+            return new NoSery(in);
         }
 
         @Override
-        public Gender[] newArray(int size) {
-            return new Gender[size];
+        public NoSery[] newArray(int size) {
+            return new NoSery[size];
         }
     };
-
 
     public int getId() {
         return id;
@@ -135,14 +132,6 @@ public class Gender implements Parcelable  {
         this.updated_by = updated_by;
     }
 
-    public Pivot getPivot() {
-        return pivot;
-    }
-
-    public void setPivot(Pivot pivot) {
-        this.pivot = pivot;
-    }
-
     public List<Media> getMedias() {
         return medias;
     }
@@ -151,7 +140,7 @@ public class Gender implements Parcelable  {
         this.medias = medias;
     }
 
-    public static Creator<Gender> getCREATOR() {
+    public static Creator<NoSery> getCREATOR() {
         return CREATOR;
     }
 }

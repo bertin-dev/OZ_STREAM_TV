@@ -1,9 +1,12 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Comment {
+public class Comment implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -34,75 +37,121 @@ public class Comment {
     private String comments_reply = null;
 
 
-    private int getId() {
+    protected Comment(Parcel in) {
+        id = in.readInt();
+        content = in.readString();
+        isValidated = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        media_id = in.readString();
+        user_id = in.readString();
+        comment_reply_id = in.readString();
+        comments_reply = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(content);
+        dest.writeString(isValidated);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(media_id);
+        dest.writeString(user_id);
+        dest.writeString(comment_reply_id);
+        dest.writeString(comments_reply);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Comment> CREATOR = new Creator<Comment>() {
+        @Override
+        public Comment createFromParcel(Parcel in) {
+            return new Comment(in);
+        }
+
+        @Override
+        public Comment[] newArray(int size) {
+            return new Comment[size];
+        }
+    };
+
+    public int getId() {
         return id;
     }
 
-    private void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    private String getContent() {
+    public String getContent() {
         return content;
     }
 
-    private void setContent(String content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
-    private String getIsValidated() {
+    public String getIsValidated() {
         return isValidated;
     }
 
-    private void setIsValidated(String isValidated) {
+    public void setIsValidated(String isValidated) {
         this.isValidated = isValidated;
     }
 
-    private String getCreated_at() {
+    public String getCreated_at() {
         return created_at;
     }
 
-    private void setCreated_at(String created_at) {
+    public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 
-    private String getUpdated_at() {
+    public String getUpdated_at() {
         return updated_at;
     }
 
-    private void setUpdated_at(String updated_at) {
+    public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
 
-    private String getMedia_id() {
+    public String getMedia_id() {
         return media_id;
     }
 
-    private void setMedia_id(String media_id) {
+    public void setMedia_id(String media_id) {
         this.media_id = media_id;
     }
 
-    private String getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    private void setUser_id(String user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
-    private String getComment_reply_id() {
+    public String getComment_reply_id() {
         return comment_reply_id;
     }
 
-    private void setComment_reply_id(String comment_reply_id) {
+    public void setComment_reply_id(String comment_reply_id) {
         this.comment_reply_id = comment_reply_id;
     }
 
-    private String getComments_reply() {
+    public String getComments_reply() {
         return comments_reply;
     }
 
-    private void setComments_reply(String comments_reply) {
+    public void setComments_reply(String comments_reply) {
         this.comments_reply = comments_reply;
+    }
+
+    public static Creator<Comment> getCREATOR() {
+        return CREATOR;
     }
 }

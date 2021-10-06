@@ -19,34 +19,30 @@ public class Root implements Parcelable {
     @SerializedName("populars")
     @Expose
     private Populars populars = null;
-    @SerializedName("willbePostes")
-    @Expose
-    private WillbePostes willbePostes = null;
     @SerializedName("frees")
     @Expose
     private Frees frees = null;
-    @SerializedName("gender")
+    @SerializedName("genders")
     @Expose
-    private Gender gender = null;
-    @SerializedName("category")
+    private List<Gender> genders = null;
+    @SerializedName("categories")
     @Expose
-    private List<Category> category = null;
-    @SerializedName("playlist")
+    private Categories categories = null;
+    @SerializedName("playlists")
     @Expose
-    private List<Playlist> playlist = null;
-
+    private Playlist playlists = null;
 
     protected Root(Parcel in) {
         news = in.readParcelable(News.class.getClassLoader());
-        gender = in.readParcelable(Gender.class.getClassLoader());
-        category = in.createTypedArrayList(Category.CREATOR);
+        genders = in.createTypedArrayList(Gender.CREATOR);
+        categories = in.readParcelable(Categories.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(news, flags);
-        dest.writeParcelable(gender, flags);
-        dest.writeTypedList(category);
+        dest.writeTypedList(genders);
+        dest.writeParcelable(categories, flags);
     }
 
     @Override
@@ -65,6 +61,7 @@ public class Root implements Parcelable {
             return new Root[size];
         }
     };
+
 
     public News getNews() {
         return news;
@@ -90,14 +87,6 @@ public class Root implements Parcelable {
         this.populars = populars;
     }
 
-    public WillbePostes getWillbePostes() {
-        return willbePostes;
-    }
-
-    public void setWillbePostes(WillbePostes willbePostes) {
-        this.willbePostes = willbePostes;
-    }
-
     public Frees getFrees() {
         return frees;
     }
@@ -106,27 +95,31 @@ public class Root implements Parcelable {
         this.frees = frees;
     }
 
-    public Gender getGender() {
-        return gender;
+    public List<Gender> getGenders() {
+        return genders;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    public void setGenders(List<Gender> genders) {
+        this.genders = genders;
     }
 
-    public List<Category> getCategory() {
-        return category;
+    public Categories getCategories() {
+        return categories;
     }
 
-    public void setCategory(List<Category> category) {
-        this.category = category;
+    public void setCategories(Categories categories) {
+        this.categories = categories;
     }
 
-    public List<Playlist> getPlaylist() {
-        return playlist;
+    public Playlist getPlaylists() {
+        return playlists;
     }
 
-    public void setPlaylist(List<Playlist> playlist) {
-        this.playlist = playlist;
+    public void setPlaylists(Playlist playlists) {
+        this.playlists = playlists;
+    }
+
+    public static Creator<Root> getCREATOR() {
+        return CREATOR;
     }
 }

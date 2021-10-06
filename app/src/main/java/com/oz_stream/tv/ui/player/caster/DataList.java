@@ -17,10 +17,12 @@
 package com.oz_stream.tv.ui.player.caster;
 
 import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.oz_stream.tv.data.models.Actor;
 import com.oz_stream.tv.data.models.BandeAnonce;
+import com.oz_stream.tv.data.models.Categories;
 import com.oz_stream.tv.data.models.Category;
 import com.oz_stream.tv.data.models.Comment;
 import com.oz_stream.tv.data.models.Data;
@@ -30,9 +32,9 @@ import com.oz_stream.tv.data.models.Frees;
 import com.oz_stream.tv.data.models.Gender;
 import com.oz_stream.tv.data.models.News;
 import com.oz_stream.tv.data.models.Photo;
+import com.oz_stream.tv.data.models.Playlist;
 import com.oz_stream.tv.data.models.Populars;
 import com.oz_stream.tv.data.models.Previews;
-import com.oz_stream.tv.data.models.WillbePostes;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +60,7 @@ public final class DataList {
 
     //DATA
     private static final String TAG_TITLE = "title";
-    private static final String TAG_DESCRIPTION  = "description";
+    private static final String TAG_DESCRIPTION = "description";
     private static final String TAG_PREVIEW = "isPreview";
     private static final String TAG_COMMING = "isComming";
     private static final String TAG_TYPE = "type";
@@ -67,7 +69,6 @@ public final class DataList {
     private static final String TAG_CREDIT = "credit";
     private static final String TAG_SHOW = "showAt";
     private static final String TAG_UNAVAILABLE = "unavailableAt";
-    private static final String TAG_LINK = "link";
     private static final String TAG_NUMBER_LIKE = "nber_like";
     private static final String TAG_NUMBER_DISLIKE = "nber_dislike";
     private static final String TAG_NUMBER_DOWNLOAD = "nber_download";
@@ -90,6 +91,7 @@ public final class DataList {
     private static final String TAG_BIBLIOGRAPHIE = "bibliographie";
     //Photo
     private static final String TAG_PHOTO_LINK = "link";
+    /*
     //Episode
     private static final String TAG_EP_NAME = "name";
     private static final String TAG_EP_DESCRIPTION = "description";
@@ -100,7 +102,7 @@ public final class DataList {
 
     //Serie
     private static final String TAG_SERIE_TITLE = "title";
-    private static final String TAG_SERIE_DESCRIPTION = "description";
+    private static final String TAG_SERIE_DESCRIPTION = "description";*/
 
     //Bande d'annonce
     private static final String TAG_BA_NAME = "name";
@@ -129,50 +131,47 @@ public final class DataList {
     private static final String TAG_GENRE_DESCRIPTION = "description";
 
 
-
     private static final String NEWS = "news";
     private static final String DATAS = "datas";
     private static final String DIFFUSER = "diffuser";
     private static final String EPISODES = "episodes";
-    private static final String SAISON = "saison";
-    private static final String SERIE = "serie";
+    /*private static final String SAISON = "saison";
+    private static final String SERIE = "serie";*/
     private static final String PHOTO = "photo";
     private static final String BANDE_ANONCE = "bande_anonce";
     private static final String ACTORS = "actors";
     private static final String COMMENTS = "comments";
-    private static final String GENDERS = "genders";
-    private static final String CATEGORIES = "categories";
 
-
+    //ROOT
     private static final String PREVIEWS = "Previews";
     private static final String POPULARS = "Populars";
-    private static final String WILLBEPOSTES = "willbePostes";
+    //private static final String WILLBEPOSTES = "willbePostes";
     private static final String FREES = "frees";
+    private static final String GENDERS = "genders";
+    private static final String CATEGORY = "category";
+    private static final String PLAYLISTS = "playlists";
 
     private static News news;
     private static Previews previews;
     private static Populars populars;
-    private static WillbePostes willbePostes;
+    //private static WillbePostes willbePostes;
     private static Frees frees;
-    private static Gender gender;
+    private static Playlist playlist;
     private static int count = 0;
 
-
     private static Diffuser diffus;
-    private static List<Episode> episodeList;
+    //private static List<Episode> episodeList;
     private static Photo tofs;
     private static BandeAnonce b_annonce;
     private static List<Actor> actorList;
     private static List<Comment> commentList;
-    private static List<Category> categoryList;
+    private static Category category;
     private static List<Gender> genderList;
     private static List<Data> list;
 
     public static List<Data> getList() {
         return list;
     }
-
-
 
 
     public static List<Data> setupMovies(String url) throws JSONException {
@@ -188,9 +187,9 @@ public final class DataList {
         JSONObject newsJSONObject = jsonObj.getJSONObject(NEWS);
         int totalNews = newsJSONObject.getInt(TAG_TOTAL_NEWS);
         JSONArray datasArray = newsJSONObject.getJSONArray(DATAS);
-        if(null != datasArray){
+        if (null != datasArray) {
 
-            for(int i = 0; i < datasArray.length(); i++){
+            for (int i = 0; i < datasArray.length(); i++) {
                 JSONObject datasJSONObject = datasArray.getJSONObject(i);
                 String datas_title = datasJSONObject.getString(TAG_TITLE);
                 String datas_desc = datasJSONObject.getString(TAG_DESCRIPTION);
@@ -202,7 +201,6 @@ public final class DataList {
                 String datas_credit = datasJSONObject.getString(TAG_CREDIT);
                 String datas_show = datasJSONObject.getString(TAG_SHOW);
                 String datas_unavailable = datasJSONObject.getString(TAG_UNAVAILABLE);
-                String datas_link = datasJSONObject.getString(TAG_LINK);
                 String datas_num_like = datasJSONObject.getString(TAG_NUMBER_LIKE);
                 String datas_num_dislike = datasJSONObject.getString(TAG_NUMBER_DISLIKE);
                 String datas_num_download = datasJSONObject.getString(TAG_NUMBER_DOWNLOAD);
@@ -227,7 +225,7 @@ public final class DataList {
                 String diffuser_bibliographie = diffuserJsonObject.getString(TAG_BIBLIOGRAPHIE);
 
                 //Episodes
-                JSONArray episodesArrayList = datasJSONObject.getJSONArray(EPISODES);
+                /*JSONArray episodesArrayList = datasJSONObject.getJSONArray(EPISODES);
                 if (null != episodesArrayList) {
                     for (int j = 0; j < episodesArrayList.length(); j++) {
                         JSONObject episodesJSONObject = episodesArrayList.getJSONObject(j);
@@ -245,7 +243,7 @@ public final class DataList {
                         String serie_desc = serieJSONObject.getString(TAG_SERIE_DESCRIPTION);
 
                     }
-                }
+                }*/
 
                 //photo
                 JSONObject photoJsonObject = datasJSONObject.getJSONObject(PHOTO);
@@ -285,15 +283,7 @@ public final class DataList {
                 }
 
                 //Categories
-                JSONArray categoriesArrayList = datasJSONObject.getJSONArray(CATEGORIES);
-                if (null != categoriesArrayList) {
-                    for (int n = 0; n < categoriesArrayList.length(); n++) {
-                        JSONObject categoriesJSONObject = categoriesArrayList.getJSONObject(n);
-                        String categories_title = categoriesJSONObject.getString(TAG_CATEGORIE_TITLE);
-                        String categories_description = categoriesJSONObject.getString(TAG_CATEGORIE_DESCRIPTION);
-                    }
-                }
-
+                JSONObject categoryJsonObject = datasJSONObject.getJSONObject(CATEGORY);
 
                 //Genres
                 JSONArray genreArrayList = datasJSONObject.getJSONArray(GENDERS);
@@ -306,17 +296,24 @@ public final class DataList {
                 }
 
                 //CONVERT JSONOBJECT TO OBJECT SOURCE
-                diffus = new Gson().fromJson(diffuserJsonObject.toString(), new TypeToken<Diffuser>(){}.getType());
-                tofs = new Gson().fromJson(photoJsonObject.toString(), new TypeToken<Photo>(){}.getType());
-                b_annonce = new Gson().fromJson(baJsonObject.toString(), new TypeToken<BandeAnonce>(){}.getType());
+                diffus = new Gson().fromJson(diffuserJsonObject.toString(), new TypeToken<Diffuser>() {
+                }.getType());
+                tofs = new Gson().fromJson(photoJsonObject.toString(), new TypeToken<Photo>() {
+                }.getType());
+                b_annonce = new Gson().fromJson(baJsonObject.toString(), new TypeToken<BandeAnonce>() {
+                }.getType());
+                category = new Gson().fromJson(categoryJsonObject.toString(), new TypeToken<Category>() {
+                }.getType());
 
                 //CONVERT JSONARRAY TO LIST
-                episodeList = new Gson().fromJson(episodesArrayList.toString(), new TypeToken<List<Episode>>(){}.getType());
-                actorList = new Gson().fromJson(actorsArrayList.toString(), new TypeToken<List<Actor>>(){}.getType());
-                commentList = new Gson().fromJson(commentArrayList.toString(), new TypeToken<List<Comment>>(){}.getType());
-                categoryList = new Gson().fromJson(categoriesArrayList.toString(), new TypeToken<List<Category>>(){}.getType());
-                genderList = new Gson().fromJson(genreArrayList.toString(), new TypeToken<List<Gender>>(){}.getType());
-
+                /*episodeList = new Gson().fromJson(episodesArrayList.toString(), new TypeToken<List<Episode>>() {
+                }.getType());*/
+                actorList = new Gson().fromJson(actorsArrayList.toString(), new TypeToken<List<Actor>>() {
+                }.getType());
+                commentList = new Gson().fromJson(commentArrayList.toString(), new TypeToken<List<Comment>>() {
+                }.getType());
+                genderList = new Gson().fromJson(genreArrayList.toString(), new TypeToken<List<Gender>>() {
+                }.getType());
 
 
                 //Log.w("TAG", "NDEMBA0000----------: " + url_sources);
@@ -331,7 +328,6 @@ public final class DataList {
                         datas_credit,
                         datas_show,
                         datas_unavailable,
-                        datas_link,
                         datas_num_like,
                         datas_num_dislike,
                         datas_num_download,
@@ -342,14 +338,14 @@ public final class DataList {
                         data_num_timelinelookbande,
                         data_num_popularity,
                         diffus,
-                        episodeList,
+                        //episodeList,
                         tofs,
                         b_annonce,
                         actorList,
                         commentList,
-                        categoryList,
+                        category,
                         genderList
-                        ));
+                ));
             }
         }
         return list;
@@ -366,7 +362,6 @@ public final class DataList {
             String credit,
             String showAt,
             String unavailableAt,
-            String link,
             String nber_like,
             String nber_dislike,
             String nber_download,
@@ -378,12 +373,12 @@ public final class DataList {
             String popularity,
             //List<ThisUserStatVideo> this_user_stat_videos,
             Diffuser diffuser,
-            List<Episode> episodes,
+            //List<Episode> episodes,
             Photo photo,
             BandeAnonce bandeAnonce,
             List<Actor> actors,
             List<Comment> comments,
-            List<Category> categories,
+            Category category,
             List<Gender> genders) {
 
         Data data = new Data();
@@ -398,7 +393,6 @@ public final class DataList {
         data.setCredit(credit);
         data.setShowAt(showAt);
         data.setUnavailableAt(unavailableAt);
-        data.setLink(link);
         data.setNber_like(nber_like);
         data.setNber_dislike(nber_dislike);
         data.setNber_download(nber_download);
@@ -410,12 +404,12 @@ public final class DataList {
         data.setPopularity(popularity);
         //data.setThis_user_stat_videos(this_user_stat_videos);
         data.setDiffuser(diffuser);
-        data.setEpisodes(episodes);
+        //data.setEpisodes(episodes);
         data.setPhoto(photo);
         data.setBande_anonce(bandeAnonce);
         data.setActors(actors);
         data.setComments(comments);
-        data.setCategories(categories);
+        data.setCategory(category);
         data.setGenders(genders);
         return data;
     }
@@ -448,6 +442,5 @@ public final class DataList {
             }
         }
     }
-
 
 }

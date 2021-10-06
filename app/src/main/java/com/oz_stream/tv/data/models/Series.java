@@ -1,11 +1,14 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Series {
+public class Series implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -34,10 +37,70 @@ public class Series {
     @SerializedName("pivot")
     @Expose
     private Pivot pivot = null;
+    @SerializedName("diffuser")
+    @Expose
+    private Diffuser diffuser = null;
+    @SerializedName("photo")
+    @Expose
+    private Photo photo = null;
+    @SerializedName("bande_anonce")
+    @Expose
+    private BandeAnonce bande_anonce = null;
+    @SerializedName("genders")
+    @Expose
+    private List<Gender> genders = null;
     @SerializedName("saisons_with")
     @Expose
     private List<SaisonsWith> saisons_with = null;
 
+
+    protected Series(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        description = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        user_id = in.readString();
+        updated_by = in.readString();
+        created_by = in.readString();
+        diffuser = in.readParcelable(Diffuser.class.getClassLoader());
+        photo = in.readParcelable(Photo.class.getClassLoader());
+        bande_anonce = in.readParcelable(BandeAnonce.class.getClassLoader());
+        genders = in.createTypedArrayList(Gender.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(user_id);
+        dest.writeString(updated_by);
+        dest.writeString(created_by);
+        dest.writeParcelable(diffuser, flags);
+        dest.writeParcelable(photo, flags);
+        dest.writeParcelable(bande_anonce, flags);
+        dest.writeTypedList(genders);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Series> CREATOR = new Creator<Series>() {
+        @Override
+        public Series createFromParcel(Parcel in) {
+            return new Series(in);
+        }
+
+        @Override
+        public Series[] newArray(int size) {
+            return new Series[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -111,11 +174,47 @@ public class Series {
         this.pivot = pivot;
     }
 
+    public Diffuser getDiffuser() {
+        return diffuser;
+    }
+
+    public void setDiffuser(Diffuser diffuser) {
+        this.diffuser = diffuser;
+    }
+
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+
+    public BandeAnonce getBande_anonce() {
+        return bande_anonce;
+    }
+
+    public void setBande_anonce(BandeAnonce bande_anonce) {
+        this.bande_anonce = bande_anonce;
+    }
+
+    public List<Gender> getGenders() {
+        return genders;
+    }
+
+    public void setGenders(List<Gender> genders) {
+        this.genders = genders;
+    }
+
     public List<SaisonsWith> getSaisons_with() {
         return saisons_with;
     }
 
     public void setSaisons_with(List<SaisonsWith> saisons_with) {
         this.saisons_with = saisons_with;
+    }
+
+    public static Creator<Series> getCREATOR() {
+        return CREATOR;
     }
 }

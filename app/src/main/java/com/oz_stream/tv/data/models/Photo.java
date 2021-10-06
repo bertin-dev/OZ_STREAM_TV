@@ -1,9 +1,12 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Photo {
+public class Photo implements Parcelable {
 
 
     @SerializedName("id")
@@ -28,6 +31,44 @@ public class Photo {
     @Expose
     private String updated_by = null;
 
+
+    protected Photo(Parcel in) {
+        id = in.readInt();
+        link = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        user_id = in.readString();
+        created_by = in.readString();
+        updated_by = in.readString();
+    }
+
+    public static final Creator<Photo> CREATOR = new Creator<Photo>() {
+        @Override
+        public Photo createFromParcel(Parcel in) {
+            return new Photo(in);
+        }
+
+        @Override
+        public Photo[] newArray(int size) {
+            return new Photo[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(link);
+        parcel.writeString(created_at);
+        parcel.writeString(updated_at);
+        parcel.writeString(user_id);
+        parcel.writeString(created_by);
+        parcel.writeString(updated_by);
+    }
 
     public int getId() {
         return id;
@@ -83,5 +124,9 @@ public class Photo {
 
     public void setUpdated_by(String updated_by) {
         this.updated_by = updated_by;
+    }
+
+    public static Creator<Photo> getCREATOR() {
+        return CREATOR;
     }
 }

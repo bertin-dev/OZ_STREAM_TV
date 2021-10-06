@@ -9,7 +9,7 @@ import com.oz_stream.tv.ui.base.BaseTVActivity;
  */
 public class MainActivity extends BaseTVActivity {
 
-    public static final String POSTER = "Poster";
+    public static final String DATA = "Data";
     public static final String EPISODE = "Episode";
 
     @Override

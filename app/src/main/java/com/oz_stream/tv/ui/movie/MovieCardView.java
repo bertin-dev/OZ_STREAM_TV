@@ -1,11 +1,13 @@
 package com.oz_stream.tv.ui.movie;
 
 import android.content.Context;
+import android.provider.Settings;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.oz_stream.tv.Config;
 import com.oz_stream.tv.R;
 import com.oz_stream.tv.data.models.Actor;
 import com.oz_stream.tv.data.models.Data;
@@ -42,13 +44,13 @@ public class MovieCardView extends BindableCardView<Data> {
     protected void bind(Data data) {
         //photo de couverture films ou série
         Glide.with(getContext())
-                .load(data.getPhoto().getLink())
+                .load(Config.GLOBAL_URL + data.getPhoto().getLink())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(movie_img);
 
         //photo de couverture diffuseur
         Glide.with(getContext())
-                .load(data.getDiffuser().getAvatarLink())
+                .load(Config.GLOBAL_URL + data.getDiffuser().getAvatarLink())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(diffuser_name);
 

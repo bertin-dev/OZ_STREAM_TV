@@ -42,9 +42,9 @@ public class App extends Application {
 
 
         //CASTER
-        /*CastReceiverContext.initInstance(this);
+        CastReceiverContext.initInstance(this);
         CastReceiverContext.getInstance().registerEventCallback(new EventCallback());
-        ProcessLifecycleOwner.get().getLifecycle().addObserver(new AppLifecycleObserver());*/
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(new AppLifecycleObserver());
     }
 
     public static App instance() {

@@ -30,9 +30,9 @@ public interface ApplicationComponent {
     void inject(DialogFragment dialogFragment);
     void inject(MainFragment mainFragment);
     void inject(MainFragment.Accueil homeMovie);
-    /*void inject(MainFragment.Films films);
+    void inject(MainFragment.Films films);
     void inject(MainFragment.Series series);
-    void inject(MainFragment.Actors actors);*/
+    //void inject(MainFragment.Actors actors);
     void inject(DetailFragment movieDetailsFragment);
     void inject(DetailDataFragment detailPosterFragment);
     void inject(SearchFragment searchFragment);

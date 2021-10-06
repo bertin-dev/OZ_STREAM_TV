@@ -58,7 +58,7 @@ public class PublishChannelFragment extends GuidedStepFragment {
     /**
      * Bitmap which will be put at the front of each checkbox
      */
-    private static final int OPTION_DRAWABLE = R.drawable.logo_official_thumbnail;
+    private static final int OPTION_DRAWABLE = R.drawable.icon;
 
 
     /**

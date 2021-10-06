@@ -73,9 +73,9 @@ public class DataDetails {
     @SerializedName("diffuser")
     @Expose
     private Diffuser diffuser = null;
-    @SerializedName("episodes")
+    /*@SerializedName("episodes")
     @Expose
-    private List<Episode> episodes = null;
+    private List<Episode> episodes = null;*/
     @SerializedName("photo")
     @Expose
     private Photo photo = null;
@@ -88,9 +88,9 @@ public class DataDetails {
     @SerializedName("comments")
     @Expose
     private List<Comment> comments = null;
-    @SerializedName("categories")
+    @SerializedName("category")
     @Expose
-    private List<Category> categories = null;
+    private Categories category = null;
     @SerializedName("genders")
     @Expose
     private List<Gender> genders = null;
@@ -103,7 +103,7 @@ public class DataDetails {
     public DataDetails() {
     }
 
-    public DataDetails(int id, String title, String description, String isPreview, String isComming, String type, String status, String isFree, String credit, String showAt, String unavailableAt, String link, String nber_like, String nber_dislike, String nber_download, String stars, String nber_bandeLooked, String nber_streamLooked, String nber_timeLineLookStream, String nber_timeLineLookBande, String popularity, Diffuser diffuser, List<Episode> episodes, Photo photo, BandeAnonce bande_anonce, List<Actor> actors, List<Comment> comments, List<Category> categories, List<Gender> genders, PaletteColors paletteColors, String director, int count) {
+    public DataDetails(int id, String title, String description, String isPreview, String isComming, String type, String status, String isFree, String credit, String showAt, String unavailableAt, String link, String nber_like, String nber_dislike, String nber_download, String stars, String nber_bandeLooked, String nber_streamLooked, String nber_timeLineLookStream, String nber_timeLineLookBande, String popularity, Diffuser diffuser, Photo photo, BandeAnonce bande_anonce, List<Actor> actors, List<Comment> comments, Categories category, List<Gender> genders, PaletteColors paletteColors, String director, int count) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -126,18 +126,16 @@ public class DataDetails {
         this.nber_timeLineLookBande = nber_timeLineLookBande;
         this.popularity = popularity;
         this.diffuser = diffuser;
-        this.episodes = episodes;
         this.photo = photo;
         this.bande_anonce = bande_anonce;
         this.actors = actors;
         this.comments = comments;
-        this.categories = categories;
+        this.category = category;
         this.genders = genders;
         this.paletteColors = paletteColors;
         this.director = director;
         this.count = count;
     }
-
 
     public int getId() {
         return id;
@@ -315,13 +313,13 @@ public class DataDetails {
         this.diffuser = diffuser;
     }
 
-    public List<Episode> getEpisodes() {
+    /*public List<Episode> getEpisodes() {
         return episodes;
     }
 
     public void setEpisodes(List<Episode> episodes) {
         this.episodes = episodes;
-    }
+    }*/
 
     public Photo getPhoto() {
         return photo;
@@ -355,12 +353,12 @@ public class DataDetails {
         this.comments = comments;
     }
 
-    public List<Category> getCategories() {
-        return categories;
+    public Categories getCategory() {
+        return category;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setCategory(Categories category) {
+        this.category = category;
     }
 
     public List<Gender> getGenders() {

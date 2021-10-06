@@ -83,7 +83,7 @@
     <string name="acteurPopulaire">Acteurs populaires</string>
     <string name="mieuxNote">Les mieux notés</string>
     <string name="plusPopulaire">Les plus Populaires</string>
-    <string name="movie_free">Vidéo Gratuite</string>
+    <string name="movie_free">Les Vidéos Gratuites</string>
     <string name="drame">Drame</string>
     <string name="humour">Humour</string>
     <string name="productionOZSTREAM">Production Cinaf</string>
@@ -119,5 +119,6 @@
     <string name="login_failed">"Login failed"</string>
 
     <string name="avant_premiere">Avant Première</string>
-    <string name="video_b_annonce">Vidéos Bande Annonce</string>
+    <string name="movie_gender">Vidéos par genres</string>
+    <string name="news">Les Nouveautés</string>
 </resources>
