@@ -114,16 +114,16 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
         glideBackgroundManager.setBackgroundColors(Color.parseColor("#FF263238"));*/
         setUpAdapter();
         setUpDetailsOverviewRow();
-        //setUpCastMembers();
+        setUpCastMembers();
 
-       /* Category category =  data.getCategory();
+        Category category =  data.getCategory();
         if(category.getTitle() != null){
             if(category.getTitle().toLowerCase().trim().equalsIgnoreCase("serie tv")){
                 setUpSeason();
             }
         }
 
-        setupRecommendationsRow();*/
+        setupRecommendationsRow();
         setupEventListeners1();
     }
 
@@ -240,7 +240,7 @@ public class DetailDataFragment extends DetailsFragment implements Palette.Palet
 
     private void bindCastMembers(List<Actor> actors) {
         mCastAdapter.addAll(0, actors);
-        data.setDirector("Bertin Mounok");
+        data.setDirector(data.getDiffuser().getFirstName() + " " + data.getDiffuser().getLastName());
         notifyDetailsChanged();
     }
 

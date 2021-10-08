@@ -1,6 +1,7 @@
 package com.oz_stream.tv.ui.detail;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -78,8 +79,9 @@ public class DetailViewHolder extends Presenter.ViewHolder {
             movieYearTV.setText(actor.getHeight());
             movieOverview.setText(actor.getBibliographie());
             mGenresLayout.removeAllViews();
-
+            Log.w(TAG, "bindPoster---------DEV: " );
             if (actor.getPaletteColors() != null) {
+                Log.w(TAG, "bindPoster---------PAPAPAPAAPAPAPP: " );
                 movieTitleTV.setTextColor(actor.getPaletteColors().getTitleColor());
                 mRuntimeTV.setTextColor(actor.getPaletteColors().getTextColor());
                 movieYearTV.setTextColor(actor.getPaletteColors().getTextColor());
@@ -105,7 +107,7 @@ public class DetailViewHolder extends Presenter.ViewHolder {
             mGenresLayout.removeAllViews();
 
             if (data.getDirector() != null) {
-                mDirectorTv.setText(String.format(Locale.getDefault(), "Directeur: %s", data.getDirector()));
+                mDirectorTv.setText(String.format(Locale.getDefault(), "Diffuseur: %s", data.getDirector()));
             }
 
             /*rating_bar.setRating(data.getRating());
@@ -137,12 +139,12 @@ public class DetailViewHolder extends Presenter.ViewHolder {
                     TextView textView = new TextView(itemView.getContext());
                     Log.w(TAG, "bindData---------1: " + genre.getTitle() );
                     textView.setText(genre.getTitle());
-                    //GradientDrawable shape = new GradientDrawable();
-                    //shape.setShape(GradientDrawable.RECTANGLE);
-                    //shape.setCornerRadius(corner);
-                    //shape.setColor(primaryDarkColor);
-                    //textView.setPadding(_8dp, _8dp, _8dp, _8dp);
-                    //textView.setBackground(shape);
+                    GradientDrawable shape = new GradientDrawable();
+                    shape.setShape(GradientDrawable.RECTANGLE);
+                    shape.setCornerRadius(corner);
+                    shape.setColor(primaryDarkColor);
+                    textView.setPadding(_8dp, _8dp, _8dp, _8dp);
+                    textView.setBackground(shape);
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.WRAP_CONTENT,

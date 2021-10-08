@@ -31,11 +31,13 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.oz_stream.tv.App;
+import com.oz_stream.tv.Config;
 import com.oz_stream.tv.R;
 import com.oz_stream.tv.data.api.TheMovieDbAPI;
 import com.oz_stream.tv.data.models.Actor;
 import com.oz_stream.tv.data.models.ActorDetails;
 import com.oz_stream.tv.data.models.Data;
+import com.oz_stream.tv.data.models.Media;
 import com.oz_stream.tv.data.models.PaletteColors;
 import com.oz_stream.tv.ui.base.GlideBackgroundManager;
 import com.oz_stream.tv.ui.base.PaletteUtils;
@@ -50,7 +52,7 @@ import timber.log.Timber;
 
 public class DetailFragment extends DetailsFragment implements OnItemViewClickedListener, Palette.PaletteAsyncListener {
 
-    public static String TRANSITION_NAME = "poster_transition";
+    public static String TRANSITION_NAME = "data_transition";
     private static final String TAG = "DetailFragment";
     @Inject
     TheMovieDbAPI theMovieDbAPI;
@@ -60,7 +62,7 @@ public class DetailFragment extends DetailsFragment implements OnItemViewClicked
     CustomDetailPresenter customDetailPresenter;
     DetailsOverviewRow detailsOverviewRow;
     ArrayObjectAdapter mFilmographyAdapter = new ArrayObjectAdapter(new filmographyPresenter());
-    GlideBackgroundManager glideBackgroundManager;
+    //GlideBackgroundManager glideBackgroundManager;
 
     public static DetailFragment newInstance(Actor actor) {
         Bundle args = new Bundle();
@@ -79,8 +81,8 @@ public class DetailFragment extends DetailsFragment implements OnItemViewClicked
         }
 
         actor = getArguments().getParcelable(Actor.class.getSimpleName());
-        glideBackgroundManager = new GlideBackgroundManager(getActivity());
-        glideBackgroundManager.setBackgroundColors(Color.parseColor("#FF263238"));
+        /*glideBackgroundManager = new GlideBackgroundManager(getActivity());
+        glideBackgroundManager.setBackgroundColors(Color.parseColor("#FF263238"));*/
         setUpAdapter();
         setUpDetailsOverviewRow();
         setupFilmographyRow();
@@ -115,7 +117,7 @@ public class DetailFragment extends DetailsFragment implements OnItemViewClicked
             detailsOverviewRow = new DetailsOverviewRow(new ActorDetails());
             mAdapter.add(detailsOverviewRow);
 
-            loadImage(actor.getAvatar());
+            loadImage(Config.GLOBAL_URL + actor.getAvatar());
             detailsOverviewRow.setItem(this.actor);
         }
     }
@@ -127,15 +129,12 @@ public class DetailFragment extends DetailsFragment implements OnItemViewClicked
     }
 
     private void Filmography() {
-        /*theMovieDbAPI.getFilmographieDetails(actor.getId())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::bindFilmography, e -> Timber.e(e, "Error fetching Filmographie: %s", e.getMessage()));*/
+        bindFilmography(actor.getMedias());
     }
 
 
-    private void bindFilmography(List<Data> posterList) {
-        mFilmographyAdapter.addAll(0, posterList);
+    private void bindFilmography(List<Media> mediaList) {
+        mFilmographyAdapter.addAll(0, mediaList);
     }
 
     private SimpleTarget<GlideDrawable> mGlideDrawableSimpleTarget = new SimpleTarget<GlideDrawable>() {
@@ -178,7 +177,6 @@ public class DetailFragment extends DetailsFragment implements OnItemViewClicked
 
         /*customDetailPresenter.setActionsBackgroundColor(Color.parseColor("#FF263238"));
         customDetailPresenter.setBackgroundColor(Color.parseColor("#FF263238"));*/
-
         if (actor != null) {
             this.actor.setPaletteColors(colors);
         }
@@ -195,10 +193,10 @@ public class DetailFragment extends DetailsFragment implements OnItemViewClicked
     public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
 
         if( item instanceof Data){
-            Data poster = (Data) item;
+            Data data = (Data) item;
             Intent intent = new Intent(getActivity(), DetailDataActivity.class);
             // Pass the langue to the activity
-            intent.putExtra(Data.class.getSimpleName(), poster);
+            intent.putExtra(Data.class.getSimpleName(), data);
 
             if (itemViewHolder.view instanceof filmographyPresenter.FilmographyCardView) {
                 // Pass the ImageView to allow a nice transition

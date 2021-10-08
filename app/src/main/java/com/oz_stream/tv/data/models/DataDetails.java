@@ -73,9 +73,9 @@ public class DataDetails {
     @SerializedName("diffuser")
     @Expose
     private Diffuser diffuser = null;
-    /*@SerializedName("episodes")
+    @SerializedName("episodes")
     @Expose
-    private List<Episode> episodes = null;*/
+    private List<Episode> episodes = null;
     @SerializedName("photo")
     @Expose
     private Photo photo = null;
@@ -103,7 +103,14 @@ public class DataDetails {
     public DataDetails() {
     }
 
-    public DataDetails(int id, String title, String description, String isPreview, String isComming, String type, String status, String isFree, String credit, String showAt, String unavailableAt, String link, String nber_like, String nber_dislike, String nber_download, String stars, String nber_bandeLooked, String nber_streamLooked, String nber_timeLineLookStream, String nber_timeLineLookBande, String popularity, Diffuser diffuser, Photo photo, BandeAnonce bande_anonce, List<Actor> actors, List<Comment> comments, Categories category, List<Gender> genders, PaletteColors paletteColors, String director, int count) {
+    public DataDetails(int id, String title, String description, String isPreview, String isComming,
+                       String type, String status, String isFree, String credit, String showAt,
+                       String unavailableAt, String link, String nber_like, String nber_dislike,
+                       String nber_download, String stars, String nber_bandeLooked, String nber_streamLooked,
+                       String nber_timeLineLookStream, String nber_timeLineLookBande, String popularity,
+                       Diffuser diffuser, List<Episode> episodes, Photo photo, BandeAnonce bande_anonce,
+                       List<Actor> actors, List<Comment> comments, Categories category, List<Gender> genders,
+                       PaletteColors paletteColors, String director, int count) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -126,6 +133,7 @@ public class DataDetails {
         this.nber_timeLineLookBande = nber_timeLineLookBande;
         this.popularity = popularity;
         this.diffuser = diffuser;
+        this.episodes = episodes;
         this.photo = photo;
         this.bande_anonce = bande_anonce;
         this.actors = actors;
@@ -313,13 +321,13 @@ public class DataDetails {
         this.diffuser = diffuser;
     }
 
-    /*public List<Episode> getEpisodes() {
+    public List<Episode> getEpisodes() {
         return episodes;
     }
 
     public void setEpisodes(List<Episode> episodes) {
         this.episodes = episodes;
-    }*/
+    }
 
     public Photo getPhoto() {
         return photo;

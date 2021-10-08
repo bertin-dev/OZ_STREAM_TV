@@ -9,6 +9,7 @@ import androidx.leanback.widget.Presenter;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.oz_stream.tv.Config;
 import com.oz_stream.tv.R;
 import com.oz_stream.tv.data.models.Actor;
 import com.oz_stream.tv.ui.base.BindableCardView;
@@ -53,10 +54,18 @@ public class PersonPresenter_casting extends Presenter {
 
         @Override
         protected void bind(Actor actor) {
-            Glide.with(getContext())
-                    .load(actor.getAvatar())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(mPosterIV);
+
+            if(actor.getAvatar() != null){
+                Glide.with(getContext())
+                        .load(Config.GLOBAL_URL + actor.getAvatar())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(mPosterIV);
+            }else {
+                Glide.with(getContext())
+                        .load(R.drawable.placeholder_profile)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(mPosterIV);
+            }
 
             title_tv.setText(actor.getLastName());
             sub_title.setText(actor.getFirstName());

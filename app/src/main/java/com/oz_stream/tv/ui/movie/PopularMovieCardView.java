@@ -4,6 +4,8 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.oz_stream.tv.Config;
@@ -44,10 +46,18 @@ public class PopularMovieCardView extends BindableCardView<Data> {
                 .into(movie_img);
 
         //photo de couverture diffuseur
-        Glide.with(getContext())
-                .load(Config.GLOBAL_URL + data.getDiffuser().getAvatarLink())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(diffuser_name);
+        if(data.getDiffuser().getAvatarLink() != null){
+            Glide.with(getContext())
+                    .load(Config.GLOBAL_URL + data.getDiffuser().getAvatarLink())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(diffuser_name);
+        }else {
+            Glide.with(getContext())
+                    .load(R.drawable.placeholder_profile)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(diffuser_name);
+        }
+
 
         //Nom de la vidéo
         movie_title.setText(data.getTitle());

@@ -91,11 +91,12 @@ public final class DataList {
     private static final String TAG_BIBLIOGRAPHIE = "bibliographie";
     //Photo
     private static final String TAG_PHOTO_LINK = "link";
-    /*
+
     //Episode
     private static final String TAG_EP_NAME = "name";
     private static final String TAG_EP_DESCRIPTION = "description";
 
+    /*
     //Saison
     private static final String TAG_SAISON_NAME = "name";
     private static final String TAG_SAISON_DESCRIPTION = "description";
@@ -160,7 +161,7 @@ public final class DataList {
     private static int count = 0;
 
     private static Diffuser diffus;
-    //private static List<Episode> episodeList;
+    private static List<Episode> episodeList;
     private static Photo tofs;
     private static BandeAnonce b_annonce;
     private static List<Actor> actorList;
@@ -180,7 +181,7 @@ public final class DataList {
             return list;
         }
         list = new ArrayList<>();
-        Map<String, String> urlPrefixMap = new HashMap<>();
+        //Map<String, String> urlPrefixMap = new HashMap<>();
         JSONObject jsonObj = new DataList().parseUrl(url);
         //Log.w("TAG", "setupMovies: " + jsonObj );
 
@@ -225,8 +226,8 @@ public final class DataList {
                 String diffuser_bibliographie = diffuserJsonObject.getString(TAG_BIBLIOGRAPHIE);
 
                 //Episodes
-                /*JSONArray episodesArrayList = datasJSONObject.getJSONArray(EPISODES);
-                if (null != episodesArrayList) {
+                JSONArray episodesArrayList = datasJSONObject.getJSONArray(EPISODES);
+                /*if (null != episodesArrayList) {
                     for (int j = 0; j < episodesArrayList.length(); j++) {
                         JSONObject episodesJSONObject = episodesArrayList.getJSONObject(j);
                         String episode_name = episodesJSONObject.getString(TAG_EP_NAME);
@@ -306,8 +307,8 @@ public final class DataList {
                 }.getType());
 
                 //CONVERT JSONARRAY TO LIST
-                /*episodeList = new Gson().fromJson(episodesArrayList.toString(), new TypeToken<List<Episode>>() {
-                }.getType());*/
+                episodeList = new Gson().fromJson(episodesArrayList.toString(), new TypeToken<List<Episode>>() {
+                }.getType());
                 actorList = new Gson().fromJson(actorsArrayList.toString(), new TypeToken<List<Actor>>() {
                 }.getType());
                 commentList = new Gson().fromJson(commentArrayList.toString(), new TypeToken<List<Comment>>() {
@@ -338,7 +339,7 @@ public final class DataList {
                         data_num_timelinelookbande,
                         data_num_popularity,
                         diffus,
-                        //episodeList,
+                        episodeList,
                         tofs,
                         b_annonce,
                         actorList,
@@ -373,7 +374,7 @@ public final class DataList {
             String popularity,
             //List<ThisUserStatVideo> this_user_stat_videos,
             Diffuser diffuser,
-            //List<Episode> episodes,
+            List<Episode> episodes,
             Photo photo,
             BandeAnonce bandeAnonce,
             List<Actor> actors,
@@ -404,7 +405,7 @@ public final class DataList {
         data.setPopularity(popularity);
         //data.setThis_user_stat_videos(this_user_stat_videos);
         data.setDiffuser(diffuser);
-        //data.setEpisodes(episodes);
+        data.setEpisodes(episodes);
         data.setPhoto(photo);
         data.setBande_anonce(bandeAnonce);
         data.setActors(actors);

@@ -106,10 +106,10 @@ public class Data implements Parcelable {
     private Diffuser diffuser = null;
     /*@SerializedName("language")
     @Expose
-    private String language = null;
+    private String language = null;*/
     @SerializedName("episodes")
     @Expose
-    private List<Episode> episodes = null;*/
+    private List<Episode> episodes = null;
     @SerializedName("photo")
     @Expose
     private Photo photo = null;
@@ -160,6 +160,7 @@ public class Data implements Parcelable {
         nber_timeLineLookBande = in.readString();
         popularity = in.readString();
         diffuser = in.readParcelable(Diffuser.class.getClassLoader());
+        episodes = in.createTypedArrayList(Episode.CREATOR);
         photo = in.readParcelable(Photo.class.getClassLoader());
         bande_anonce = in.readParcelable(BandeAnonce.class.getClassLoader());
         actors = in.createTypedArrayList(Actor.CREATOR);
@@ -195,6 +196,7 @@ public class Data implements Parcelable {
         dest.writeString(nber_timeLineLookBande);
         dest.writeString(popularity);
         dest.writeParcelable(diffuser, flags);
+        dest.writeTypedList(episodes);
         dest.writeParcelable(photo, flags);
         dest.writeParcelable(bande_anonce, flags);
         dest.writeTypedList(actors);
@@ -222,7 +224,6 @@ public class Data implements Parcelable {
             return new Data[size];
         }
     };
-
 
     public int getId() {
         return id;
@@ -398,6 +399,14 @@ public class Data implements Parcelable {
 
     public void setDiffuser(Diffuser diffuser) {
         this.diffuser = diffuser;
+    }
+
+    public List<Episode> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(List<Episode> episodes) {
+        this.episodes = episodes;
     }
 
     public Photo getPhoto() {

@@ -110,18 +110,18 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
     //private static final String HEADER_NAME_3 = "Séries";
 
     private static final long HEADER_ID_4 = 4;
-    //private static final String HEADER_NAME_4 = "Acteurs";
+    //private static final String HEADER_NAME_4 = "Live";
 
     private static final long HEADER_ID_5 = 5;
-    //private static final String HEADER_NAME_5 = "Paramètres";
+    //private static final String HEADER_NAME_7 = "Contactez nous";
 
     private static final long HEADER_ID_6 = 6;
-    //private static final String HEADER_NAME_6 = "Deconnexion";
+    //private static final String HEADER_NAME_6 = "Paramètres";
 
     private static final long HEADER_ID_7 = 7;
-    //private static final String HEADER_NAME_7 = "Contactez nous";
-    private static final long HEADER_ID_8 = 8;
-    //private static final String HEADER_NAME_8 = "Politique de Confidentialité";
+    //private static final String HEADER_NAME_7 = "Deconnexion";
+
+
     public GlideBackgroundManager glideBackgroundManager;
     private ArrayObjectAdapter mRowsAdapter;
     private static final String TAG = "MainFragment";
@@ -204,26 +204,22 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         PageRow pageRow3 = new PageRow(headerItem3);
         mRowsAdapter.add(pageRow3);
 
-        HeaderItem headerItem4 = new HeaderItem(HEADER_ID_4, getString(R.string.acteurs));
+        HeaderItem headerItem4 = new HeaderItem(HEADER_ID_4, getString(R.string.live));
         PageRow pageRow4 = new PageRow(headerItem4);
         mRowsAdapter.add(pageRow4);
 
-        HeaderItem headerItem5 = new HeaderItem(HEADER_ID_5, getString(R.string.parametres));
+        HeaderItem headerItem5 = new HeaderItem(HEADER_ID_5, getString(R.string.contactNous));
         PageRow pageRow5 = new PageRow(headerItem5);
         mRowsAdapter.add(pageRow5);
 
-
-        HeaderItem headerItem6 = new HeaderItem(HEADER_ID_6, getString(R.string.deconnexion));
+        HeaderItem headerItem6 = new HeaderItem(HEADER_ID_6, getString(R.string.parametres));
         PageRow pageRow6 = new PageRow(headerItem6);
         mRowsAdapter.add(pageRow6);
 
-        HeaderItem headerItem7 = new HeaderItem(HEADER_ID_7, getString(R.string.contactNous));
+        HeaderItem headerItem7 = new HeaderItem(HEADER_ID_7, getString(R.string.deconnexion));
         PageRow pageRow7 = new PageRow(headerItem7);
         mRowsAdapter.add(pageRow7);
 
-        HeaderItem headerItem8 = new HeaderItem(HEADER_ID_8, getString(R.string.policy));
-        PageRow pageRow8 = new PageRow(headerItem8);
-        mRowsAdapter.add(pageRow8);
     }
 
 
@@ -261,16 +257,14 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
                 return new Films(mBackgroundManager);
             } else if (row.getHeaderItem().getId() == HEADER_ID_3) {
                 return new Series(mBackgroundManager);
-            }/*else if (row.getHeaderItem().getId() == HEADER_ID_4) {
-                return new Actors();
-            }*/else if (row.getHeaderItem().getId() == HEADER_ID_5) {
-                return new setting();
-            }else if (row.getHeaderItem().getId() == HEADER_ID_6) {
-                return new Logout();
-            }else if (row.getHeaderItem().getId() == HEADER_ID_7) {
+            } else if (row.getHeaderItem().getId() == HEADER_ID_4) {
+                return new Live();
+            } else if (row.getHeaderItem().getId() == HEADER_ID_5) {
                 return new ContactUsWebView();
-            }else if (row.getHeaderItem().getId() == HEADER_ID_8) {
-                return new PolicyConfidentialityWebView();
+            }else if (row.getHeaderItem().getId() == HEADER_ID_6) {
+                return new setting();
+            }else if (row.getHeaderItem().getId() == HEADER_ID_7) {
+                return new Logout();
             }
 
             throw new IllegalArgumentException(String.format("Invalid row %s", rowObj));
@@ -301,17 +295,6 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         // rows - 4 - Liste des genres
         private static final int GENDERS = 4;
 
-        // rows - 5 - humour
-        private static final int HUMOUR = 5;
-
-        // rows - 6 - production cinaf
-        private static final int PRODUCTION_CINAF = 6;
-
-        // rows - 7 - action
-        private static final int ACTION = 7;
-
-        // rows - 8 - action
-        private static final int ROMANCE = 8;
 
         SparseArray<MovieRow> movieRowSparseArray;
 
@@ -331,8 +314,6 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             App.instance().appComponent().inject(this);
             createDataRows();
             createRows();
-
-            //fetchActorsMovies();
             fetchNewsMovies();
             return super.onCreateView(inflater, container, savedInstanceState);
         }
@@ -351,13 +332,8 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             super.onActivityCreated(savedInstanceState);
             //Toast.makeText(getActivity(), "2", Toast.LENGTH_SHORT).show();
             //prepareEntranceTransition();
-            //fetchSlideMovies();
-
 
             //fetchGendersMovies();
-
-            /*fetchHumourMovies();
-            fetchProductionCinafMovies();*/
             setupEventListeners1();
         }
 
@@ -367,9 +343,6 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
         public void onResume() {
             super.onResume();
             //Toast.makeText(getActivity(), "3", Toast.LENGTH_SHORT).show();
-
-            //fetchActionMovies();
-            //fetchRomanceMovies();
         }
 
         private void setupEventListeners1() {
@@ -431,40 +404,6 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
                     .setId(GENDERS)
                     .setAdapter(new ArrayObjectAdapter(moviePresenter))
                     .setTitle(getString(R.string.movie_gender))
-                    .setPage(1)
-            );
-
-
-            //row - 5 - create objects
-            movieRowSparseArray.put(HUMOUR, new MovieRow()
-                    .setId(HUMOUR)
-                    .setAdapter(new ArrayObjectAdapter(moviePresenter))
-                    .setTitle(getString(R.string.humour))
-                    .setPage(1)
-            );
-
-
-            //row - 6 - create objects
-            movieRowSparseArray.put(PRODUCTION_CINAF, new MovieRow()
-                    .setId(PRODUCTION_CINAF)
-                    .setAdapter(new ArrayObjectAdapter(moviePresenter))
-                    .setTitle(getString(R.string.productionOZSTREAM))
-                    .setPage(1)
-            );
-
-            //row - 7 - create objects
-            movieRowSparseArray.put(ACTION, new MovieRow()
-                    .setId(ACTION)
-                    .setAdapter(new ArrayObjectAdapter(moviePresenter))
-                    .setTitle(getString(R.string.action))
-                    .setPage(1)
-            );
-
-            //row - 8 - create objects
-            movieRowSparseArray.put(ROMANCE, new MovieRow()
-                    .setId(ROMANCE)
-                    .setAdapter(new ArrayObjectAdapter(moviePresenter))
-                    .setTitle(getString(R.string.romance))
                     .setPage(1)
             );
 
@@ -537,77 +476,6 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
                         //startEntranceTransition();
                     }, e -> Timber.e(e, "Error fetching drame movies: %s", e.getMessage()));
         }
-
-
-        /*private void fetchActorsMovies() {
-            theMovieDbAPI.getHomePage()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-                        //bindActorsResponse(response, ACCUEIL);
-                        //startEntranceTransition();
-                    }, e -> {
-                        Timber.e(e, "Error fetching now Actor movies: %s", e.getMessage());
-                    });
-        }
-
-
-        private void fetchHumourMovies() {
-            theMovieDbAPI.getHomePage()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-                        bindHumourResponse(response, HUMOUR);
-                        //startEntranceTransition();
-                    }, e -> Timber.e(e, "Error fetching Humour movies: %s", e.getMessage()));
-        }
-
-
-        private void fetchProductionCinafMovies() {
-            theMovieDbAPI.getHomePage()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-                        bindProductionCinafResponse(response, PRODUCTION_CINAF);
-                        //startEntranceTransition();
-                    }, e -> Timber.e(e, "Error fetching production cinaf movies: %s", e.getMessage()));
-        }
-
-
-        private void fetchActionMovies() {
-            theMovieDbAPI.getHomePage()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-                        bindActionResponse(response, ACTION);
-                        //startEntranceTransition();
-                    }, e -> Timber.e(e, "Error fetching action movies: %s", e.getMessage()));
-        }
-
-        private void fetchRomanceMovies(){
-            theMovieDbAPI.getHomePage()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(response -> {
-                        bindRomanceResponse(response, ROMANCE);
-                        //startEntranceTransition();
-                    }, e -> Timber.e(e, "Error fetching romance movies: %s", e.getMessage()));
-        }*/
-
-
-        /*private void bindActorsResponse(Root response, int id) {
-            Log.w("ACTOR", "bindActorsResponse: " + response.getActors() );
-            MovieRow movieRow = movieRowSparseArray.get(id);
-            movieRow.setPage(movieRow.getPage() + 1);
-            HeaderItem headerItem = new HeaderItem(movieRow.getTitle());
-            for(Actor actor : response.getActors()){
-                if(actor.getImage() != null){
-                    movieRow.getAdapter().add(actor);
-                }
-            }
-            rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
-        }*/
-
 
         //Avant Première
         private void bindPreviewResponse(Root response, int id) {
@@ -689,94 +557,6 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             }*/
             rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
         }
-
-        /*
-        private void bindHumourResponse(Root response, int id) {
-            Log.w("HUMOUR", "bindHumourResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
-            MovieRow movieRow = movieRowSparseArray.get(id);
-            movieRow.setPage(movieRow.getPage() + 1);
-            HeaderItem headerItem = new HeaderItem(movieRow.getTitle());
-            List<Genre> genres = response.getGenres();
-
-            //films les mieux notés (Poster)
-            for(Genre genre : genres){
-
-                if(genre.getTitle().trim().toLowerCase().equalsIgnoreCase("humour")){
-                    for (Poster poster : genre.getPosters()){
-                        if(poster.getImage() != null){
-                            movieRow.getAdapter().add(poster);
-                        }
-                    }
-                }
-            }
-            rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
-        }
-
-
-        private void bindProductionCinafResponse(Root response, int id) {
-            Log.w("PRODUCTION CINAF", "bindProductionCinafResponse: " + response.getGenres().get(0).getTitle().toLowerCase() );
-            MovieRow movieRow = movieRowSparseArray.get(id);
-            movieRow.setPage(movieRow.getPage() + 1);
-            HeaderItem headerItem = new HeaderItem(movieRow.getTitle());
-            List<Genre> genres = response.getGenres();
-
-            //films les mieux notés (Poster)
-            for(Genre genre : genres){
-
-                if(genre.getTitle().trim().toLowerCase().equalsIgnoreCase("production cinaf")){
-                    for (Poster poster : genre.getPosters()){
-                        if(poster.getImage() != null){
-                            movieRow.getAdapter().add(poster);
-                        }
-                    }
-                }
-            }
-            rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
-        }
-
-
-        private void bindActionResponse(Root response, int id) {
-            Log.w("ACTION", "bindActionResponse: " + response.getGenres().get(0).getTitle().toLowerCase());
-            MovieRow movieRow = movieRowSparseArray.get(id);
-            movieRow.setPage(movieRow.getPage() + 1);
-            HeaderItem headerItem = new HeaderItem(movieRow.getTitle());
-            List<Genre> genres = response.getGenres();
-
-            //films les mieux notés (Poster)
-            for(Genre genre : genres){
-
-                if(genre.getTitle().trim().toLowerCase().equalsIgnoreCase("action")){
-                    for (Poster poster : genre.getPosters()){
-                        if(poster.getImage() != null){
-                            movieRow.getAdapter().add(poster);
-                        }
-                    }
-                }
-            }
-            rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
-        }
-
-
-        private void bindRomanceResponse(Root response, int id) {
-            Log.w("ACTION", "bindRomancenResponse: " + response.getGenres().get(0).getTitle().toLowerCase());
-            MovieRow movieRow = movieRowSparseArray.get(id);
-            movieRow.setPage(movieRow.getPage() + 1);
-            HeaderItem headerItem = new HeaderItem(movieRow.getTitle());
-            List<Genre> genres = response.getGenres();
-
-            //films les mieux notés (Poster)
-            for(Genre genre : genres){
-
-                if(genre.getTitle().trim().toLowerCase().equalsIgnoreCase("romance")){
-                    for (Poster poster : genre.getPosters()){
-                        if(poster.getImage() != null){
-                            movieRow.getAdapter().add(poster);
-                        }
-                    }
-                }
-            }
-            rowsAdapter.add(new CardListRow(headerItem, movieRow.getAdapter(),response));
-        }*/
 
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item, RowPresenter.ViewHolder rowViewHolder, Row row) {
@@ -1175,6 +955,82 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
     }
 
 
+    public static class Live extends Fragment implements MainFragmentAdapterProvider {
+        private MainFragmentAdapter mMainFragmentAdapter = new MainFragmentAdapter(this);
+        private WebView mWebview;
+
+        @Override
+        public MainFragmentAdapter getMainFragmentAdapter() {
+            return mMainFragmentAdapter;
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            getMainFragmentAdapter().getFragmentHost().showTitleView(false);
+        }
+
+        @Override
+        public View onCreateView(
+                LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            FrameLayout root = new FrameLayout(getActivity());
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT);
+            lp.setMarginStart(32);
+            mWebview = new WebView(getActivity());
+            mWebview.setWebViewClient(new WebViewClient());
+            mWebview.getSettings().setJavaScriptEnabled(true);
+            root.addView(mWebview, lp);
+            return root;
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            mWebview.loadUrl("https://ozstream.tv");
+            getMainFragmentAdapter().getFragmentHost().notifyDataReady(getMainFragmentAdapter());
+        }
+    }
+
+    public static class ContactUsWebView extends Fragment implements MainFragmentAdapterProvider {
+        private MainFragmentAdapter mMainFragmentAdapter = new MainFragmentAdapter(this);
+        private WebView mWebview;
+
+        @Override
+        public MainFragmentAdapter getMainFragmentAdapter() {
+            return mMainFragmentAdapter;
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            getMainFragmentAdapter().getFragmentHost().showTitleView(false);
+        }
+
+        @Override
+        public View onCreateView(
+                LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            FrameLayout root = new FrameLayout(getActivity());
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT);
+            lp.setMarginStart(32);
+            mWebview = new WebView(getActivity());
+            mWebview.setWebViewClient(new WebViewClient());
+            mWebview.getSettings().setJavaScriptEnabled(true);
+            root.addView(mWebview, lp);
+            return root;
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            mWebview.loadUrl("https://ozstream.tv");
+            getMainFragmentAdapter().getFragmentHost().notifyDataReady(getMainFragmentAdapter());
+        }
+    }
+
 
     public static class setting extends RowsFragment implements OnItemViewClickedListener{
 
@@ -1306,8 +1162,6 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
 
 
 
-
-
     public static class Logout extends Fragment implements MainFragmentAdapterProvider{
 
         private static String TAG= "Logout";
@@ -1362,79 +1216,5 @@ public class MainFragment extends BrowseFragment implements LoaderManager.Loader
             alertDialog.show();
         }
 
-    }
-    public static class ContactUsWebView extends Fragment implements MainFragmentAdapterProvider {
-        private MainFragmentAdapter mMainFragmentAdapter = new MainFragmentAdapter(this);
-        private WebView mWebview;
-
-        @Override
-        public MainFragmentAdapter getMainFragmentAdapter() {
-            return mMainFragmentAdapter;
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            getMainFragmentAdapter().getFragmentHost().showTitleView(false);
-        }
-
-        @Override
-        public View onCreateView(
-                LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            FrameLayout root = new FrameLayout(getActivity());
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT);
-            lp.setMarginStart(32);
-            mWebview = new WebView(getActivity());
-            mWebview.setWebViewClient(new WebViewClient());
-            mWebview.getSettings().setJavaScriptEnabled(true);
-            root.addView(mWebview, lp);
-            return root;
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            mWebview.loadUrl("https://ozstream.tv");
-            getMainFragmentAdapter().getFragmentHost().notifyDataReady(getMainFragmentAdapter());
-        }
-    }
-    public static class PolicyConfidentialityWebView extends Fragment implements MainFragmentAdapterProvider {
-        private MainFragmentAdapter mMainFragmentAdapter = new MainFragmentAdapter(this);
-        private WebView mWebview;
-
-        @Override
-        public MainFragmentAdapter getMainFragmentAdapter() {
-            return mMainFragmentAdapter;
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            getMainFragmentAdapter().getFragmentHost().showTitleView(false);
-        }
-
-        @Override
-        public View onCreateView(
-                LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            FrameLayout root = new FrameLayout(getActivity());
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT);
-            lp.setMarginStart(32);
-            mWebview = new WebView(getActivity());
-            mWebview.setWebViewClient(new WebViewClient());
-            mWebview.getSettings().setJavaScriptEnabled(true);
-            root.addView(mWebview, lp);
-            return root;
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            mWebview.loadUrl("https://ozstream.tv");
-            getMainFragmentAdapter().getFragmentHost().notifyDataReady(getMainFragmentAdapter());
-        }
     }
 }

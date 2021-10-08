@@ -5,6 +5,7 @@
     android:layout_width="180dp"
     android:layout_height="180dp"
     android:weightSum="1"
+    android:background="@color/colorAccent"
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView

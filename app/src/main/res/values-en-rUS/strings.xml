@@ -48,7 +48,8 @@
         <item>@string/accueil</item>
         <item>@string/films</item>
         <item>@string/serie</item>
-        <item>@string/acteurs</item>
+        <item>@string/live</item>
+        <item>@string/contactNous</item>
         <item>@string/parametres</item>
         <item>@string/deconnexion</item>
     </string-array>
@@ -57,9 +58,10 @@
     <string-array name="icons">
         <item>@drawable/ic_baseline_home_24</item>
         <item>@drawable/ic_baseline_local_movies_24</item>
+        <item>@drawable/ic_baseline_movie_filter_24</item>
         <item>@drawable/ic_baseline_live_tv_24</item>
-        <item>@drawable/ic_baseline_recent_actors_24</item>
-        <item>@drawable/ic_baseline_video_settings_24</item>
+        <item>@drawable/ic_baseline_contact_mail_24</item>
+        <item>@drawable/ic_baseline_settings_24</item>
         <item>@drawable/ic_baseline_exit_to_app_24</item>
     </string-array>
 
@@ -108,8 +110,18 @@
     <string name="favoris">Favorites</string>
     <string name="biographie">Biography</string>
     <string name="recherche">Research</string>
+    <string name="title_activity_play">Play</string>
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 
     <string name="avant_premiere">Preview</string>
     <string name="news">News</string>
     <string name="movie_gender">Gender movie</string>
+    <string name="live">Direct</string>
 </resources>
