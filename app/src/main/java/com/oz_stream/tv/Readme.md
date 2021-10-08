@@ -12,7 +12,7 @@
 -Films
 -Série
 -Détail du média
--Vidéos pupulaire
+-Vidéos populaire
 -Casting
 -Bande d'annonce
 -Changer de langue
