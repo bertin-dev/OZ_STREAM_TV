@@ -12,32 +12,46 @@ public class Saison {
     private int id;
     @SerializedName("name")
     @Expose
-    private String name;
+    private String name = null;
     @SerializedName("description")
     @Expose
-    private String description;
+    private String description = null;
     @SerializedName("created_at")
     @Expose
-    private String created_at;
+    private String created_at = null;
     @SerializedName("updated_at")
     @Expose
-    private String updated_at;
+    private String updated_at = null;
     @SerializedName("user_id")
     @Expose
-    private String user_id;
+    private String user_id = null;
     @SerializedName("serie_id")
     @Expose
-    private String serie_id;
+    private String serie_id = null;
+    @SerializedName("photo_id")
+    @Expose
+    public String photo_id = null;
+    @SerializedName("bande_anonce_id")
+    @Expose
+    public String bande_anonce_id = null;
     @SerializedName("created_by")
     @Expose
-    private String created_by;
+    private String created_by = null;
     @SerializedName("updated_by")
     @Expose
-    private String updated_by;
+    private String updated_by = null;
+    @SerializedName("genders")
+    @Expose
+    private List<Gender> genders = null;
     @SerializedName("serie")
     @Expose
-    private Serie serie;
-
+    private Serie serie = null;
+    @SerializedName("photo")
+    @Expose
+    private Photo photo = null;
+    @SerializedName("bande_anonce")
+    @Expose
+    private BandeAnonce bande_anonce = null;
 
     public int getId() {
         return id;
@@ -95,6 +109,22 @@ public class Saison {
         this.serie_id = serie_id;
     }
 
+    public String getPhoto_id() {
+        return photo_id;
+    }
+
+    public void setPhoto_id(String photo_id) {
+        this.photo_id = photo_id;
+    }
+
+    public String getBande_anonce_id() {
+        return bande_anonce_id;
+    }
+
+    public void setBande_anonce_id(String bande_anonce_id) {
+        this.bande_anonce_id = bande_anonce_id;
+    }
+
     public String getCreated_by() {
         return created_by;
     }
@@ -111,11 +141,35 @@ public class Saison {
         this.updated_by = updated_by;
     }
 
+    public List<Gender> getGenders() {
+        return genders;
+    }
+
+    public void setGenders(List<Gender> genders) {
+        this.genders = genders;
+    }
+
     public Serie getSerie() {
         return serie;
     }
 
     public void setSerie(Serie serie) {
         this.serie = serie;
+    }
+
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+
+    public BandeAnonce getBande_anonce() {
+        return bande_anonce;
+    }
+
+    public void setBande_anonce(BandeAnonce bande_anonce) {
+        this.bande_anonce = bande_anonce;
     }
 }

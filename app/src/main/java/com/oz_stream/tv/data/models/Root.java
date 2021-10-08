@@ -1,36 +1,66 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Root {
+public class Root implements Parcelable {
 
     @SerializedName("news")
     @Expose
-    private News news;
+    private News news = null;
     @SerializedName("previews")
     @Expose
-    private Previews previews;
+    private Previews previews = null;
     @SerializedName("populars")
     @Expose
-    private Populars populars;
-    @SerializedName("willbePostes")
-    @Expose
-    private WillbePostes willbePostes;
+    private Populars populars = null;
     @SerializedName("frees")
     @Expose
-    private Frees frees;
-    @SerializedName("gender")
+    private Frees frees = null;
+    @SerializedName("genders")
     @Expose
-    private Gender gender;
-    @SerializedName("category")
+    private List<Gender> genders = null;
+    @SerializedName("categories")
     @Expose
-    private List<Category> category;
-    @SerializedName("playlist")
+    private Categories categories = null;
+    @SerializedName("playlists")
     @Expose
-    private List<Playlist> playlist;
+    private Playlist playlists = null;
+
+    protected Root(Parcel in) {
+        news = in.readParcelable(News.class.getClassLoader());
+        genders = in.createTypedArrayList(Gender.CREATOR);
+        categories = in.readParcelable(Categories.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(news, flags);
+        dest.writeTypedList(genders);
+        dest.writeParcelable(categories, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Root> CREATOR = new Creator<Root>() {
+        @Override
+        public Root createFromParcel(Parcel in) {
+            return new Root(in);
+        }
+
+        @Override
+        public Root[] newArray(int size) {
+            return new Root[size];
+        }
+    };
 
 
     public News getNews() {
@@ -57,14 +87,6 @@ public class Root {
         this.populars = populars;
     }
 
-    public WillbePostes getWillbePostes() {
-        return willbePostes;
-    }
-
-    public void setWillbePostes(WillbePostes willbePostes) {
-        this.willbePostes = willbePostes;
-    }
-
     public Frees getFrees() {
         return frees;
     }
@@ -73,27 +95,31 @@ public class Root {
         this.frees = frees;
     }
 
-    public Gender getGender() {
-        return gender;
+    public List<Gender> getGenders() {
+        return genders;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    public void setGenders(List<Gender> genders) {
+        this.genders = genders;
     }
 
-    public List<Category> getCategory() {
-        return category;
+    public Categories getCategories() {
+        return categories;
     }
 
-    public void setCategory(List<Category> category) {
-        this.category = category;
+    public void setCategories(Categories categories) {
+        this.categories = categories;
     }
 
-    public List<Playlist> getPlaylist() {
-        return playlist;
+    public Playlist getPlaylists() {
+        return playlists;
     }
 
-    public void setPlaylist(List<Playlist> playlist) {
-        this.playlist = playlist;
+    public void setPlaylists(Playlist playlists) {
+        this.playlists = playlists;
+    }
+
+    public static Creator<Root> getCREATOR() {
+        return CREATOR;
     }
 }

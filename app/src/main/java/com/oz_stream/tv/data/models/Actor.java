@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Actor implements Parcelable {
 
     @SerializedName("id")
@@ -47,6 +49,9 @@ public class Actor implements Parcelable {
     @SerializedName("pivot")
     @Expose
     private Pivot pivot;
+    @SerializedName("medias")
+    @Expose
+    private List<Media> medias;
 
     private PaletteColors paletteColors;
     private String director;
@@ -69,8 +74,38 @@ public class Actor implements Parcelable {
         updated_at = in.readString();
         created_by = in.readString();
         updated_by = in.readString();
+        medias = in.createTypedArrayList(Media.CREATOR);
         paletteColors = in.readParcelable(PaletteColors.class.getClassLoader());
         director = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(birthDate);
+        dest.writeString(height);
+        dest.writeString(bibliographie);
+        dest.writeString(avatar);
+        dest.writeString(phone);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(created_by);
+        dest.writeString(updated_by);
+        dest.writeTypedList(medias);
+        dest.writeParcelable(paletteColors, flags);
+        dest.writeString(director);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Actor> CREATOR = new Creator<Actor>() {
@@ -84,34 +119,6 @@ public class Actor implements Parcelable {
             return new Actor[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        if (id == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(id);
-        }
-        parcel.writeString(firstName);
-        parcel.writeString(lastName);
-        parcel.writeString(birthDate);
-        parcel.writeString(height);
-        parcel.writeString(bibliographie);
-        parcel.writeString(avatar);
-        parcel.writeString(phone);
-        parcel.writeString(created_at);
-        parcel.writeString(updated_at);
-        parcel.writeString(created_by);
-        parcel.writeString(updated_by);
-        parcel.writeParcelable(paletteColors, i);
-        parcel.writeString(director);
-    }
 
     public Integer getId() {
         return id;
@@ -217,6 +224,14 @@ public class Actor implements Parcelable {
         this.pivot = pivot;
     }
 
+    public List<Media> getMedias() {
+        return medias;
+    }
+
+    public void setMedias(List<Media> medias) {
+        this.medias = medias;
+    }
+
     public PaletteColors getPaletteColors() {
         return paletteColors;
     }
@@ -233,6 +248,20 @@ public class Actor implements Parcelable {
         this.director = director;
     }
 
+    public static Creator<Actor> getCREATOR() {
+        return CREATOR;
+    }
+
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", avatar='" + avatar + '\'' +
+                '}';
+    }
 
 }
 

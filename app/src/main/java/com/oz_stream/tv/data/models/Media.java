@@ -1,129 +1,234 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Media {
+public class Media implements Parcelable {
 
     @SerializedName("id")
     @Expose
     private int id;
     @SerializedName("title")
     @Expose
-    private String title;
+    private String title = null;
     @SerializedName("description")
     @Expose
-    private String description;
+    private String description = null;
     @SerializedName("isPreview")
     @Expose
-    private String isPreview;
+    private String isPreview = null;
     @SerializedName("isComming")
     @Expose
-    private String isComming;
+    private String isComming = null;
     @SerializedName("type")
     @Expose
-    private String type;
+    private String type = null;
     @SerializedName("status")
     @Expose
-    private String status;
+    private String status = null;
     @SerializedName("isFree")
     @Expose
-    private String isFree;
+    private String isFree = null;
     @SerializedName("credit")
     @Expose
-    private String credit;
+    private String credit = null;
     @SerializedName("showAt")
     @Expose
-    private String showAt;
+    private String showAt = null;
     @SerializedName("unavailableAt")
     @Expose
-    private String unavailableAt;
+    private String unavailableAt = null;
     @SerializedName("link")
     @Expose
-    private String link;
+    private String link = null;
     @SerializedName("nber_like")
     @Expose
-    private String nber_like;
+    private String nber_like = null;
     @SerializedName("nber_dislike")
     @Expose
-    private String nber_dislike;
+    private String nber_dislike = null;
     @SerializedName("nber_download")
     @Expose
-    private String nber_download;
+    private String nber_download = null;
     @SerializedName("stars")
     @Expose
-    private String stars;
+    private String stars = null;
     @SerializedName("nber_bandeLooked")
     @Expose
-    private String nber_bandeLooked;
+    private String nber_bandeLooked = null;
     @SerializedName("nber_streamLooked")
     @Expose
-    private String nber_streamLooked;
+    private String nber_streamLooked = null;
     @SerializedName("nber_timeLineLookStream")
     @Expose
-    private String nber_timeLineLookStream;
+    private String nber_timeLineLookStream = null;
     @SerializedName("nber_timeLineLookBande")
     @Expose
-    private String nber_timeLineLookBande;
+    private String nber_timeLineLookBande = null;
     @SerializedName("popularity")
     @Expose
-    private String popularity;
+    private String popularity = null;
     @SerializedName("created_at")
     @Expose
-    private String created_at;
+    private String created_at = null;
     @SerializedName("updated_at")
     @Expose
-    private String updated_at;
+    private String updated_at = null;
     @SerializedName("user_id")
     @Expose
-    private String user_id;
+    private String user_id = null;
     @SerializedName("language_id")
     @Expose
-    private String language_id;
+    private String language_id = null;
     @SerializedName("photo_id")
     @Expose
-    private String photo_id;
+    private String photo_id = null;
     @SerializedName("bande_anonce_id")
     @Expose
-    private String bande_anonce_id;
+    private String bande_anonce_id = null;
     @SerializedName("created_by")
     @Expose
-    private String created_by;
+    private String created_by = null;
     @SerializedName("updated_by")
     @Expose
-    private String updated_by;
+    private String updated_by = null;
     @SerializedName("pivot")
     @Expose
-    private Pivot pivot;
-    @SerializedName("this_user_stat_videos")
-    @Expose
-    private List<ThisUserStatVideo> this_user_stat_videos;
+    private Pivot pivot = null;
     @SerializedName("diffuser")
     @Expose
-    private Diffuser diffuser;
+    private Diffuser diffuser = null;
     @SerializedName("language")
     @Expose
-    private String language;
+    private String language = null;
     @SerializedName("episodes")
     @Expose
-    private List<Episode> episodes;
+    private List<Episode> episodes = null;
     @SerializedName("photo")
     @Expose
-    private Photo photo;
+    private Photo photo = null;
     @SerializedName("bande_anonce")
     @Expose
-    private BandeAnonce bande_anonce;
+    private BandeAnonce bande_anonce = null;
     @SerializedName("actors")
     @Expose
-    private List<Actor> actors;
+    private List<Actor> actors = null;
     @SerializedName("comments")
     @Expose
-    private List<Comment> comments;
+    private List<Comment> comments = null;
+    @SerializedName("category")
+    @Expose
+    private Categories category = null;
     @SerializedName("genders")
     @Expose
-    private List<Gender> genders;
+    private List<Gender> genders = null;
+
+
+    protected Media(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        description = in.readString();
+        isPreview = in.readString();
+        isComming = in.readString();
+        type = in.readString();
+        status = in.readString();
+        isFree = in.readString();
+        credit = in.readString();
+        showAt = in.readString();
+        unavailableAt = in.readString();
+        link = in.readString();
+        nber_like = in.readString();
+        nber_dislike = in.readString();
+        nber_download = in.readString();
+        stars = in.readString();
+        nber_bandeLooked = in.readString();
+        nber_streamLooked = in.readString();
+        nber_timeLineLookStream = in.readString();
+        nber_timeLineLookBande = in.readString();
+        popularity = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        user_id = in.readString();
+        language_id = in.readString();
+        photo_id = in.readString();
+        bande_anonce_id = in.readString();
+        created_by = in.readString();
+        updated_by = in.readString();
+        diffuser = in.readParcelable(Diffuser.class.getClassLoader());
+        language = in.readString();
+        episodes = in.createTypedArrayList(Episode.CREATOR);
+        photo = in.readParcelable(Photo.class.getClassLoader());
+        bande_anonce = in.readParcelable(BandeAnonce.class.getClassLoader());
+        actors = in.createTypedArrayList(Actor.CREATOR);
+        comments = in.createTypedArrayList(Comment.CREATOR);
+        category = in.readParcelable(Categories.class.getClassLoader());
+        genders = in.createTypedArrayList(Gender.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(isPreview);
+        dest.writeString(isComming);
+        dest.writeString(type);
+        dest.writeString(status);
+        dest.writeString(isFree);
+        dest.writeString(credit);
+        dest.writeString(showAt);
+        dest.writeString(unavailableAt);
+        dest.writeString(link);
+        dest.writeString(nber_like);
+        dest.writeString(nber_dislike);
+        dest.writeString(nber_download);
+        dest.writeString(stars);
+        dest.writeString(nber_bandeLooked);
+        dest.writeString(nber_streamLooked);
+        dest.writeString(nber_timeLineLookStream);
+        dest.writeString(nber_timeLineLookBande);
+        dest.writeString(popularity);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(user_id);
+        dest.writeString(language_id);
+        dest.writeString(photo_id);
+        dest.writeString(bande_anonce_id);
+        dest.writeString(created_by);
+        dest.writeString(updated_by);
+        dest.writeParcelable(diffuser, flags);
+        dest.writeString(language);
+        dest.writeTypedList(episodes);
+        dest.writeParcelable(photo, flags);
+        dest.writeParcelable(bande_anonce, flags);
+        dest.writeTypedList(actors);
+        dest.writeTypedList(comments);
+        dest.writeParcelable(category, flags);
+        dest.writeTypedList(genders);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Media> CREATOR = new Creator<Media>() {
+        @Override
+        public Media createFromParcel(Parcel in) {
+            return new Media(in);
+        }
+
+        @Override
+        public Media[] newArray(int size) {
+            return new Media[size];
+        }
+    };
+
 
     public int getId() {
         return id;
@@ -365,14 +470,6 @@ public class Media {
         this.pivot = pivot;
     }
 
-    public List<ThisUserStatVideo> getThis_user_stat_videos() {
-        return this_user_stat_videos;
-    }
-
-    public void setThis_user_stat_videos(List<ThisUserStatVideo> this_user_stat_videos) {
-        this.this_user_stat_videos = this_user_stat_videos;
-    }
-
     public Diffuser getDiffuser() {
         return diffuser;
     }
@@ -429,11 +526,23 @@ public class Media {
         this.comments = comments;
     }
 
+    public Categories getCategory() {
+        return category;
+    }
+
+    public void setCategory(Categories category) {
+        this.category = category;
+    }
+
     public List<Gender> getGenders() {
         return genders;
     }
 
     public void setGenders(List<Gender> genders) {
         this.genders = genders;
+    }
+
+    public static Creator<Media> getCREATOR() {
+        return CREATOR;
     }
 }

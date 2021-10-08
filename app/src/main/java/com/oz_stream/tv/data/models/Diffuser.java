@@ -1,9 +1,12 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Diffuser {
+public class Diffuser implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -41,15 +44,25 @@ public class Diffuser {
     @Expose
     private String cardNumber = null;
 
-    @SerializedName("codeTv")
+    @SerializedName("credit")
     @Expose
-    private String codeTv = null;
+    private String credit = null;
 
+    @SerializedName("maxDevice")
+    @Expose
+    private String maxDevice = null;
+
+    @SerializedName("tokenSpace")
+    @Expose
+    private String tokenSpace = null;
 
     @SerializedName("fcm-token")
     @Expose
     private String fcmToken = null;
 
+    @SerializedName("AvatarLink")
+    @Expose
+    private String AvatarLink = null;
     @SerializedName("referent")
     @Expose
     private String referent = null;
@@ -57,8 +70,6 @@ public class Diffuser {
     @SerializedName("accountStatus")
     @Expose
     private String accountStatus = null;
-
-
     @SerializedName("avatarLink")
     @Expose
     private String avatarLink = null;
@@ -111,6 +122,97 @@ public class Diffuser {
     @Expose
     private String updated_by = null;
 
+
+    protected Diffuser(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readInt();
+        }
+        firstName = in.readString();
+        lastName = in.readString();
+        sex = in.readString();
+        birthDate = in.readString();
+        email = in.readString();
+        email_verified_at = in.readString();
+        phone = in.readString();
+        cardNumber = in.readString();
+        credit = in.readString();
+        maxDevice = in.readString();
+        tokenSpace = in.readString();
+        fcmToken = in.readString();
+        AvatarLink = in.readString();
+        referent = in.readString();
+        accountStatus = in.readString();
+        avatarLink = in.readString();
+        cover = in.readString();
+        bibliographie = in.readString();
+        update_role_at = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        language_id = in.readString();
+        country_id = in.readString();
+        town_id = in.readString();
+        role_id = in.readString();
+        role_given_by = in.readString();
+        created_by = in.readString();
+        updated_by = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (id == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(id);
+        }
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(sex);
+        dest.writeString(birthDate);
+        dest.writeString(email);
+        dest.writeString(email_verified_at);
+        dest.writeString(phone);
+        dest.writeString(cardNumber);
+        dest.writeString(credit);
+        dest.writeString(maxDevice);
+        dest.writeString(tokenSpace);
+        dest.writeString(fcmToken);
+        dest.writeString(AvatarLink);
+        dest.writeString(referent);
+        dest.writeString(accountStatus);
+        dest.writeString(avatarLink);
+        dest.writeString(cover);
+        dest.writeString(bibliographie);
+        dest.writeString(update_role_at);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(language_id);
+        dest.writeString(country_id);
+        dest.writeString(town_id);
+        dest.writeString(role_id);
+        dest.writeString(role_given_by);
+        dest.writeString(created_by);
+        dest.writeString(updated_by);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Diffuser> CREATOR = new Creator<Diffuser>() {
+        @Override
+        public Diffuser createFromParcel(Parcel in) {
+            return new Diffuser(in);
+        }
+
+        @Override
+        public Diffuser[] newArray(int size) {
+            return new Diffuser[size];
+        }
+    };
 
     public Integer getId() {
         return id;
@@ -184,12 +286,28 @@ public class Diffuser {
         this.cardNumber = cardNumber;
     }
 
-    public String getCodeTv() {
-        return codeTv;
+    public String getCredit() {
+        return credit;
     }
 
-    public void setCodeTv(String codeTv) {
-        this.codeTv = codeTv;
+    public void setCredit(String credit) {
+        this.credit = credit;
+    }
+
+    public String getMaxDevice() {
+        return maxDevice;
+    }
+
+    public void setMaxDevice(String maxDevice) {
+        this.maxDevice = maxDevice;
+    }
+
+    public String getTokenSpace() {
+        return tokenSpace;
+    }
+
+    public void setTokenSpace(String tokenSpace) {
+        this.tokenSpace = tokenSpace;
     }
 
     public String getFcmToken() {
@@ -200,28 +318,12 @@ public class Diffuser {
         this.fcmToken = fcmToken;
     }
 
-    public String getReferent() {
-        return referent;
-    }
-
-    public void setReferent(String referent) {
-        this.referent = referent;
-    }
-
-    public String getAccountStatus() {
-        return accountStatus;
-    }
-
-    public void setAccountStatus(String accountStatus) {
-        this.accountStatus = accountStatus;
-    }
-
     public String getAvatarLink() {
-        return avatarLink;
+        return AvatarLink;
     }
 
     public void setAvatarLink(String avatarLink) {
-        this.avatarLink = avatarLink;
+        AvatarLink = avatarLink;
     }
 
     public String getCover() {
@@ -318,5 +420,25 @@ public class Diffuser {
 
     public void setUpdated_by(String updated_by) {
         this.updated_by = updated_by;
+    }
+
+    public static Creator<Diffuser> getCREATOR() {
+        return CREATOR;
+    }
+
+    public String getReferent() {
+        return referent;
+    }
+
+    public void setReferent(String referent) {
+        this.referent = referent;
+    }
+
+    public String getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(String accountStatus) {
+        this.accountStatus = accountStatus;
     }
 }

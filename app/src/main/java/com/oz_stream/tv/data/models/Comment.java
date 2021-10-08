@@ -1,38 +1,83 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Comment {
+public class Comment implements Parcelable {
 
     @SerializedName("id")
     @Expose
-    public int id;
+    private int id;
     @SerializedName("content")
     @Expose
-    public String content;
+    private String content = null;
     @SerializedName("isValidated")
     @Expose
-    public String isValidated;
+    private String isValidated = null;
     @SerializedName("created_at")
     @Expose
-    public String created_at;
+    private String created_at = null;
     @SerializedName("updated_at")
     @Expose
-    public String updated_at;
+    private String updated_at = null;
     @SerializedName("media_id")
     @Expose
-    public String media_id;
+    private String media_id = null;
     @SerializedName("user_id")
     @Expose
-    public String user_id;
+    private String user_id = null;
     @SerializedName("comment_reply_id")
     @Expose
-    public String comment_reply_id;
+    private String comment_reply_id = null;
     @SerializedName("comments_reply")
     @Expose
-    public String comments_reply;
+    private String comments_reply = null;
 
+
+    protected Comment(Parcel in) {
+        id = in.readInt();
+        content = in.readString();
+        isValidated = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        media_id = in.readString();
+        user_id = in.readString();
+        comment_reply_id = in.readString();
+        comments_reply = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(content);
+        dest.writeString(isValidated);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(media_id);
+        dest.writeString(user_id);
+        dest.writeString(comment_reply_id);
+        dest.writeString(comments_reply);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Comment> CREATOR = new Creator<Comment>() {
+        @Override
+        public Comment createFromParcel(Parcel in) {
+            return new Comment(in);
+        }
+
+        @Override
+        public Comment[] newArray(int size) {
+            return new Comment[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -104,5 +149,9 @@ public class Comment {
 
     public void setComments_reply(String comments_reply) {
         this.comments_reply = comments_reply;
+    }
+
+    public static Creator<Comment> getCREATOR() {
+        return CREATOR;
     }
 }

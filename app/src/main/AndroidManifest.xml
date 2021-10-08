@@ -3,23 +3,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.oz_stream.tv">
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> -->
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
     <uses-feature
         android:name="android.software.leanback"
         android:required="true" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
 
     <application
         android:name=".App"
         android:allowBackup="true"
         android:banner="@drawable/banner"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo_official"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.OZ_STREAM_TV">
+        <!--android:usesCleartextTraffic="true"-->
+
+        <activity
+            android:name=".ui.player.caster.PlaybackActivity"
+            android:exported="true"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|layoutDirection"
+            android:launchMode="singleTask"
+            android:resizeableActivity="true"
+            android:theme="@style/Theme.Leanback"
+            android:supportsPictureInPicture="true">
+
+            <intent-filter>
+                <action android:name="com.google.android.gms.cast.tv.action.LOAD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- Uncomment and populate data fields to enable load by entity deeplinks -->
+            <!--
+            intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"/>
+                <data android:host="YOUR-DEEPLINK-HOST-URL"/>
+                <data android:pathPattern=".*"/>
+            </intent-filter
+            -->
+
+        </activity>
+        <activity
+            android:name=".ui.player.caster.PlaybackTrailerActivity"
+            android:exported="true"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|layoutDirection"
+            android:launchMode="singleTask"
+            android:resizeableActivity="true"
+            android:theme="@style/Theme.Leanback"
+            android:supportsPictureInPicture="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.cast.tv.action.LOAD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.player.EmbedActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|layoutDirection"
+            android:exported="true"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.player.PlayerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.player.Play"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|layoutDirection"
+            android:exported="true"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.publish_channel.ChannelPublishActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Leanback.GuidedStep" />
+        <activity
+            android:name=".ui.dialog.DialogActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Leanback.GuidedStep" />
+        <activity
+            android:name=".ui.detail.DetailActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.detail.DetailDataActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.main.AuthencateCodeQR"
             android:exported="true" />
@@ -28,31 +106,38 @@
             android:exported="true" />
         <activity
             android:name=".ui.main.SplashScreen"
+            android:banner="@drawable/banner"
             android:exported="true"
+            android:icon="@drawable/icon"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:logo="@mipmap/logo_official"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="com.google.android.gms.cast.tv.action.LAUNCH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:banner="@drawable/app_icon_your_company"
+            android:name=".ui.main.MainActivity"
+            android:banner="@drawable/banner"
             android:exported="true"
-            android:icon="@drawable/app_icon_your_company"
+            android:icon="@drawable/icon"
             android:label="@string/app_name"
-            android:logo="@drawable/app_icon_your_company"
+            android:logo="@mipmap/logo_official"
             android:screenOrientation="landscape" />
-        <activity
-            android:name=".DetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PlaybackActivity"
-            android:exported="false" />
-        <activity
-            android:name=".BrowseErrorActivity"
-            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.cast.tv.RECEIVER_OPTIONS_PROVIDER_CLASS_NAME"
+            android:value="com.oz_stream.tv.CastReceiverOptionsProvider" />
     </application>
 
 </manifest>

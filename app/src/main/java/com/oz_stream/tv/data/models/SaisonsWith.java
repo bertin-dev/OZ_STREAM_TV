@@ -1,42 +1,90 @@
 package com.oz_stream.tv.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class SaisonsWith {
+public class SaisonsWith implements Parcelable {
 
     @SerializedName("id")
     @Expose
     private int id;
     @SerializedName("name")
     @Expose
-    private String name;
+    private String name = null;
     @SerializedName("description")
     @Expose
-    private Object description;
+    private String description = null;
     @SerializedName("created_at")
     @Expose
-    private String created_at;
+    private String created_at = null;
     @SerializedName("updated_at")
     @Expose
-    private String updated_at;
+    private String updated_at = null;
     @SerializedName("user_id")
     @Expose
-    private String user_id;
+    private String user_id = null;
     @SerializedName("serie_id")
     @Expose
-    private String serie_id;
+    private String serie_id = null;
     @SerializedName("created_by")
     @Expose
-    private String created_by;
+    private String created_by = null;
     @SerializedName("updated_by")
     @Expose
-    private String updated_by;
+    private String updated_by = null;
     @SerializedName("episode")
     @Expose
-    private List<Episode> episode;
+    private List<Episode> episode = null;
+
+
+    protected SaisonsWith(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        description = in.readString();
+        created_at = in.readString();
+        updated_at = in.readString();
+        user_id = in.readString();
+        serie_id = in.readString();
+        created_by = in.readString();
+        updated_by = in.readString();
+        episode = in.createTypedArrayList(Episode.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(created_at);
+        dest.writeString(updated_at);
+        dest.writeString(user_id);
+        dest.writeString(serie_id);
+        dest.writeString(created_by);
+        dest.writeString(updated_by);
+        dest.writeTypedList(episode);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<SaisonsWith> CREATOR = new Creator<SaisonsWith>() {
+        @Override
+        public SaisonsWith createFromParcel(Parcel in) {
+            return new SaisonsWith(in);
+        }
+
+        @Override
+        public SaisonsWith[] newArray(int size) {
+            return new SaisonsWith[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -54,11 +102,11 @@ public class SaisonsWith {
         this.name = name;
     }
 
-    public Object getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Object description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -116,5 +164,9 @@ public class SaisonsWith {
 
     public void setEpisode(List<Episode> episode) {
         this.episode = episode;
+    }
+
+    public static Creator<SaisonsWith> getCREATOR() {
+        return CREATOR;
     }
 }

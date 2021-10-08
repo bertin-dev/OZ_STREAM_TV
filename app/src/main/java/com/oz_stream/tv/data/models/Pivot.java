@@ -5,45 +5,29 @@ import com.google.gson.annotations.SerializedName;
 
 public class Pivot{
 
-    @SerializedName("media_id")
+
+    @SerializedName("saison_id")
     @Expose
-    private String media_id;
-    @SerializedName("actor_id")
-    @Expose
-    private String actor_id;
-    @SerializedName("category_id")
-    @Expose
-    private String category_id;
+    private String saison_id = null;
     @SerializedName("gender_id")
     @Expose
-    private String gender_id;
+    private String gender_id = null;
     @SerializedName("serie_id")
     @Expose
-    private String serie_id;
+    private String serie_id = null;
+    @SerializedName("media_id")
+    @Expose
+    private String media_id = null;
+    @SerializedName("actor_id")
+    @Expose
+    private String actor_id = null;
 
-
-    public String getMedia_id() {
-        return media_id;
+    public String getSaison_id() {
+        return saison_id;
     }
 
-    public void setMedia_id(String media_id) {
-        this.media_id = media_id;
-    }
-
-    public String getActor_id() {
-        return actor_id;
-    }
-
-    public void setActor_id(String actor_id) {
-        this.actor_id = actor_id;
-    }
-
-    public String getCategory_id() {
-        return category_id;
-    }
-
-    public void setCategory_id(String category_id) {
-        this.category_id = category_id;
+    public void setSaison_id(String saison_id) {
+        this.saison_id = saison_id;
     }
 
     public String getGender_id() {
@@ -60,5 +44,21 @@ public class Pivot{
 
     public void setSerie_id(String serie_id) {
         this.serie_id = serie_id;
+    }
+
+    public String getMedia_id() {
+        return media_id;
+    }
+
+    public void setMedia_id(String media_id) {
+        this.media_id = media_id;
+    }
+
+    public String getActor_id() {
+        return actor_id;
+    }
+
+    public void setActor_id(String actor_id) {
+        this.actor_id = actor_id;
     }
 }

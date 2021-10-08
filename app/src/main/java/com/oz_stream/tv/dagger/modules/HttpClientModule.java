@@ -34,16 +34,22 @@ public class HttpClientModule {
     private static final String HEADER_CACHE_CONTROL = "Cache-Control";
 
 
-    public static final String API_URL = "https://cinaf.fr/api/";
-    public static final String ACCUEIL = "first/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/";
+    public static final String API_URL = "https://ozstream.tv/webservice/api/";
+    public static final String LOGIN = "login";
+    public static final String ACCUEIL = "all/media/home";
+    public static final String FILTER_BY_CATEGORY = "all/media/home/more/new";
+    public static final String SEARCH_BY_NAME = "api/getuser?search=";
+
+
+
+
+
     public static final String ACTOR_DETAILS = "movie/by/actor/";
     public static final String RANDOM_GENRE = "movie/random/";
     public static final String ROLE_BY_POSTER = "role/by/poster/";
     public static final String SEARCH_BY_ACTOR = "actor/all/";
-    public static final String GLOBAL_SEARCH = "search/";
     public static final String MOVIES = "movie/by/filtres/";
     public static final String SERIES = "serie/by/filtres/";
-    public static final String LOGIN = "user/login/";
     public static final String EDIT_TOKEN = "user/token/";
     public static final String REGISTER = "user/register/";
     public static final String SEASON = "season/by/serie/";
@@ -111,7 +117,7 @@ public class HttpClientModule {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                Log.w(TAG, "log: http log" + message);
+                Log.w(TAG, "log: http log111" + message);
             }
         });
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

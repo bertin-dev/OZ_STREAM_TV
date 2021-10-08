@@ -2,9 +2,10 @@ package com.oz_stream.tv.data.api;
 
 import com.oz_stream.tv.Config;
 import com.oz_stream.tv.dagger.modules.HttpClientModule;
+import com.oz_stream.tv.data.models.Access_token;
 import com.oz_stream.tv.data.models.Actor;
 import com.oz_stream.tv.data.models.Root;
-import com.oz_stream.tv.data.models.Saison;
+import com.oz_stream.tv.data.models.RootFilter;
 
 import java.util.List;
 
@@ -17,97 +18,35 @@ import rx.Observable;
 
 public interface TheMovieDbAPI {
 
+
+    //PAGE D'ACCUEIL
     @GET(HttpClientModule.ACCUEIL)
-    Observable<Root> getNowPlayingMovies();
+    Observable<Root> getHomePage();
 
 
-    /*@GET(HttpClientModule.ACTOR_DETAILS + "{id}/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<List<Poster>> getFilmographieDetails(
-            @Path("id") int id
+    //FILTER BY CATEGORY
+    @GET(HttpClientModule.FILTER_BY_CATEGORY + "/{category}")
+    Observable<RootFilter> getFilterByCategory(
+            @Path("category") String category
     );
 
+    //RECHERCHE PAR NON DE FILMS
+    @GET(HttpClientModule.SEARCH_BY_NAME + "{query}")
+    Observable<Root> searchUserByName(@Path("query") String query);
 
-    @GET(HttpClientModule.RANDOM_GENRE + "{genres}/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<List<Poster>> getRandomMovies(
-            @Path("genres") String genres
-    );
-
-
-    @GET(HttpClientModule.ROLE_BY_POSTER + "{id}/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<List<Actor>> getRolesByPoster(
-            @Path("id") int id
-    );
+    //RECHERCHE PAR ACTEUR
+    @GET(HttpClientModule.SEARCH_BY_NAME + "{query}")
+    Observable<List<Actor>> getActorsList(@Path("query") String query);
 
 
-
-    //RECHERCHE PAR ACTEURS
-    @GET(HttpClientModule.SEARCH_BY_ACTOR + "{page}/{search}/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<List<Actor>> getActorsList(
-            @Path("page") Integer page,
-            @Path("search") String search
-    );
-
-
-    //RECHERCHE GLOBALE
-    @GET(HttpClientModule.GLOBAL_SEARCH + "{query}/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<Movie> searchData(@Path("query") String query);
-
-
-    //LISTE DES FILMS PAR FILTRE
-    @GET(HttpClientModule.MOVIES + "{genre}/{order}/{page}/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<List<Poster>> getMoviesByFiltres(
-            @Path("genre") Integer genre,
-            @Path("order") String order,
-            @Path("page") Integer page
-    );
-
-
-    //LISTE DES SERIES PAR FILTRE
-    @GET(HttpClientModule.SERIES + "{genre}/{order}/{page}/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<List<Poster>> getSeriesByFiltres(
-            @Path("genre") Integer genre,
-            @Path("order") String order,
-            @Path("page") Integer page
-    );
-
-
-    //LOGIN
+    //SEND ID CODE
     @FormUrlEncoded
-    @POST(HttpClientModule.LOGIN + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<ApiResponse> login(
-            @Field("username") String username,
-            @Field("password") String password
-    );
+    @POST(HttpClientModule.IDCODE)
+    Observable<Access_token> codeID(@Field("code") String code);
 
-    //EDIT TOKEN
+    //AUTHENTIFICATION
     @FormUrlEncoded
-    @POST(HttpClientModule.EDIT_TOKEN + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<ApiResponse> editToken(
-            @Field("user") Integer user,
-            @Field("key") String key,
-            @Field("token_f") String token_f,
-            @Field("name") String name
-    );
-
-
-    //REGISTER
-    @FormUrlEncoded
-    @POST(HttpClientModule.REGISTER + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<ApiResponse> register(
-            @Field("name") String name,
-            @Field("username") String username,
-            @Field("password") String password,
-            @Field("type") String type,
-            @Field("image") String image
-    );
-
-
-
-        //LIST DES SAISONS ET EPISODES
-    @GET(HttpClientModule.SEASON + "{id}/" + Config.API_KEY_URL + "/" + Config.ITEM_PURCHASE_CODE + "/")
-    Observable<List<Saison>> getSeasonsBySerie(@Path("id") Integer id);
-    */
-
-
+    @POST(HttpClientModule.LOGIN)
+    Observable<Access_token> login(@Field("phone") String phone, @Field("password") String password);
 
 }
