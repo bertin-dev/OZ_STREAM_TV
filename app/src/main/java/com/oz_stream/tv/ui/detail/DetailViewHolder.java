@@ -52,11 +52,14 @@ public class DetailViewHolder extends Presenter.ViewHolder {
     @BindView(R.id.rating_bar)
     AppCompatRatingBar rating_bar;
 
-    @BindView(R.id.rating)
-    TextView rating;
+    @BindView(R.id.credit)
+    TextView credit;
 
-    @BindView(R.id.imdb)
-    TextView imdb;
+    @BindView(R.id.like)
+    TextView like;
+
+    @BindView(R.id.dislike)
+    TextView dislike;
 
     @BindView(R.id.classification)
     LinearLayout classification;
@@ -100,9 +103,10 @@ public class DetailViewHolder extends Presenter.ViewHolder {
         if (data != null && data.getTitle() != null) {
             classification.setVisibility(View.VISIBLE);
             mRuntimeTV.setText(data.getDuration());
-            mTaglineTV.setText(data.getType() + " - "+ data.getCredit() + " Crédits");
+            mTaglineTV.setText(itemView.getResources().getString(R.string.movie) +" "+ data.getType());
             movieTitleTV.setText(data.getTitle().toUpperCase());
             //movieYearTV.setText(data.getYear());
+            movieYearTV.setText("120 minutes - (2021) ");
             movieOverview.setText(data.getDescription());
             mGenresLayout.removeAllViews();
 
@@ -114,9 +118,10 @@ public class DetailViewHolder extends Presenter.ViewHolder {
             rating.setText(data.getRating() + "/5");
             imdb.setText(data.getImdb() + "/10");*/
 
-            rating_bar.setRating(Float.parseFloat(data.getNber_like()));
-            rating.setText(data.getNber_dislike());
-            //imdb.setText(data.getImdb() + "/10");
+            rating_bar.setRating(3);
+            credit.setText(itemView.getResources().getString(R.string.cout) + " " + data.getCredit() + " " + itemView.getResources().getString(R.string.credit));
+            like.setText(data.getNber_like());
+            dislike.setText(data.getNber_dislike());
 
             int _16dp = (int) itemView.getResources().getDimension(R.dimen.full_padding);
             int _8dp = (int) itemView.getResources().getDimension(R.dimen.half_padding);
@@ -131,8 +136,9 @@ public class DetailViewHolder extends Presenter.ViewHolder {
                 movieYearTV.setTextColor(data.getPaletteColors().getTextColor());
                 movieOverview.setTextColor(data.getPaletteColors().getTextColor());
                 mDirectorTv.setTextColor(data.getPaletteColors().getTextColor());
-                rating.setTextColor(data.getPaletteColors().getTextColor());
-                imdb.setTextColor(data.getPaletteColors().getTextColor());
+                credit.setTextColor(data.getPaletteColors().getTextColor());
+                like.setTextColor(data.getPaletteColors().getTextColor());
+                dislike.setTextColor(data.getPaletteColors().getTextColor());
                 int primaryDarkColor = data.getPaletteColors().getStatusBarColor();
                 // Adds each genre to the genre layout
                 for (Gender genre : data.getGenders()) {

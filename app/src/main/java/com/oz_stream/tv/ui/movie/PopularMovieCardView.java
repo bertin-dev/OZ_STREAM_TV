@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +33,9 @@ public class PopularMovieCardView extends BindableCardView<Data> {
     @BindView(R.id.movie_year)
     TextView movie_year;
 
+    @BindView(R.id.rating_bar)
+    AppCompatRatingBar rating_bar;
+
     public PopularMovieCardView(Context context) {
         super(context);
         ButterKnife.bind(this);
@@ -39,6 +43,9 @@ public class PopularMovieCardView extends BindableCardView<Data> {
 
     @Override
     protected void bind(Data data) {
+
+        rating_bar.setRating(2);
+
         //photo de couverture films ou série
         Glide.with(getContext())
                 .load(Config.GLOBAL_URL + data.getPhoto().getLink())

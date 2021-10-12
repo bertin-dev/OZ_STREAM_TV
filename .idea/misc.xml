@@ -7,6 +7,7 @@
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/drawable/bg_fab_accent.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/drawable/bg_loading_subtitles_accent.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/drawable/bg_season_tab.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/drawable/border_right.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/drawable/color_cursor_white.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/drawable/dialog_radius.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/drawable/dialog_radius_dark.xml" value="0.11666666666666667" />
@@ -17,7 +18,7 @@
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/drawable/logo_official_22_background.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/activity_authencate_code_qr.xml" value="0.20425724637681159" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/activity_channel_publish.xml" value="0.19021739130434784" />
-        <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/activity_detail.xml" value="0.209375" />
+        <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/activity_detail.xml" value="0.25" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/activity_details.xml" value="0.19791666666666666" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/activity_embed.xml" value="0.1953125" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/activity_idcode.xml" value="0.18" />
@@ -31,7 +32,7 @@
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/card_casting.xml" value="0.33" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/card_filmography.xml" value="0.19021739130434784" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/card_movie.xml" value="0.25" />
-        <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/card_popular_movie.xml" value="0.1721014492753623" />
+        <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/card_popular_movie.xml" value="0.22" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/card_season.xml" value="0.209375" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/dialog_sources.xml" value="0.209375" />
         <entry key="..\:/Users/Bertin-dev/AndroidStudioProjects/APPS_TV/OZ_STREAM_TV/app/src/main/res/layout/grid_fragment.xml" value="0.19021739130434784" />

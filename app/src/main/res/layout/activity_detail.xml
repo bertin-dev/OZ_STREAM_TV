@@ -78,13 +78,13 @@
         android:gravity="left"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/rating"
+            android:id="@+id/credit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/border_right"
-            android:paddingEnd="7dp"
+            android:paddingEnd="17dp"
             android:layout_marginEnd="7dp"
-            android:text="+16"
+            android:text="Coût: 12 crédits"
             android:textColor="@color/white_text" />
 
         <LinearLayout
@@ -107,38 +107,77 @@
                 android:layout_marginEnd="7dp"
                 android:layout_gravity="center"
                 android:elevation="20dp"
-                android:progressTint="@color/colorAccent"
+                android:progressTint="@color/white"
                 android:theme="@style/MyRatingBar" />
 
         </LinearLayout>
 
-        <ImageView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:foregroundGravity="center"
-            android:src="@drawable/ic_imdb"
-            app:tint="@color/colorAccent" />
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/imdb"
+            <TextView
+                android:id="@+id/like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="7dp"
+                android:layout_marginStart="7dp"
+                android:paddingEnd="7dp"
+                android:text="+16"
+                android:textColor="@color/white_text" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_thumb_up_24"
+                android:layout_gravity="center"
+                android:foregroundGravity="center"
+                app:tint="@color/colorAccent" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="7dp"
-            android:layout_marginStart="7dp"
+            android:layout_gravity="center"
+            android:foregroundGravity="center"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/border_right"
-            android:paddingEnd="7dp"
-            android:text="+16"
-            android:textColor="@color/white_text" />
+            android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_thumb_down_24"
+                android:layout_gravity="center"
+                android:foregroundGravity="center"
+                app:tint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/dislike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="7dp"
+                android:layout_marginStart="7dp"
+                android:paddingEnd="7dp"
+                android:text="+16"
+                android:textColor="@color/white_text" />
+
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Recommandé"
-            android:padding="3dp"
+            android:padding="7dp"
             android:background="@color/default_color"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:elevation="10dp"
             android:textStyle="bold"/>
 

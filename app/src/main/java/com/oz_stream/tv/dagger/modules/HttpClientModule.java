@@ -38,21 +38,13 @@ public class HttpClientModule {
     public static final String LOGIN = "login";
     public static final String ACCUEIL = "all/media/home";
     public static final String FILTER_BY_CATEGORY = "all/media/home/more/new";
-    public static final String SEARCH_BY_NAME = "api/getuser?search=";
+    public static final String SEARCH_BY_USER = "api/getuser/all?";
+    public static final String SEARCH_BY_ACTOR = "api/actor?";
 
 
 
 
 
-    public static final String ACTOR_DETAILS = "movie/by/actor/";
-    public static final String RANDOM_GENRE = "movie/random/";
-    public static final String ROLE_BY_POSTER = "role/by/poster/";
-    public static final String SEARCH_BY_ACTOR = "actor/all/";
-    public static final String MOVIES = "movie/by/filtres/";
-    public static final String SERIES = "serie/by/filtres/";
-    public static final String EDIT_TOKEN = "user/token/";
-    public static final String REGISTER = "user/register/";
-    public static final String SEASON = "season/by/serie/";
     public static final String IDCODE = "user/tvlogin/";
 
 

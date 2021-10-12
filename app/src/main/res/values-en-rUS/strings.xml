@@ -124,4 +124,6 @@
     <string name="news">News</string>
     <string name="movie_gender">Gender movie</string>
     <string name="live">Direct</string>
+    <string name="cout">costs:</string>
+    <string name="credit">credits</string>
 </resources>

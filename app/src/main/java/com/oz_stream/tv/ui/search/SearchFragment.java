@@ -1,7 +1,6 @@
 package com.oz_stream.tv.ui.search;
 
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,11 +26,14 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.oz_stream.tv.App;
+import com.oz_stream.tv.Config;
 import com.oz_stream.tv.R;
 import com.oz_stream.tv.data.api.TheMovieDbAPI;
 import com.oz_stream.tv.data.models.Actor;
 import com.oz_stream.tv.data.models.Data;
-import com.oz_stream.tv.data.models.Root;
+import com.oz_stream.tv.data.models.RootFilter;
+import com.oz_stream.tv.data.models.SearchResult;
+import com.oz_stream.tv.data.models.SearchResultActor;
 import com.oz_stream.tv.ui.detail.DetailActivity;
 import com.oz_stream.tv.ui.detail.DetailDataActivity;
 import com.oz_stream.tv.ui.detail.DetailDataFragment;
@@ -39,7 +41,8 @@ import com.oz_stream.tv.ui.detail.DetailFragment;
 import com.oz_stream.tv.ui.movie.ActorCardView;
 import com.oz_stream.tv.ui.movie.ActorPresenter;
 import com.oz_stream.tv.ui.movie.MovieCardView;
-import com.oz_stream.tv.ui.movie.MoviePresenter;
+import com.oz_stream.tv.ui.movie.SearchActorPresenter;
+import com.oz_stream.tv.ui.movie.SearchPresenter;
 
 import java.util.List;
 
@@ -60,15 +63,15 @@ public class SearchFragment extends androidx.leanback.app.SearchFragment
 
     DetailsOverviewRow detailsOverviewRow;
 
-    ArrayObjectAdapter arrayObjectAdapter = new ArrayObjectAdapter(new ActorPresenter());
+    ArrayObjectAdapter arrayObjectAdapter = new ArrayObjectAdapter(new SearchActorPresenter());
 
-    ArrayObjectAdapter arrayObjectAdapterData = new ArrayObjectAdapter(new MoviePresenter());
+    ArrayObjectAdapter arrayObjectAdapterData = new ArrayObjectAdapter(new SearchPresenter());
 
-    List<Actor> actorList;
-    Actor actor;
+    List<SearchResultActor> searchResultActorList;
+    SearchResultActor searchResultActor;
 
-    Root root;
-    Data dataobj;
+    SearchResult searchResult;
+    //RootFilter rootFilter;
     private SimpleTarget<GlideDrawable> mGlideDrawableSimpleTarget = new SimpleTarget<GlideDrawable>() {
         @Override
         public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
@@ -119,9 +122,12 @@ public class SearchFragment extends androidx.leanback.app.SearchFragment
             theMovieDbAPI.getActorsList(query)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::bindSearch, e -> {
-                        loadImage(actor.getAvatar());
-                        bindActorDetails(actorList);
+                    .subscribe(this::bindActorSearch, e -> {
+
+                        if(searchResultActor.getAvatarLink() != null){
+                            loadImage(Config.GLOBAL_URL + searchResultActor.getAvatarLink());
+                        }
+                        bindActorDetails(searchResultActorList);
                         performSearch();
                         Timber.e(e, "Error fetching search actor response: %query", e.getMessage());
                     });
@@ -131,14 +137,20 @@ public class SearchFragment extends androidx.leanback.app.SearchFragment
             theMovieDbAPI.searchUserByName(query)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::bindPosterSearch, e -> {
-                        loadImage(dataobj.getPhoto().getLink());
-                        bindPosterDetails(root);
-                        performPosterSearch();
+                    .subscribe(this::bindDataSearch, e -> {
+
+                        List<SearchResultActor> dataList = searchResultActor.getData();
+                        for(SearchResultActor data : dataList){
+                            if(data.getAvatarLink() != null){
+                                loadImage(Config.GLOBAL_URL + data.getAvatarLink());
+                            }
+                            bindDataDetails(searchResult);
+                        }
+                        performDataSearch();
                         Timber.e(e, "Error fetching search poster response: %query", e.getMessage());
                     });
 
-            performPosterSearch();
+            performDataSearch();
 
             return true;
         }
@@ -154,9 +166,13 @@ public class SearchFragment extends androidx.leanback.app.SearchFragment
             theMovieDbAPI.getActorsList(query)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::bindSearch, e -> {
-                        loadImage(actor.getAvatar());
-                        bindActorDetails(actorList);
+                    .subscribe(this::bindActorSearch, e -> {
+
+                        if(searchResultActor.getAvatarLink() != null){
+                            loadImage(Config.GLOBAL_URL + searchResultActor.getAvatarLink());
+                        }
+
+                        bindActorDetails(searchResultActorList);
                         performSearch();
                         Timber.e(e, "Error fetching search actor response: %query", e.getMessage());
                     });
@@ -168,35 +184,38 @@ public class SearchFragment extends androidx.leanback.app.SearchFragment
             theMovieDbAPI.searchUserByName(query)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::bindPosterSearch, e -> {
-                        loadImage(dataobj.getPhoto().getLink());
-                        bindPosterDetails(root);
-                        performPosterSearch();
+                    .subscribe(this::bindDataSearch, e -> {
+
+                        List<SearchResultActor> dataList = searchResultActor.getData();
+                        for(SearchResultActor data : dataList){
+                            if(data.getAvatarLink() != null){
+                                loadImage(Config.GLOBAL_URL + data.getAvatarLink());
+                            }
+                            bindDataDetails(searchResult);
+                        }
+
+                        performDataSearch();
                         Timber.e(e, "Error fetching search poster response: %query", e.getMessage());
                     });
 
-            performPosterSearch();
+            performDataSearch();
 
             return true;
         }
     }
 
-    private void bindActorDetails(List<Actor> actorResponse) {
+    private void bindActorDetails(List<SearchResultActor> actorResponse) {
 
-        for (Actor actor1 : actorResponse) {
-            this.actor = actor1;
+        for (SearchResultActor data1 : actorResponse) {
+            this.searchResultActor = data1;
         }
-        this.actorList = actorResponse;
+        this.searchResultActorList = actorResponse;
     }
 
-    private void bindPosterDetails(Root movieResponse) {
+    private void bindDataDetails(SearchResult movieResponse) {
 
-        this.root = movieResponse;
-        List<Data> dataList = movieResponse.getNews().getDatas();
-        //films les mieux notés (Poster)
-        for (Data data1 : dataList) {
-            this.dataobj = data1;
-        }
+        this.searchResult = movieResponse;
+        this.searchResultActor = searchResult.getSearchResultActor();
     }
 
     private void setupSearchRow() {
@@ -206,12 +225,13 @@ public class SearchFragment extends androidx.leanback.app.SearchFragment
 
     }
 
-    private void bindSearch(List<Actor> responseObj) {
-        arrayObjectAdapter.addAll(0, responseObj);
+    private void bindActorSearch(SearchResult responseObj) {
+        SearchResultActor searchResultActor = responseObj.getSearchResultActor();
+        arrayObjectAdapter.addAll(0, searchResultActor.getData());
     }
 
-    private void bindPosterSearch(Root responseObj) {
-        arrayObjectAdapterData.addAll(0, responseObj.getNews().getDatas());
+    private void bindDataSearch(SearchResult responseObj) {
+        arrayObjectAdapterData.addAll(0, responseObj.getSearchResultActor().getData());
     }
 
     private void loadImage(String url) {
@@ -238,7 +258,7 @@ public class SearchFragment extends androidx.leanback.app.SearchFragment
         arrayObjectAdapter.clear();
     }
 
-    private void performPosterSearch() {
+    private void performDataSearch() {
 
         arrayObjectAdapterData.clear();
     }

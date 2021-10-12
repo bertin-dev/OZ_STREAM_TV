@@ -1,19 +1,17 @@
 package com.oz_stream.tv.data.api;
 
-import com.oz_stream.tv.Config;
 import com.oz_stream.tv.dagger.modules.HttpClientModule;
 import com.oz_stream.tv.data.models.Access_token;
-import com.oz_stream.tv.data.models.Actor;
 import com.oz_stream.tv.data.models.Root;
 import com.oz_stream.tv.data.models.RootFilter;
-
-import java.util.List;
+import com.oz_stream.tv.data.models.SearchResult;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 public interface TheMovieDbAPI {
@@ -31,12 +29,12 @@ public interface TheMovieDbAPI {
     );
 
     //RECHERCHE PAR NON DE FILMS
-    @GET(HttpClientModule.SEARCH_BY_NAME + "{query}")
-    Observable<Root> searchUserByName(@Path("query") String query);
+    @GET(HttpClientModule.SEARCH_BY_USER)
+    Observable<SearchResult> searchUserByName(@Query("search") String search);
 
     //RECHERCHE PAR ACTEUR
-    @GET(HttpClientModule.SEARCH_BY_NAME + "{query}")
-    Observable<List<Actor>> getActorsList(@Path("query") String query);
+    @GET(HttpClientModule.SEARCH_BY_ACTOR)
+    Observable<SearchResult> getActorsList(@Path("search") String search);
 
 
     //SEND ID CODE
